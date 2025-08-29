@@ -12,13 +12,15 @@ import { GiftsPage } from './pages/GiftsPage';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import MapPage from './pages/MapPage';
-import { MyTeamPage } from './pages/MyTeamPage';
-import MissionsPage from './pages/MissionsPage';
 import MissionDetailPage from './pages/MissionDetailPage';
+import MissionsPage from './pages/MissionsPage';
+import { MyTeamPage } from './pages/MyTeamPage';
+import { PuzzleListPage } from './pages/PuzzlesPage';
+import { QuestionnairePage } from './pages/QuestionnairePage';
 import SettingsPage from './pages/SettingPage';
 import { TeamsLeaderboardPage } from './pages/TeamsPage';
 import { VideoMissionPage } from './pages/VideoMissionPage';
-import { QuestionnairePage } from './pages/QuestionnairePage';
+import { VideoUploadPage } from './pages/VideoUploadPage';
 
 function App() {
     return (
@@ -61,7 +63,9 @@ function App() {
                     />
                     <Route
                         path='mission/:missionId'
-                        element={<MissionDetailPage />}
+                        element={
+                            <MissionDetailPage />
+                        }
                     />
                     <Route
                         path='map'
@@ -69,7 +73,9 @@ function App() {
                     />
                     <Route
                         path='puzzles'
-                        element={<p>پازل ها</p>}
+                        element={
+                            <PuzzleListPage />
+                        }
                     />
                     <Route
                         path='games'
@@ -79,6 +85,13 @@ function App() {
                         path='video-mission'
                         element={
                             <VideoMissionPage />
+                        }
+                    />
+
+                    <Route
+                        path='upload-video-mission'
+                        element={
+                            <VideoUploadPage />
                         }
                     />
                     <Route

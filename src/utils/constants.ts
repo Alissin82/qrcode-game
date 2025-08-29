@@ -233,3 +233,43 @@ export const QUESTIONS_DATA = [
         correctAnswer: 'پاسخ ج',
     },
 ];
+
+export const PUZZLE_DATA = {
+    completed: 1,
+    inProgress: 2,
+    total: 6,
+    totalRewards: 200,
+    pieces: [
+        {
+            id: 1,
+            title: 'معمای شب اول کتاب راز ها',
+            status: 'unlocked',
+            action: 'scan',
+        },
+        {
+            id: 2,
+            title: 'معمای شب دوم',
+            status: 'locked',
+        },
+        {
+            id: 3,
+            title: 'کارت شناسایی شهید',
+            status: 'locked',
+        },
+        {
+            id: 4,
+            title: 'معمای شب سوم',
+            status: 'locked',
+        },
+        {
+            id: 5,
+            title: 'مدال افتخار',
+            status: 'locked',
+        },
+        {
+            id: 6,
+            title: 'کیف رمزگشایی',
+            status: 'locked',
+        },
+    ],
+};
