@@ -13,6 +13,8 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import MapPage from './pages/MapPage';
 import { MyTeamPage } from './pages/MyTeamPage';
+import MissionsPage from './pages/MissionsPage';
+import MissionDetailPage from './pages/MissionDetailPage';
 import SettingsPage from './pages/SettingPage';
 import { TeamsLeaderboardPage } from './pages/TeamsPage';
 import { VideoMissionPage } from './pages/VideoMissionPage';
@@ -55,9 +57,11 @@ function App() {
                     />
                     <Route
                         path='missions'
-                        element={
-                            <p>ماموریت‌ها</p>
-                        }
+                        element={<MissionsPage />}
+                    />
+                    <Route
+                        path='mission/:missionId'
+                        element={<MissionDetailPage />}
                     />
                     <Route
                         path='map'
