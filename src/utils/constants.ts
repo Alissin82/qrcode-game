@@ -199,3 +199,37 @@ export const GAMES_DATA = [
         color: 'bg-red-500',
     },
 ];
+
+export const VIDEO_MISSION_DATA = {
+    title: 'تماشا ویدیو تاریخ تمدن',
+    totalSteps: 7,
+    videoThumbnail:
+        'https://placehold.co/600x400/222/fff?text=Video',
+};
+
+export const QUESTIONS_DATA = [
+    {
+        id: 1,
+        question:
+            'کدام یک از موارد زیر مهم‌ترین ویژگی این مکان محسوب می‌شود؟',
+        options: [
+            'گزینه ۱',
+            'گزینه ۲',
+            'گزینه ۳',
+            'گزینه ۴',
+        ],
+        correctAnswer: 'گزینه ۱',
+    },
+    {
+        id: 2,
+        question:
+            'سوال دوم در مورد چه موضوعی است؟',
+        options: [
+            'پاسخ الف',
+            'پاسخ ب',
+            'پاسخ ج',
+            'پاسخ د',
+        ],
+        correctAnswer: 'پاسخ ج',
+    },
+];

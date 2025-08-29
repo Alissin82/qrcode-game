@@ -46,7 +46,7 @@ export const AnnouncementsPage = () => {
                         (item, index) => (
                             <div key={item.id}>
                                 <div className='mb-3 flex items-baseline justify-between'>
-                                    <h2 className='lg:text-lg text-base font-bold'>
+                                    <h2 className='text-base font-bold lg:text-lg'>
                                         {
                                             item.title
                                         }

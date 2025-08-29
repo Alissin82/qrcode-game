@@ -11,10 +11,12 @@ import { GamesPage } from './pages/GamesPage';
 import { GiftsPage } from './pages/GiftsPage';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
+import MapPage from './pages/MapPage';
 import { MyTeamPage } from './pages/MyTeamPage';
 import SettingsPage from './pages/SettingPage';
 import { TeamsLeaderboardPage } from './pages/TeamsPage';
-import MapPage from './pages/MapPage';
+import { VideoMissionPage } from './pages/VideoMissionPage';
+import { QuestionnairePage } from './pages/QuestionnairePage';
 
 function App() {
     return (
@@ -69,7 +71,18 @@ function App() {
                         path='games'
                         element={<GamesPage />}
                     />
-                    =
+                    <Route
+                        path='video-mission'
+                        element={
+                            <VideoMissionPage />
+                        }
+                    />
+                    <Route
+                        path='questionnaire-mission'
+                        element={
+                            <QuestionnairePage />
+                        }
+                    />
                     <Route
                         path='notifications'
                         element={
