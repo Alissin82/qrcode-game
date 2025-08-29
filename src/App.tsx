@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom';
 import './Style.css';
 import ProtectedLayout from './components/layouts/ProtectedLayout';
+import HomePage from './pages/HomePage';
 
 function App() {
     return (
@@ -15,7 +16,7 @@ function App() {
                 >
                     <Route
                         path='/'
-                        element={<p>خوش آمدید</p>}
+                        element={<HomePage />}
                     ></Route>
                     <Route
                         path='/settings'
