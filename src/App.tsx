@@ -12,6 +12,8 @@ import { GiftsPage } from './pages/GiftsPage';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import { MyTeamPage } from './pages/MyTeamPage';
+import MissionsPage from './pages/MissionsPage';
+import MissionDetailPage from './pages/MissionDetailPage';
 import SettingsPage from './pages/SettingPage';
 import { TeamsLeaderboardPage } from './pages/TeamsPage';
 import MapPage from './pages/MapPage';
@@ -53,9 +55,11 @@ function App() {
                     />
                     <Route
                         path='missions'
-                        element={
-                            <p>ماموریت‌ها</p>
-                        }
+                        element={<MissionsPage />}
+                    />
+                    <Route
+                        path='mission/:missionId'
+                        element={<MissionDetailPage />}
                     />
                     <Route
                         path='map'
@@ -69,7 +73,6 @@ function App() {
                         path='games'
                         element={<GamesPage />}
                     />
-                    =
                     <Route
                         path='notifications'
                         element={
