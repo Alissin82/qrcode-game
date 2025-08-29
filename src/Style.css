@@ -6,7 +6,6 @@
         margin: 0 !important;
     }
 }
-
 @plugin "daisyui" {
     themes: light --default;
 }
@@ -119,6 +118,10 @@
     @apply focus:!border-primary !shadow-none !outline-none;
 }
 
+*.lale {
+    font: lale !important;
+}
+
 @theme {
     --font-display: 'dana';
     --color-primary-light: #e6fbfa;
@@ -133,6 +136,37 @@
     name: 'light';
     --color-primary: #00b48d;
     --color-secondary: #ef4770;
-    --color-tertiary: #074f9a;
-    --color-fourtary: #fcb917;
+    --color-accent: #074f9a;
+    --color-neutral: #fcb917;
+}
+
+/* Your custom utilities can stay */
+@layer utilities {
+    .btn {
+        @apply border-none shadow-none outline-none;
+    }
+    .input {
+        @apply focus:!border-primary !shadow-none !outline-none;
+    }
+    .lale {
+        font-family: 'lale' !important;
+    }
+    * {
+        font-family: 'dana' !important;
+    }
+}
+/* Your custom utilities can stay */
+@layer utilities {
+    .btn {
+        @apply border-none shadow-none outline-none;
+    }
+    .input {
+        @apply focus:!border-primary !shadow-none !outline-none;
+    }
+    .lale {
+        font-family: 'lale' !important;
+    }
+    * {
+        font-family: 'dana' !important;
+    }
 }
