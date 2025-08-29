@@ -1,0 +1,138 @@
+@import 'tailwindcss';
+@plugin "daisyui";
+
+@media print {
+    body {
+        margin: 0 !important;
+    }
+}
+
+@plugin "daisyui" {
+    themes: light --default;
+}
+
+@font-face {
+    font-family: lale;
+    font-style: normal;
+    font-weight: 900;
+    src: url('/fonts/lalezar/font.ttf')
+        format('truetype');
+}
+
+@font-face {
+    font-family: dana;
+    font-style: normal;
+    font-weight: 10;
+    src: url('/fonts/dana/Dana-Hairline.woff2')
+        format('woff2');
+}
+@font-face {
+    font-family: dana;
+    font-style: normal;
+    font-weight: 100;
+    src: url('/fonts/dana/Dana-Thin.woff2')
+        format('woff2');
+}
+@font-face {
+    font-family: dana;
+    font-style: normal;
+    font-weight: 200;
+    src: url('/fonts/dana/Dana-UltraLight.woff2')
+        format('woff2');
+}
+@font-face {
+    font-family: dana;
+    font-style: normal;
+    font-weight: 300;
+    src: url('/fonts/dana/Dana-Light.woff2')
+        format('woff2');
+}
+@font-face {
+    font-family: dana;
+    font-style: normal;
+    font-weight: 500;
+    src: url('/fonts/dana/Dana-Medium.woff2')
+        format('woff2');
+}
+@font-face {
+    font-family: dana;
+    font-style: normal;
+    font-weight: 600;
+    src: url('/fonts/dana/Dana-DemiBold.woff2')
+        format('woff2');
+}
+@font-face {
+    font-family: dana;
+    font-style: normal;
+    font-weight: 800;
+    src: url('/fonts/dana/Dana-ExtraBold.woff2')
+        format('woff2');
+}
+@font-face {
+    font-family: dana;
+    font-style: normal;
+    font-weight: 900;
+    src: url('/fonts/dana/Dana-Black.woff2')
+        format('woff2');
+}
+@font-face {
+    font-family: dana;
+    font-style: normal;
+    font-weight: 930;
+    src: url('/fonts/dana/Dana-ExtraBlack.woff2')
+        format('woff2');
+}
+@font-face {
+    font-family: dana;
+    font-style: normal;
+    font-weight: 960;
+    src: url('/fonts/dana/Dana-Heavy.woff2')
+        format('woff2');
+}
+@font-face {
+    font-family: dana;
+    font-style: normal;
+    font-weight: 990;
+    src: url('/fonts/dana/Dana-Fat.woff2')
+        format('woff2');
+}
+@font-face {
+    font-family: dana;
+    font-style: normal;
+    font-weight: bold;
+    src: url('/fonts/dana/Dana-ExtraBold.woff2')
+        format('woff2');
+}
+@font-face {
+    font-family: dana;
+    font-style: normal;
+    font-weight: normal;
+    src: url('/fonts/dana/Dana-Regular.woff2')
+        format('woff2');
+}
+
+@utility btn {
+    @apply border-none shadow-none outline-none;
+}
+
+@utility input {
+    @apply focus:!border-primary !shadow-none !outline-none;
+}
+
+@theme {
+    --font-display: 'dana';
+    --color-primary-light: #e6fbfa;
+    --color-icon-light: #8adcd7;
+    --color-primary-text: #065b56;
+}
+* {
+    font-family: 'dana' !important;
+}
+
+@plugin "daisyui/theme" {
+    name: 'light';
+    --color-primary: #00b48d;
+    --color-secondary: #ef4770;
+    --color-tertiary: #074f9a;
+    --color-fourtary: #fcb917;
+}
