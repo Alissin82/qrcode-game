@@ -6,6 +6,7 @@ import {
 import './Style.css';
 import ProtectedLayout from './components/layouts/ProtectedLayout';
 import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
 
 function App() {
     return (
@@ -17,61 +18,53 @@ function App() {
                     <Route
                         path='/'
                         element={<HomePage />}
-                    ></Route>
+                    />
+                    <Route
+                        path='dashboard'
+                        element={<p>داشبورد</p>}
+                    />
                     <Route
                         path='/settings'
                         element={<p>تنظیمات</p>}
                     />
-
                     <Route
                         path='teams'
                         element={<p>تیم ها</p>}
                     />
-
                     <Route
                         path='gifts'
                         element={
                             <p>جوایز دریافتی</p>
                         }
                     />
-
                     <Route
                         path='missions'
                         element={
                             <p>ماموریت‌ها</p>
                         }
                     />
-
                     <Route
                         path='map'
                         element={<p>نقشه</p>}
                     />
-
                     <Route
                         path='puzzles'
                         element={<p>پازل ها</p>}
                     />
-                    <Route path='scores'>
-                        <Route
-                            index
-                            element={
-                                <p>امتیازات</p>
-                            }
-                        />
-                        <Route
-                            path='notifications'
-                            element={
-                                <p>اعلان‌ها</p>
-                            }
-                        />
-                    </Route>
+                    <Route
+                        path='scores'
+                        element={<p>امتیازات</p>}
+                    />
+                    =
+                    <Route
+                        path='notifications'
+                        element={<p>اعلان‌ها</p>}
+                    />
                 </Route>
 
                 <Route
                     path='/login'
-                    element={
-                        <p>لطفا وارد شوید</p>
-                    }
+                    element={<LoginPage />}
                 />
                 <Route
                     path='*'
