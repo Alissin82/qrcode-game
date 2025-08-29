@@ -5,8 +5,16 @@ import {
 } from 'react-router-dom';
 import './Style.css';
 import ProtectedLayout from './components/layouts/ProtectedLayout';
+import { AnnouncementsPage } from './pages/AnnouncementsPage';
+import DashboardPage from './pages/DashboardPage';
+import { GamesPage } from './pages/GamesPage';
+import { GiftsPage } from './pages/GiftsPage';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
+import { MyTeamPage } from './pages/MyTeamPage';
+import SettingsPage from './pages/SettingPage';
+import { TeamsLeaderboardPage } from './pages/TeamsPage';
+import MapPage from './pages/MapPage';
 
 function App() {
     return (
@@ -21,21 +29,27 @@ function App() {
                     />
                     <Route
                         path='dashboard'
-                        element={<p>داشبورد</p>}
+                        element={
+                            <DashboardPage />
+                        }
                     />
                     <Route
                         path='/settings'
-                        element={<p>تنظیمات</p>}
+                        element={<SettingsPage />}
                     />
                     <Route
                         path='teams'
-                        element={<p>تیم ها</p>}
+                        element={
+                            <TeamsLeaderboardPage />
+                        }
+                    />
+                    <Route
+                        path='my-team'
+                        element={<MyTeamPage />}
                     />
                     <Route
                         path='gifts'
-                        element={
-                            <p>جوایز دریافتی</p>
-                        }
+                        element={<GiftsPage />}
                     />
                     <Route
                         path='missions'
@@ -45,20 +59,22 @@ function App() {
                     />
                     <Route
                         path='map'
-                        element={<p>نقشه</p>}
+                        element={<MapPage />}
                     />
                     <Route
                         path='puzzles'
                         element={<p>پازل ها</p>}
                     />
                     <Route
-                        path='scores'
-                        element={<p>امتیازات</p>}
+                        path='games'
+                        element={<GamesPage />}
                     />
                     =
                     <Route
                         path='notifications'
-                        element={<p>اعلان‌ها</p>}
+                        element={
+                            <AnnouncementsPage />
+                        }
                     />
                 </Route>
 
