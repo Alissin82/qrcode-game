@@ -12,7 +12,7 @@ import Menu from '../components/ui/Menu';
 
 const SettingsPage = () => {
     // State to toggle between boy (blue) and girl (pink) themes
-    const [isBoy, setIsBoy] = useState(false);
+    const [isBoy, setIsBoy] = useState(true);
     // State to manage the team color from the color picker
     const [teamColor, setTeamColor] =
         useState('#1f4567');
@@ -35,13 +35,14 @@ const SettingsPage = () => {
             {/* Main container with responsive max-width */}
             <div className='mx-auto w-full max-w-xl p-4 pb-32'>
                 {/* Header */}
-                <header className='mb-10 flex items-center justify-between'>
-                    <h1 className='text-xl font-bold'>
-                        تنظیمات
-                    </h1>
+                <header className='mb-10 flex items-center'>
                     <button className='btn btn-square btn-ghost rounded-full bg-white/20'>
                         <FaArrowRight />
                     </button>
+                    <h1 className='text-xl font-bold px-3'>
+                        تنظیمات
+                    </h1>
+
                 </header>
 
                 {/* Profile Picture Section */}
@@ -75,7 +76,7 @@ const SettingsPage = () => {
                             type='text'
                             id='teamName'
                             placeholder='نام گروه خود را میتوانید از اینجا تغییر دهید'
-                            className='input input-bordered w-full bg-black/20 text-right placeholder:text-gray-400'
+                            className='mb-5 py-6 input input-bordered w-full bg-black/20 text-right placeholder:text-gray-300'
                         />
                     </div>
 
@@ -93,7 +94,7 @@ const SettingsPage = () => {
                                 type='text'
                                 value={teamColor}
                                 readOnly
-                                className='input input-bordered w-full bg-black/20 pr-12 text-right'
+                                className='input input-bordered w-full bg-black/20 py-6 px-8 text-right'
                             />
                             {/* This is the clickable swatch that opens the color picker */}
                             <label
@@ -119,16 +120,18 @@ const SettingsPage = () => {
 
                     {/* Save Button */}
                     <div className='pt-4'>
-                        <button
-                            type='submit'
-                            className='btn btn-lg w-full rounded-xl border-none text-xl font-bold text-white'
-                            style={{
-                                background:
-                                    'linear-gradient(to left, #10B981, #34D399)', // Green gradient
-                            }}
-                        >
-                            ذخیره اطلاعات
-                        </button>
+    <button
+        type='submit'
+        className='btn btn-lg w-full rounded-xl border-none text-xl font-bold text-white'
+        style={{
+            background: isBoy
+                
+                ? 'linear-gradient(to right, #FCB917, #FB923C)' 
+                : 'linear-gradient(to left, #10B981, #34D399)'
+        }}
+    >
+        ذخیره اطلاعات
+    </button>
                     </div>
                 </form>
             </div>

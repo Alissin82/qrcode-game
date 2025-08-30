@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import {
     FaMedal,
-    FaStar,
     FaTrophy,
 } from 'react-icons/fa6';
 import { TbCoinFilled } from 'react-icons/tb';
 import BellIcon from '../components/ui/icons/BellIcon';
 import SettingsIcon from '../components/ui/icons/SettingIcon';
 import Menu from '../components/ui/Menu';
+import Upgradee from '../components/ui/Upgrade';
 const DashboardPage = () => {
     const [isBoy, setIsBoy] = useState(true);
 
@@ -22,29 +22,9 @@ const DashboardPage = () => {
             {/* Main container with responsive max-width */}
             <div className='relative mx-auto w-full max-w-xl p-4 pb-24'>
                 {/* Header Section */}
-                <header className='mb-6 flex items-center justify-between'>
-                    <div className='flex items-center gap-3'>
-                        <button className='btn btn-square btn-ghost bg-white/10'>
-                            <SettingsIcon />
-                        </button>
-                        <div className='indicator'>
-                            <span className='indicator-item badge badge-secondary'>
-                                3
-                            </span>
-                            <button className='btn btn-square btn-ghost bg-white/10'>
-                                <BellIcon />
-                            </button>
-                        </div>
-                    </div>
+                <header className='mb-6 flex items-center justify-between bg-white/10 p-4 rounded-xl'>
                     <div className='flex items-center gap-3 text-right'>
-                        <div>
-                            <p className='font-bold'>
-                                شهید سلیمانی
-                            </p>
-                            <p className='text-sm opacity-80'>
-                                سطح سرباز
-                            </p>
-                        </div>
+
                         <div className='avatar'>
                             <div className='ring-primary ring-offset-base-100 w-14 rounded-full ring ring-offset-2'>
                                 <img
@@ -53,7 +33,30 @@ const DashboardPage = () => {
                                 />
                             </div>
                         </div>
+                        <div>
+                            <p className='font-bold'>
+                                شهید سلیمانی
+                            </p>
+                            <p className='text-sm opacity-80'>
+                                سطح سرباز
+                            </p>
+                        </div>
                     </div>
+                    <div className='flex items-center gap-3'>
+                        <button className='btn btn-square btn-ghost bg-white/10'>
+                            <SettingsIcon />
+                        </button>
+                        <div className='indicator'>
+                            <button className='btn btn-square btn-ghost bg-white/10'>
+                                <BellIcon />
+                            </button>
+                            <span className='indicator-item rounded-full py-1 px-3 bg-amber-600'>
+                                3
+                            </span>
+
+                        </div>
+                    </div>
+
                 </header>
 
                 {/* Coins Section */}
@@ -61,26 +64,28 @@ const DashboardPage = () => {
                     <section
                         className={`mb-8 flex w-1/2 items-center justify-between rounded-xl bg-black/10 p-4`}
                     >
-                        <span className='text-2xl font-bold tracking-widest text-indigo-300'>
-                            ۳,۲۰۰
-                        </span>
                         <div className='flex items-center gap-2'>
                             <div className='rounded-full bg-indigo-300 p-1'>
                                 <FaTrophy />
                             </div>
                         </div>
+                        <span className='text-2xl font-bold tracking-widest text-indigo-300'>
+                            ۳,۲۰۰
+                        </span>
+
                     </section>
                     <section
                         className={`mb-8 flex w-1/2 items-center justify-between rounded-xl bg-black/10 p-4`}
                     >
-                        <span className='text-2xl font-bold tracking-widest text-yellow-500'>
-                            ۳,۰۰۰,۰۰۰
-                        </span>
                         <div className='flex items-center gap-2'>
                             <div className='rounded-full bg-yellow-400 p-1 text-black'>
                                 <TbCoinFilled />
                             </div>
                         </div>
+                        <span className='text-2xl font-bold tracking-widest text-yellow-500'>
+                            ۳,۰۰۰,۰۰۰
+                        </span>
+
                     </section>
                 </div>
 
@@ -144,19 +149,9 @@ const DashboardPage = () => {
                         max='100'
                     ></progress>
                 </section>
-
+                <Upgradee/>
                 {/* Floating Action Button */}
-                <div className='fixed right-6 bottom-18 z-20 lg:right-auto lg:left-1/2 lg:ml-[280px]'>
-                    <div className='indicator'>
-                        <span className='indicator-item badge h-8 w-8 rounded-full border-none bg-rose-800 text-base'>
-                            ⚡
-                        </span>
-                        <button className='btn btn-lg btn-warning h-18 w-18 flex-col rounded-full text-xs text-rose-600'>
-                            <FaStar size={32} />
-                            ارتقا امتیاز
-                        </button>
-                    </div>
-                </div>
+     
             </div>
 
             {/* Bottom Navigation */}

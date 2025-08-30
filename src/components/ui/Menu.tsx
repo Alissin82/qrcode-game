@@ -24,29 +24,11 @@ const Menu = () => {
         <footer className='fixed right-0 bottom-0 left-0 bg-black/20 backdrop-blur-sm'>
             <div className='mx-auto flex w-full max-w-xl items-center justify-around p-2 text-xs text-white'>
                 <NavLink
-                    to='/puzzles'
+                    to='/dashboard'
                     className={getLinkClass}
                 >
-                    <TbLayoutGridFilled
-                        size={24}
-                    />
-
-                    <span>پازل</span>
-                </NavLink>
-                <NavLink
-                    to='/teams'
-                    className={getLinkClass}
-                >
-                    <TeamIcon />
-                    <span>تیم ها</span>
-                </NavLink>
-                <NavLink
-                    to='/gifts'
-                    className={getLinkClass}
-                >
-                    <FaMedal size={22} />
-
-                    <span>جوایز دریافتی</span>
+                    <HomeIcon />
+                    <span>خانه</span>
                 </NavLink>
                 <NavLink
                     to='/missions'
@@ -56,12 +38,32 @@ const Menu = () => {
                     <span>عملیات‌ها</span>
                 </NavLink>
                 <NavLink
-                    to='/dashboard'
+                    to='/gifts'
                     className={getLinkClass}
                 >
-                    <HomeIcon />
-                    <span>خانه</span>
+                    <FaMedal size={22} />
+
+                    <span>جوایز</span>
                 </NavLink>
+                <NavLink
+                    to='/teams'
+                    className={getLinkClass}
+                >
+                    <TeamIcon />
+                    <span>تیم ها</span>
+                </NavLink>
+                <NavLink
+                    to='/puzzles'
+                    className={getLinkClass}
+                >
+                    <TbLayoutGridFilled
+                        size={24}
+                    />
+
+                    <span>پازل</span>
+                </NavLink>
+
+
             </div>
         </footer>
     );

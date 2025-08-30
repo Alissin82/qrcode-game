@@ -130,6 +130,7 @@
 }
 * {
     font-family: 'dana' !important;
+    direction: rtl !important;
 }
 
 @plugin "daisyui/theme" {
