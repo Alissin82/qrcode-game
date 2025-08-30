@@ -18,6 +18,7 @@ import QrScanner from 'react-qr-scanner';
 import Menu from '../components/ui/Menu';
 import { TeamDataContext } from '../contexts/TeamDataContext.ts';
 import { apiClient } from '../utils';
+import Upgrade from '../components/ui/Upgrade.tsx';
 
 const MissionsPage = () => {
     const navigate = useNavigate();
@@ -68,7 +69,7 @@ const MissionsPage = () => {
         const response = await apiClient.post(
             `/actions/${id}/start`,
         );
-        console.log(response)
+        console.log(response);
         setScanning(false);
         if (response.status == 200)
             navigate('/mission/1');
@@ -352,17 +353,7 @@ const MissionsPage = () => {
                 </section>
 
                 {/* Floating Action Button */}
-                <div className='fixed right-6 bottom-18 z-20 lg:right-auto lg:left-1/2 lg:ml-[280px]'>
-                    <div className='indicator'>
-                        <span className='indicator-item badge h-8 w-8 rounded-full border-none bg-rose-800 text-base'>
-                            ⚡
-                        </span>
-                        <button className='btn btn-lg btn-warning h-18 w-18 flex-col rounded-full text-xs text-rose-600'>
-                            <FaStar size={32} />
-                            ارتقا امتیاز
-                        </button>
-                    </div>
-                </div>
+                <Upgrade />
             </div>
 
             {/* Bottom Navigation */}
