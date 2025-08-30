@@ -47,7 +47,26 @@ const DashboardPage = () => {
             {/* Main container with responsive max-width */}
             <div className='relative mx-auto w-full max-w-xl p-4 pb-24'>
                 {/* Header Section */}
-                <header className='mb-6 flex items-center justify-between'>
+                <header className='mb-6 flex items-center justify-between bg-white/20 p-4 rounded-2xl'>
+                                        <div className='flex items-center gap-3 text-right'>
+                        <div className='avatar'>
+                            <div className='ring-primary ring-offset-base-100 w-14 rounded-full ring ring-offset-2'>
+                                <img
+                                    src='/images/profile.jpg'
+                                    alt='User Avatar'
+                                />
+                            </div>
+                        </div>
+                        <div>
+                            <p className='font-bold'>
+                                {team?.name}
+                            </p>
+                            <p className='text-sm opacity-80'>
+                                سطح سرباز
+                            </p>
+                        </div>
+                        
+                    </div>
                     <div className='flex items-center gap-3'>
                         <button className='btn btn-square btn-ghost bg-white/10'>
                             <SettingsIcon />
@@ -61,24 +80,7 @@ const DashboardPage = () => {
                             </button>
                         </div>
                     </div>
-                    <div className='flex items-center gap-3 text-right'>
-                        <div>
-                            <p className='font-bold'>
-                                {team?.name}
-                            </p>
-                            <p className='text-sm opacity-80'>
-                                سطح سرباز
-                            </p>
-                        </div>
-                        <div className='avatar'>
-                            <div className='ring-primary ring-offset-base-100 w-14 rounded-full ring ring-offset-2'>
-                                <img
-                                    src='/images/profile.jpg'
-                                    alt='User Avatar'
-                                />
-                            </div>
-                        </div>
-                    </div>
+
                 </header>
 
                 {/* Coins Section */}
