@@ -121,7 +121,7 @@
 *.lale {
     font: lale !important;
 }
-*{
+* {
     direction: rtl !important;
 }
 @theme {

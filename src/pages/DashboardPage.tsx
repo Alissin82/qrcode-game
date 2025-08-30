@@ -39,7 +39,7 @@ const DashboardPage = () => {
 
         fetchTeam();
     }, []);
-
+    
     return (
         <div
             className={`min-h-screen ${className} font-sans text-white`}
