@@ -5,21 +5,19 @@ import {
     useRef,
     useState,
 } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
-    FaMedal,
-    FaStar,
     FaMapMarkerAlt,
-    FaPlay,
+    FaMedal,
     FaPencilAlt,
+    FaPlay,
+    FaStar,
 } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
-import Menu from '../components/ui/Menu';
-import { apiClient } from '../utils';
-import { TeamDataContext } from '../contexts/TeamDataContext.ts';
-import type { AxiosResponse } from 'axios';
-import type { ApiResponse } from '../types/apiResponse';
 import QrScanner from 'react-qr-scanner';
+import Menu from '../components/ui/Menu';
+import { TeamDataContext } from '../contexts/TeamDataContext.ts';
+import { apiClient } from '../utils';
 
 const MissionsPage = () => {
     const navigate = useNavigate();
@@ -27,19 +25,13 @@ const MissionsPage = () => {
     const [actions, setActions] = useState<
         Action[] | null
     >(null);
+    const [meta, setMeta] = useState<Meta | null>(
+        null,
+    );
+
     const { data: teamData } = useContext(
         TeamDataContext,
     );
-
-    // Stats data from backend - these would be fetched from API
-    const [completedOperations] = useState({
-        completed: 3,
-        total: 10,
-    });
-    const [completedLocations] = useState({
-        completed: 1,
-        total: 6,
-    });
 
     const [scanning, setScanning] =
         useState(false);
@@ -48,9 +40,11 @@ const MissionsPage = () => {
         async function fetchActions() {
             const response =
                 await apiClient.get(`/actions`);
-            console.log(response.data.data);
             setActions(
                 response.data.data.actions,
+            );
+            setMeta(
+                response.data.data.meta.actions,
             );
         }
 
@@ -74,6 +68,7 @@ const MissionsPage = () => {
         const response = await apiClient.post(
             `/actions/${id}/start`,
         );
+        console.log(response)
         setScanning(false);
         if (response.status == 200)
             navigate('/mission/1');
@@ -153,11 +148,7 @@ const MissionsPage = () => {
                                 </h3>
                                 <div className='text-2xl font-bold text-white'>
                                     {
-                                        completedOperations.completed
-                                    }
-                                    /
-                                    {
-                                        completedOperations.total
+                                        meta?.completed
                                     }
                                 </div>
                             </div>
@@ -169,13 +160,7 @@ const MissionsPage = () => {
                                     شده
                                 </h3>
                                 <div className='text-2xl font-bold text-white'>
-                                    {
-                                        completedLocations.completed
-                                    }
-                                    /
-                                    {
-                                        completedLocations.total
-                                    }
+                                    0
                                 </div>
                             </div>
                         </div>
@@ -253,26 +238,28 @@ const MissionsPage = () => {
                                             className='progress progress-primary flex-1'
                                             value={
                                                 (action
-                                                    .started_by_team
-                                                    .length /
+                                                    .meta
+                                                    .completed /
                                                     action
-                                                        .missions
-                                                        .length) *
+                                                        .meta
+                                                        .total) *
                                                 100
                                             }
-                                            max='100'
+                                            max={
+                                                100
+                                            }
                                         ></progress>
                                         <span className='text-sm'>
                                             {action
-                                                .started_by_team
-                                                .length >
+                                                .meta
+                                                .total >
                                             0
                                                 ? (action
-                                                      .started_by_team
-                                                      .length /
+                                                      .meta
+                                                      .completed /
                                                       action
-                                                          .missions
-                                                          .length) *
+                                                          .meta
+                                                          .total) *
                                                   100
                                                 : 0}
                                             %
@@ -309,7 +296,9 @@ const MissionsPage = () => {
                                         </div>
                                         <span className='text-sm'>
                                             {
-                                                action.completed_mission_count
+                                                action
+                                                    .meta
+                                                    .completed
                                             }
                                         </span>
                                     </div>

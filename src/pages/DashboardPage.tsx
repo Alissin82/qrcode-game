@@ -15,6 +15,7 @@ import Menu from '../components/ui/Menu';
 import { apiClient } from '../utils';
 import type { AxiosResponse } from 'axios';
 import type { ApiResponse } from '../types/apiResponse';
+import Upgrade from '../components/ui/Upgrade';
 
 const DashboardPage = () => {
     const [team, setTeam] =
@@ -72,7 +73,7 @@ const DashboardPage = () => {
                             <SettingsIcon />
                         </button>
                         <div className='indicator'>
-                            <span className='indicator-item badge badge-secondary'>
+                            <span className='indicator-item py-1 px-3 rounded-full bg-amber-500'>
                                 3
                             </span>
                             <button className='btn btn-square btn-ghost bg-white/10'>
@@ -171,29 +172,9 @@ const DashboardPage = () => {
                         max='100'
                     ></progress>
                 </section>
-
+                <Upgrade/>
                 {/* Floating Action Button */}
-                <div
-                    onClick={() =>
-                        setIsScanning(true)
-                    }
-                    className='fixed right-6 bottom-18 z-20 lg:right-auto lg:left-1/2 lg:ml-[280px]'
-                >
-                    <div className='indicator'>
-                        <span className='indicator-item badge top-[12px] right-[12px] h-[32px] w-[32px] rounded-full border-none bg-rose-800 text-base'>
-                            ⚡
-                        </span>
-                        <button className='btn btn-lg btn-warning h-[98px] w-[98px] flex-col rounded-full bg-yellow-500 text-xs text-rose-600'>
-                            <FaStar
-                                size={8}
-                                className={
-                                    'h-[32px] w-[32px]'
-                                }
-                            />
-                            ارتقا امتیاز
-                        </button>
-                    </div>
-                </div>
+
             </div>
 
             {/* Bottom Navigation */}
