@@ -277,17 +277,7 @@ const MissionDetailPage = () => {
                 </section>
 
                 {/* Floating Action Button */}
-                <div className='fixed bottom-18 left-6 z-20 lg:right-1/2 lg:left-auto lg:mr-[280px]'>
-                    <div className='indicator'>
-                        <span className='indicator-item badge h-8 w-8 rounded-full border-none bg-rose-800 text-base'>
-                            ⚡
-                        </span>
-                        <button className='btn btn-lg btn-warning h-18 w-18 flex-col rounded-full text-xs text-rose-600'>
-                            <FaPlay size={32} />
-                            ارتقا امتیاز
-                        </button>
-                    </div>
-                </div>
+
             </div>
 
             {/* Bottom Navigation */}

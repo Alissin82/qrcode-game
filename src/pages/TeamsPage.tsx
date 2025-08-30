@@ -21,7 +21,20 @@ export const TeamsLeaderboardPage = () => {
             <div className='mx-auto w-full max-w-xl p-4 pb-32'>
                 {/* My Team Header */}
                 <header className='mb-6 flex items-center justify-between rounded-2xl bg-black/20 p-4'>
-                    <div className='text-right'>
+                    <div className='flex text-right'>
+                        <div className='avatar p-3'>
+                        <div className='w-16 rounded-full'>
+                            <img
+                                src={
+                                    MY_TEAM_DATA.avatar
+                                }
+                                alt={
+                                    MY_TEAM_DATA.name
+                                }
+                            />
+                        </div>
+                    </div>
+                    <div>
                         <p className='text-lg font-bold'>
                             {MY_TEAM_DATA.name}
                         </p>
@@ -36,6 +49,7 @@ export const TeamsLeaderboardPage = () => {
                         <button className='btn btn-xs btn-warning mt-2'>
                             مشاهده اعضا
                         </button>
+                        </div>
                     </div>
                     <div className='text-left'>
                         <p className='text-2xl font-bold'>
@@ -47,18 +61,7 @@ export const TeamsLeaderboardPage = () => {
                             امتیاز
                         </p>
                     </div>
-                    <div className='avatar'>
-                        <div className='w-16 rounded-full'>
-                            <img
-                                src={
-                                    MY_TEAM_DATA.avatar
-                                }
-                                alt={
-                                    MY_TEAM_DATA.name
-                                }
-                            />
-                        </div>
-                    </div>
+
                 </header>
 
                 {/* Top Teams Section */}
