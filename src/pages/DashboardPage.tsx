@@ -1,4 +1,8 @@
-import { useState } from 'react';
+import {
+    useEffect,
+    useMemo,
+    useState,
+} from 'react';
 import {
     FaMedal,
     FaStar,
@@ -8,12 +12,33 @@ import { TbCoinFilled } from 'react-icons/tb';
 import BellIcon from '../components/ui/icons/BellIcon';
 import SettingsIcon from '../components/ui/icons/SettingIcon';
 import Menu from '../components/ui/Menu';
-const DashboardPage = () => {
-    const [isBoy, setIsBoy] = useState(true);
+import { apiClient } from '../utils';
+import type { AxiosResponse } from 'axios';
+import type { ApiResponse } from '../types/apiResponse';
 
-    let className = isBoy
-        ? 'bg-accent'
-        : 'bg-secondary';
+const DashboardPage = () => {
+    const [team, setTeam] =
+        useState<Team | null>();
+
+    const className = useMemo(() => {
+        return team?.gender
+            ? 'bg-accent'
+            : 'bg-secondary';
+    }, [team]);
+
+    const [isScanning, setIsScanning] =
+        useState(false);
+
+    useEffect(() => {
+        async function fetchTeam() {
+            const response: AxiosResponse<
+                ApiResponse<Team>
+            > = await apiClient.get(`/teams/me`);
+            setTeam(response.data.data);
+        }
+
+        fetchTeam();
+    }, []);
 
     return (
         <div
@@ -39,7 +64,7 @@ const DashboardPage = () => {
                     <div className='flex items-center gap-3 text-right'>
                         <div>
                             <p className='font-bold'>
-                                شهید سلیمانی
+                                {team?.name}
                             </p>
                             <p className='text-sm opacity-80'>
                                 سطح سرباز
@@ -62,7 +87,7 @@ const DashboardPage = () => {
                         className={`mb-8 flex w-1/2 items-center justify-between rounded-xl bg-black/10 p-4`}
                     >
                         <span className='text-2xl font-bold tracking-widest text-indigo-300'>
-                            ۳,۲۰۰
+                            {team?.score}
                         </span>
                         <div className='flex items-center gap-2'>
                             <div className='rounded-full bg-indigo-300 p-1'>
@@ -74,7 +99,7 @@ const DashboardPage = () => {
                         className={`mb-8 flex w-1/2 items-center justify-between rounded-xl bg-black/10 p-4`}
                     >
                         <span className='text-2xl font-bold tracking-widest text-yellow-500'>
-                            ۳,۰۰۰,۰۰۰
+                            {team?.coin}
                         </span>
                         <div className='flex items-center gap-2'>
                             <div className='rounded-full bg-yellow-400 p-1 text-black'>
@@ -146,13 +171,23 @@ const DashboardPage = () => {
                 </section>
 
                 {/* Floating Action Button */}
-                <div className='fixed right-6 bottom-18 z-20 lg:right-auto lg:left-1/2 lg:ml-[280px]'>
+                <div
+                    onClick={() =>
+                        setIsScanning(true)
+                    }
+                    className='fixed right-6 bottom-18 z-20 lg:right-auto lg:left-1/2 lg:ml-[280px]'
+                >
                     <div className='indicator'>
-                        <span className='indicator-item badge h-8 w-8 rounded-full border-none bg-rose-800 text-base'>
+                        <span className='indicator-item badge top-[12px] right-[12px] h-[32px] w-[32px] rounded-full border-none bg-rose-800 text-base'>
                             ⚡
                         </span>
-                        <button className='btn btn-lg btn-warning h-18 w-18 flex-col rounded-full text-xs text-rose-600'>
-                            <FaStar size={32} />
+                        <button className='btn btn-lg btn-warning h-[98px] w-[98px] flex-col rounded-full bg-yellow-500 text-xs text-rose-600'>
+                            <FaStar
+                                size={8}
+                                className={
+                                    'h-[32px] w-[32px]'
+                                }
+                            />
                             ارتقا امتیاز
                         </button>
                     </div>

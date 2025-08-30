@@ -1,27 +1,36 @@
 import { useState } from 'react';
 import QrScanner from 'react-qr-scanner';
 import { useNavigate } from 'react-router-dom';
-
-// You can keep this component in a file like `src/components/LoginPage.jsx`
+import { apiClient } from '../utils';
+import clsx from 'clsx';
 
 const LoginPage = () => {
     const navigate = useNavigate();
-
     // State to hold the scanned QR code data
-    const [qrData, setQrData] = useState();
+    const [qrData, setQrData] = useState<{
+        hash: string;
+    }>();
     // State for the dropdown selections
     const [gender, setGender] = useState('');
     const [deviceType, setDeviceType] =
         useState('');
     // State to control the visibility of the bottom drawer
-    const [isDrawerOpen, setIsDrawerOpen] = 
+    const [isDrawerOpen, setIsDrawerOpen] =
         useState(false);
-
+    const [statusText, setStatusText] = useState({
+        text: '',
+        success: true,
+    });
     // This function is called when a QR code is successfully scanned
     const handleScan = (data: any) => {
         if (data) {
-            console.log('Scanned QR Code:', data);
-            setQrData(data.text);
+            const hashData: { hash: string } =
+                JSON.parse(data.text);
+            setQrData(hashData);
+            setStatusText({
+                text: 'با موفقیت اسکن شد',
+                success: true,
+            });
         }
     };
 
@@ -31,23 +40,41 @@ const LoginPage = () => {
     };
 
     // This function handles the login button click
-    const handleLogin = (e: any) => {
+    const handleLogin = async (e: any) => {
         e.preventDefault();
         if (!qrData) {
-            // In a real app, you'd show a toast or an inline error message
-            console.error(
-                'Please scan a QR code first.',
-            );
+            setStatusText({
+                text: 'ابتدا اسکن کنید',
+                success: false,
+            });
             return;
         }
         if (!gender || !deviceType) {
-            console.error(
-                'Please select both gender and device type.',
-            );
+            setStatusText({
+                text: 'اطلاعات را مشخص کنید',
+                success: false,
+            });
             return;
         }
-        // Open the confirmation drawer instead of logging in directly
-        setIsDrawerOpen(true);
+        if (qrData) {
+            const response = await apiClient.post(
+                '/teams/login',
+                {
+                    hash: qrData?.hash,
+                },
+            );
+            if (response.status == 200) {
+                localStorage.setItem(
+                    'token',
+                    response.data.token,
+                );
+                setIsDrawerOpen(true);
+                setStatusText({
+                    text: '',
+                    success: true,
+                });
+            }
+        }
     };
 
     // This function is called when the user confirms the device
@@ -68,9 +95,9 @@ const LoginPage = () => {
 
     return (
         // Main container with a light gray background, filling the screen
-        <div className='flex min-h-screen items-center justify-center md:bg-gray-100 font-sans md:*:p-4'>
+        <div className='flex min-h-screen items-center justify-center font-sans md:bg-gray-100 md:*:p-4'>
             {/* Card container with a white background, rounded corners, and shadow */}
-            <div className='w-full md:max-w-md space-y-8 md:rounded-2xl bg-white p-8 md:shadow-xl'>
+            <div className='w-full space-y-8 bg-white p-8 md:max-w-md md:rounded-2xl md:shadow-xl'>
                 {/* QR Code Scanner Section */}
                 <div className='text-center'>
                     {/* The container for the scanner has a border with corner accents */}
@@ -106,18 +133,26 @@ const LoginPage = () => {
                         مربوط به تیم خود را اسکن
                         کنید
                     </p>
-                    {qrData && (
-                        <p className='mt-2 rounded-md bg-green-100 p-2 text-sm font-bold text-green-600'>
-                            اسکن موفق: {qrData}
+                    {
+                        <p
+                            className={clsx(
+                                'mt-2 rounded-md p-2 text-sm font-bold',
+                                {
+                                    'bg-green-100 text-green-600':
+                                        statusText.success,
+                                    'bg-red-100 text-red-600':
+                                        !statusText.success,
+                                    hidden: !statusText.text,
+                                },
+                            )}
+                        >
+                            {statusText.text}
                         </p>
-                    )}
+                    }
                 </div>
 
                 {/* Form Section */}
-                <form
-                    className='space-y-6'
-                    onSubmit={handleLogin}
-                >
+                <div className='space-y-6'>
                     {/* Gender Dropdown */}
                     <div>
                         <label
@@ -192,10 +227,9 @@ const LoginPage = () => {
                         </select>
                     </div>
 
-                    {/* Submit Button */}
                     <div>
                         <button
-                            type='submit'
+                            onClick={handleLogin}
                             className='btn btn-lg mt-4 w-full rounded-xl border-none text-xl font-bold text-white'
                             style={{
                                 background:
@@ -205,7 +239,7 @@ const LoginPage = () => {
                             ورود به بازی
                         </button>
                     </div>
-                </form>
+                </div>
             </div>
 
             {/* Confirmation Drawer (Modal) */}

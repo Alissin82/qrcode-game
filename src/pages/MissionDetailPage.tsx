@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {
     FaArrowRight,
     FaBook,
@@ -17,82 +17,31 @@ import {
     useParams,
 } from 'react-router-dom';
 import Menu from '../components/ui/Menu';
+import { TeamDataContext } from '../contexts/TeamDataContext.ts';
+import { apiClient } from '../utils';
+import type { Mission } from '../types/missions';
+import type { AxiosResponse } from 'axios';
+import type { ApiResponse } from '../types/apiResponse';
 
 const MissionDetailPage = () => {
     const { missionId } = useParams();
     const navigate = useNavigate();
-    const [isBoy, setIsBoy] = useState(true);
+    const [action, setAction] = useState<Action|null>(null);
+    useEffect(() => {
+        async function fetchAction(){
+            const response: AxiosResponse<ApiResponse<Action>> = await apiClient(`/actions/${missionId}`)
+            setAction(response.data.data)
+        }
+        
+        fetchAction()
+    }, []);
+    
+    const { data: teamData } = useContext(TeamDataContext);
 
-    let className = isBoy
+    let className = teamData?.gender
         ? 'bg-accent'
         : 'bg-secondary';
-
-    // Mission data - this would come from backend based on missionId
-    const mission = {
-        id: missionId,
-        title: 'عملیات سری رد خون',
-        location: 'بوفه',
-        progress: 40,
-        estimatedTime: '8 ساعت',
-        operationsCompleted: '۱/۷',
-        totalOperations: 7,
-        steps: [
-            {
-                id: 1,
-                title: 'تماشا ویدیو',
-                icon: FaVideo,
-                iconBg: 'bg-pink-500',
-                status: 'active',
-                buttonText: 'آماده شروع',
-                buttonBg: 'bg-yellow-500',
-            },
-            {
-                id: 2,
-                title: 'چهار گزینه ای',
-                icon: FaFileAlt,
-                iconBg: 'bg-blue-400',
-                status: 'locked',
-                buttonText: 'آماده شروع',
-                buttonBg: 'bg-gray-500',
-            },
-            {
-                id: 3,
-                title: 'داکیومنت',
-                icon: FaFileAlt,
-                iconBg: 'bg-gray-600',
-                status: 'locked',
-                buttonText: 'آماده شروع',
-                buttonBg: 'bg-gray-500',
-            },
-            {
-                id: 4,
-                title: 'پازل',
-                icon: FaPuzzlePiece,
-                iconBg: 'bg-pink-500',
-                status: 'locked',
-                buttonText: 'آماده شروع',
-                buttonBg: 'bg-gray-500',
-            },
-            {
-                id: 5,
-                title: 'تصویر',
-                icon: FaImage,
-                iconBg: 'bg-yellow-500',
-                status: 'locked',
-                buttonText: 'آماده شروع',
-                buttonBg: 'bg-gray-500',
-            },
-            {
-                id: 6,
-                title: 'متن',
-                icon: FaFileAlt,
-                iconBg: 'bg-gray-600',
-                status: 'locked',
-                buttonText: 'آماده شروع',
-                buttonBg: 'bg-gray-500',
-            },
-        ],
-    };
+    
 
     return (
         <div
@@ -137,7 +86,7 @@ const MissionDetailPage = () => {
                             dir='rtl'
                         >
                             <h1 className='text-xl font-bold'>
-                                {mission.title}
+                                {action?.name}
                             </h1>
                             <div className='btn rounded-lg bg-purple-600 p-2'>
                                 <FaKey
@@ -151,7 +100,7 @@ const MissionDetailPage = () => {
                                 size={16}
                             />
                             <span className='text-sm'>
-                                {mission.location}
+                                {action?.region.name}
                             </span>
                         </div>
                     </div>
@@ -172,13 +121,13 @@ const MissionDetailPage = () => {
                         </h2>
                         <div className='flex flex-row-reverse items-center gap-3'>
                             <span className='font text-sm'>
-                                {mission.progress}
+                                {(action?.completed_mission_count / action?.missions.length) * 100}
                                 ٪
                             </span>
                             <progress
                                 className='progress progress-warning flex-1'
                                 value={
-                                    mission.progress
+                                    (action?.completed_mission_count / action?.missions.length) * 100
                                 }
                                 max='100'
                             ></progress>
@@ -203,7 +152,7 @@ const MissionDetailPage = () => {
                                 </div>
                                 <div className='text-lg font-bold'>
                                     {
-                                        mission.estimatedTime
+                                        (action?.missions.length - action?.completed_mission_count) * 80
                                     }
                                 </div>
                             </div>
@@ -220,7 +169,7 @@ const MissionDetailPage = () => {
                                 </div>
                                 <div className='text-lg font-bold'>
                                     {
-                                        mission.operationsCompleted
+                                        action?.completed_mission_count
                                     }
                                 </div>
                             </div>
@@ -275,51 +224,53 @@ const MissionDetailPage = () => {
                         مراحل مأموریت
                     </h2>
                     <div className='space-y-3'>
-                        {mission.steps.map(
-                            (step) => (
-                                <div
-                                    key={step.id}
-                                    className='mb-3 rounded-xl p-4'
-                                    style={{
-                                        backgroundColor:
-                                            '#00000052',
-                                    }}
-                                >
-                                    <div className='flex items-center justify-between'>
-                                        {/* Step Info */}
-                                        <div className='flex items-center gap-3'>
-                                            <div
-                                                className={`${step.iconBg} flex h-10 w-10 items-center justify-center rounded-lg p-2`}
-                                            >
-                                                <step.icon
-                                                    size={
-                                                        18
-                                                    }
-                                                    className='text-white'
-                                                />
-                                            </div>
-                                            <span className='font-medium'>
+                        {action && action.missions && action?.missions.map(
+                            (mission) => ( mission.tasks.map(task =>
+                                    <div
+                                        key={mission.id}
+                                        className='mb-3 rounded-xl p-4'
+                                        style={{
+                                            backgroundColor:
+                                                '#00000052',
+                                        }}
+                                    >
+                                        <div className='flex items-center justify-between'>
+                                            {/* Step Info */}
+                                            <div className='flex items-center gap-3'>
+                                                <div
+                                                    className={`bg-pink-500 flex h-10 w-10 items-center justify-center rounded-lg p-2`}
+                                                >
+                                                    <FaPuzzlePiece
+                                                        size={
+                                                            18
+                                                        }
+                                                        className='text-white'
+                                                    />
+                                                </div>
+                                                <span className='font-medium'>
                                                 {
-                                                    step.title
+                                                    task?.type
                                                 }
                                             </span>
-                                        </div>
+                                            </div>
 
-                                        {/* Action Button */}
-                                        <button
-                                            className={`${step.buttonBg} flex items-center gap-2 rounded-lg px-4 py-2 font-medium text-white`}
-                                        >
-                                            <FaPlay
-                                                size={
-                                                    14
+                                            {/* Action Button */}
+                                            <button
+                                                className={`bg-yellow-500 cursor-pointer flex items-center gap-2 rounded-3xl px-4 py-2 font-medium text-white`}
+                                            >
+                                                <FaPlay
+                                                    size={
+                                                        14
+                                                    }
+                                                />
+                                                {
+                                                    'آماده شروع'
                                                 }
-                                            />
-                                            {
-                                                step.buttonText
-                                            }
-                                        </button>
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
+                                )
+
                             ),
                         )}
                     </div>
