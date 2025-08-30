@@ -188,7 +188,7 @@ const DashboardPage = () => {
                                     'h-[32px] w-[32px]'
                                 }
                             />
-                            ارتقا امتیاز
+          ارتقا امتیاز
                         </button>
                     </div>
                 </div>
