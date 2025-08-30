@@ -34,6 +34,7 @@ const DashboardPage = () => {
             const response: AxiosResponse<
                 ApiResponse<Team>
             > = await apiClient.get(`/teams/me`);
+            console.log(response.data.data);
             setTeam(response.data.data);
         }
 
@@ -188,7 +189,7 @@ const DashboardPage = () => {
                                     'h-[32px] w-[32px]'
                                 }
                             />
-          ارتقا امتیاز
+                            ارتقا امتیاز
                         </button>
                     </div>
                 </div>

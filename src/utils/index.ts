@@ -11,7 +11,7 @@ export function cn(...inputs: ClassValue[]) {
 export const apiClient = axios.create({
     baseURL: config.apiUrl,
     headers: {
-        Authorization: ` Bearer ${localStorage.getItem('token')}`,
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
         Accept: 'application/json',
         'Access-Control-Allow-Credentials': true,
     },

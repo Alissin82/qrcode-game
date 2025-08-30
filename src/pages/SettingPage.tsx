@@ -25,8 +25,8 @@ const SettingsPage = () => {
     // Dynamically set the background color based on the isBoy state
     // These classes ('bg-secondary', 'bg-accent') should be defined in your DaisyUI theme config
     const bgColor = isBoy
-        ? 'bg-secondary'
-        : 'bg-accent';
+        ? 'bg-accent'
+        : 'bg-secondary';
 
     return (
         <div

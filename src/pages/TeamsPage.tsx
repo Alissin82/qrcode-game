@@ -6,7 +6,7 @@ import {
 } from '../utils/constants';
 
 export const TeamsLeaderboardPage = () => {
-    const [isBoy, setIsBoy] = useState(false); // Set to false for pink theme by default
+    const [isBoy, setIsBoy] = useState(true); // Set to false for pink theme by default
     const bgColor = isBoy
         ? 'bg-blue-800'
         : 'bg-pink-600'; // Example theme colors
