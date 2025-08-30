@@ -30,6 +30,7 @@ const MissionsPage = () => {
     const { data: teamData } = useContext(
         TeamDataContext,
     );
+
     // Stats data from backend - these would be fetched from API
     const [completedOperations] = useState({
         completed: 3,
@@ -39,15 +40,18 @@ const MissionsPage = () => {
         completed: 1,
         total: 6,
     });
+
     const [scanning, setScanning] =
         useState(false);
 
     useEffect(() => {
         async function fetchActions() {
-            const response: AxiosResponse<
-                ApiResponse<Action[]>
-            > = await apiClient.get(`/actions`);
-            setActions(response.data.data);
+            const response =
+                await apiClient.get(`/actions`);
+            console.log(response.data.data);
+            setActions(
+                response.data.data.actions,
+            );
         }
 
         fetchActions();
@@ -61,7 +65,7 @@ const MissionsPage = () => {
         ? 'bg-accent'
         : 'bg-secondary';
 
-    async function handleScan(data) {
+    async function handleScan(data: any) {
         if (!data) return;
         if (scanned.current) return;
         const id = JSON.parse(data?.text)?.id;
@@ -78,7 +82,7 @@ const MissionsPage = () => {
     return (
         <div
             className={`min-h-screen ${className} font-sans text-white`}
-            dir="rtl"
+            dir='rtl'
         >
             {scanning && (
                 <div
@@ -130,24 +134,24 @@ const MissionsPage = () => {
                 </div>
             )}
             {/* Main container with responsive max-width */}
-            <div className="relative mx-auto w-full max-w-xl p-4 pb-24">
+            <div className='relative mx-auto w-full max-w-xl p-4 pb-24'>
                 {/* Stats Section */}
-                <div className="mb-6">
+                <div className='mb-6'>
                     <div
-                        className="rounded-2xl p-6"
+                        className='rounded-2xl p-6'
                         style={{
                             backgroundColor:
                                 '#FFFFFF3D',
                         }}
                     >
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className='grid grid-cols-2 gap-4'>
                             {/* Right Section - Completed Operations */}
-                            <div className="border-l border-white/20 pl-4 text-center">
-                                <h3 className="mb-2 text-sm font-bold">
+                            <div className='border-l border-white/20 pl-4 text-center'>
+                                <h3 className='mb-2 text-sm font-bold'>
                                     عملیات تکمیل
                                     شده
                                 </h3>
-                                <div className="text-2xl font-bold text-white">
+                                <div className='text-2xl font-bold text-white'>
                                     {
                                         completedOperations.completed
                                     }
@@ -159,12 +163,12 @@ const MissionsPage = () => {
                             </div>
 
                             {/* Left Section - Completed Locations */}
-                            <div className="pr-4 text-center">
-                                <h3 className="mb-2 text-sm font-bold">
+                            <div className='pr-4 text-center'>
+                                <h3 className='mb-2 text-sm font-bold'>
                                     مکان های تکمیل
                                     شده
                                 </h3>
-                                <div className="text-2xl font-bold text-white">
+                                <div className='text-2xl font-bold text-white'>
                                     {
                                         completedLocations.completed
                                     }
@@ -179,30 +183,30 @@ const MissionsPage = () => {
                 </div>
 
                 {/* Page Title */}
-                <div className="mb-6 text-center">
-                    <h1 className="text-3xl font-bold">
+                <div className='mb-6 text-center'>
+                    <h1 className='text-3xl font-bold'>
                         لیست عملیات
                     </h1>
-                    <p className="mt-2 text-sm opacity-80">
+                    <p className='mt-2 text-sm opacity-80'>
                         ماموریت‌های خود را انتخاب
                         کنید و جایزه بگیرید
                     </p>
                 </div>
 
                 {/* Missions Grid - Matching the image design */}
-                <div className="space-y-4">
+                <div className='space-y-4'>
                     {actions &&
                         actions?.length > 0 &&
                         actions.map((action) => (
                             <div
                                 key={action.id}
-                                className="mb-4 rounded-2xl p-6"
+                                className='mb-4 rounded-2xl p-6'
                                 style={{
                                     backgroundColor:
                                         '#00000052',
                                 }}
                             >
-                                <div className="mb-4 flex items-center justify-between">
+                                <div className='mb-4 flex items-center justify-between'>
                                     {action.started_by_team && (
                                         <div
                                             className={`flex h-12 w-12 items-center justify-center rounded-lg bg-pink-500 p-3`}
@@ -211,18 +215,18 @@ const MissionsPage = () => {
                                                 size={
                                                     20
                                                 }
-                                                className="text-white"
+                                                className='text-white'
                                             />
                                         </div>
                                     )}
-                                    <h3 className="mx-4 flex-1 text-center text-lg font-bold">
+                                    <h3 className='mx-4 flex-1 text-center text-lg font-bold'>
                                         {
                                             action.name
                                         }
                                     </h3>
                                     {action.started_by_team && (
-                                        <div className="flex items-center gap-2">
-                                            <span className="text-sm">
+                                        <div className='flex items-center gap-2'>
+                                            <span className='text-sm'>
                                                 {
                                                     'رزرو شده'
                                                 }
@@ -240,36 +244,36 @@ const MissionsPage = () => {
                                 </div>
 
                                 {/* Progress Section */}
-                                <div className="mb-4">
-                                    <div className="mb-2 text-sm">
+                                <div className='mb-4'>
+                                    <div className='mb-2 text-sm'>
                                         پیشرفت کلی
                                     </div>
-                                    <div className="flex items-center gap-3">
+                                    <div className='flex items-center gap-3'>
                                         <progress
-                                            className="progress progress-primary flex-1"
+                                            className='progress progress-primary flex-1'
                                             value={
                                                 (action
-                                                        .started_by_team
-                                                        .length /
+                                                    .started_by_team
+                                                    .length /
                                                     action
                                                         .missions
                                                         .length) *
                                                 100
                                             }
-                                            max="100"
+                                            max='100'
                                         ></progress>
-                                        <span className="text-sm">
+                                        <span className='text-sm'>
                                             {action
                                                 .started_by_team
                                                 .length >
                                             0
                                                 ? (action
-                                                        .started_by_team
-                                                        .length /
-                                                    action
-                                                        .missions
-                                                        .length) *
-                                                100
+                                                      .started_by_team
+                                                      .length /
+                                                      action
+                                                          .missions
+                                                          .length) *
+                                                  100
                                                 : 0}
                                             %
                                         </span>
@@ -277,31 +281,33 @@ const MissionsPage = () => {
                                 </div>
 
                                 {/* Details Section */}
-                                <div className="mb-4 grid grid-cols-2 gap-3">
-                                    <div className="rounded-lg bg-blue-800/50 p-3">
-                                        <div className="mb-1 text-sm">
+                                <div className='mb-4 grid grid-cols-2 gap-3'>
+                                    <div className='rounded-lg bg-blue-800/50 p-3'>
+                                        <div className='mb-1 text-sm'>
                                             مکان:
                                         </div>
-                                        <div className="flex items-center gap-2">
+                                        <div className='flex items-center gap-2'>
                                             <FaMapMarkerAlt
                                                 size={
                                                     14
                                                 }
                                             />
-                                            <span className="text-sm">
+                                            <span className='text-sm'>
                                                 {
-                                                    action.region.name
+                                                    action
+                                                        .region
+                                                        .name
                                                 }
                                             </span>
                                         </div>
                                     </div>
-                                    <div className="rounded-lg bg-blue-800/50 p-3">
-                                        <div className="mb-1 text-sm">
+                                    <div className='rounded-lg bg-blue-800/50 p-3'>
+                                        <div className='mb-1 text-sm'>
                                             عملیات
                                             انجام
                                             شده
                                         </div>
-                                        <span className="text-sm">
+                                        <span className='text-sm'>
                                             {
                                                 action.completed_mission_count
                                             }
@@ -340,30 +346,29 @@ const MissionsPage = () => {
                 </div>
 
                 {/* Quick Actions */}
-                <section className="mt-8 rounded-xl bg-black/10 p-6">
-                    <h3 className="mb-4 text-center text-lg font-bold">
+                <section className='mt-8 rounded-xl bg-black/10 p-6'>
+                    <h3 className='mb-4 text-center text-lg font-bold'>
                         عملیات سریع
                     </h3>
-                    <div className="grid grid-cols-2 gap-4">
-                        <button className="btn bg-primary border-none text-white">
-                            <FaMedal className="mr-2" />
+                    <div className='grid grid-cols-2 gap-4'>
+                        <button className='btn bg-primary border-none text-white'>
+                            <FaMedal className='mr-2' />
                             ماموریت جدید
                         </button>
-                        <button className="btn border-none bg-yellow-500 text-white">
-                            <FaStar className="mr-2" />
+                        <button className='btn border-none bg-yellow-500 text-white'>
+                            <FaStar className='mr-2' />
                             جایزه روزانه
                         </button>
                     </div>
                 </section>
 
                 {/* Floating Action Button */}
-                <div className="fixed right-6 bottom-18 z-20 lg:right-auto lg:left-1/2 lg:ml-[280px]">
-                    <div className="indicator">
-                        <span className="indicator-item badge h-8 w-8 rounded-full border-none bg-rose-800 text-base">
+                <div className='fixed right-6 bottom-18 z-20 lg:right-auto lg:left-1/2 lg:ml-[280px]'>
+                    <div className='indicator'>
+                        <span className='indicator-item badge h-8 w-8 rounded-full border-none bg-rose-800 text-base'>
                             ⚡
                         </span>
-                        <button
-                            className="btn btn-lg btn-warning h-18 w-18 flex-col rounded-full text-xs text-rose-600">
+                        <button className='btn btn-lg btn-warning h-18 w-18 flex-col rounded-full text-xs text-rose-600'>
                             <FaStar size={32} />
                             ارتقا امتیاز
                         </button>

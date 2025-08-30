@@ -22,7 +22,7 @@ export default {
                 light: {
                     // This uses the default light theme as a base
                     ...require('daisyui/src/theming/themes')[
-                        'light'
+                    'light'
                     ],
 
                     // Now, we override the colors with your custom ones

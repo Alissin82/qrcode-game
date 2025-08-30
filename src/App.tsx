@@ -27,118 +27,138 @@ import { apiClient } from './utils';
 import { config } from './config/config.ts';
 
 function App() {
-    const [teamData, setTeamData] = useState<Team|null>(null);
+    const [teamData, setTeamData] =
+        useState<Team | null>(null);
 
     useEffect(() => {
-        apiClient.get(`${config.host}sanctum/csrf-cookie`)
-        async function fetchTeam(){
-            const response = await apiClient.get('/teams/me');
-            setTeamData(response.data.data)
+        apiClient.get(
+            `${config.host}sanctum/csrf-cookie`,
+        );
+        async function fetchTeam() {
+            const response =
+                await apiClient.get('/teams/me');
+            setTeamData(response.data.data);
         }
-        if (!teamData)
-            fetchTeam()
+        if (!teamData) fetchTeam();
     }, []);
 
     return (
         <BrowserRouter>
-            <TeamDataContext.Provider value={{data: teamData, setData: setTeamData}}>
-            <Routes>
-                <Route
-                    element={<ProtectedLayout />}
-                >
+            <TeamDataContext.Provider
+                value={{
+                    data: teamData,
+                    setData: setTeamData,
+                }}
+            >
+                <Routes>
                     <Route
-                        path='/'
-                        element={<HomePage />}
-                    />
-                    <Route
-                        path='dashboard'
                         element={
-                            <DashboardPage />
+                            <ProtectedLayout />
                         }
-                    />
-                    <Route
-                        path='/settings'
-                        element={<SettingsPage />}
-                    />
-                    <Route
-                        path='teams'
-                        element={
-                            <TeamsLeaderboardPage />
-                        }
-                    />
-                    <Route
-                        path='my-team'
-                        element={<MyTeamPage />}
-                    />
-                    <Route
-                        path='gifts'
-                        element={<GiftsPage />}
-                    />
-                    <Route
-                        path='missions'
-                        element={<MissionsPage />}
-                    />
-                    <Route
-                        path='mission/:missionId'
-                        element={
-                            <MissionDetailPage />
-                        }
-                    />
-                    <Route
-                        path='map'
-                        element={<MapPage />}
-                    />
-                    <Route
-                        path='puzzles'
-                        element={
-                            <PuzzleListPage />
-                        }
-                    />
-                    <Route
-                        path='games'
-                        element={<GamesPage />}
-                    />
-                    <Route
-                        path='video-mission'
-                        element={
-                            <VideoMissionPage />
-                        }
-                    />
+                    >
+                        <Route
+                            path='/'
+                            element={<HomePage />}
+                        />
+                        <Route
+                            path='dashboard'
+                            element={
+                                <DashboardPage />
+                            }
+                        />
+                        <Route
+                            path='/settings'
+                            element={
+                                <SettingsPage />
+                            }
+                        />
+                        <Route
+                            path='teams'
+                            element={
+                                <TeamsLeaderboardPage />
+                            }
+                        />
+                        <Route
+                            path='my-team'
+                            element={
+                                <MyTeamPage />
+                            }
+                        />
+                        <Route
+                            path='gifts'
+                            element={
+                                <GiftsPage />
+                            }
+                        />
+                        <Route
+                            path='missions'
+                            element={
+                                <MissionsPage />
+                            }
+                        />
+                        <Route
+                            path='mission/:missionId'
+                            element={
+                                <MissionDetailPage />
+                            }
+                        />
+                        <Route
+                            path='map'
+                            element={<MapPage />}
+                        />
+                        <Route
+                            path='puzzles'
+                            element={
+                                <PuzzleListPage />
+                            }
+                        />
+                        <Route
+                            path='games'
+                            element={
+                                <GamesPage />
+                            }
+                        />
+                        <Route
+                            path='video-mission'
+                            element={
+                                <VideoMissionPage />
+                            }
+                        />
+
+                        <Route
+                            path='upload-video-mission'
+                            element={
+                                <VideoUploadPage />
+                            }
+                        />
+                        <Route
+                            path='questionnaire-mission'
+                            element={
+                                <QuestionnairePage />
+                            }
+                        />
+                        <Route
+                            path='notifications'
+                            element={
+                                <AnnouncementsPage />
+                            }
+                        />
+                    </Route>
 
                     <Route
-                        path='upload-video-mission'
-                        element={
-                            <VideoUploadPage />
-                        }
+                        path='/login'
+                        element={<LoginPage />}
                     />
                     <Route
-                        path='questionnaire-mission'
+                        path='*'
                         element={
-                            <QuestionnairePage />
+                            <p>
+                                صفحه ی مورد نظر
+                                یافت نشد
+                            </p>
                         }
                     />
-                    <Route
-                        path='notifications'
-                        element={
-                            <AnnouncementsPage />
-                        }
-                    />
-                </Route>
-
-                <Route
-                    path='/login'
-                    element={<LoginPage />}
-                />
-                <Route
-                    path='*'
-                    element={
-                        <p>
-                            صفحه ی مورد نظر یافت
-                            نشد
-                        </p>
-                    }
-                />
-            </Routes>
+                </Routes>
             </TeamDataContext.Provider>
         </BrowserRouter>
     );

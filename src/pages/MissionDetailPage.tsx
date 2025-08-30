@@ -1,16 +1,18 @@
-import { useContext, useEffect, useState } from 'react';
+import type { AxiosResponse } from 'axios';
+import {
+    useContext,
+    useEffect,
+    useState,
+} from 'react';
 import {
     FaArrowRight,
     FaBook,
     FaClock,
     FaDownload,
-    FaFileAlt,
-    FaImage,
     FaKey,
     FaMapMarkerAlt,
     FaPlay,
-    FaPuzzlePiece,
-    FaVideo,
+    FaPuzzlePiece
 } from 'react-icons/fa';
 import {
     useNavigate,
@@ -18,30 +20,34 @@ import {
 } from 'react-router-dom';
 import Menu from '../components/ui/Menu';
 import { TeamDataContext } from '../contexts/TeamDataContext.ts';
-import { apiClient } from '../utils';
-import type { Mission } from '../types/missions';
-import type { AxiosResponse } from 'axios';
 import type { ApiResponse } from '../types/apiResponse';
+import { apiClient } from '../utils';
 
 const MissionDetailPage = () => {
     const { missionId } = useParams();
     const navigate = useNavigate();
-    const [action, setAction] = useState<Action|null>(null);
+    const [action, setAction] =
+        useState<Action | null>(null);
     useEffect(() => {
-        async function fetchAction(){
-            const response: AxiosResponse<ApiResponse<Action>> = await apiClient(`/actions/${missionId}`)
-            setAction(response.data.data)
+        async function fetchAction() {
+            const response: AxiosResponse<
+                ApiResponse<Action>
+            > = await apiClient(
+                `/actions/${missionId}`,
+            );
+            setAction(response.data.data);
         }
-        
-        fetchAction()
+
+        fetchAction();
     }, []);
-    
-    const { data: teamData } = useContext(TeamDataContext);
+
+    const { data: teamData } = useContext(
+        TeamDataContext,
+    );
 
     let className = teamData?.gender
         ? 'bg-accent'
         : 'bg-secondary';
-    
 
     return (
         <div
@@ -100,7 +106,10 @@ const MissionDetailPage = () => {
                                 size={16}
                             />
                             <span className='text-sm'>
-                                {action?.region.name}
+                                {
+                                    action?.region
+                                        .name
+                                }
                             </span>
                         </div>
                     </div>
@@ -121,13 +130,21 @@ const MissionDetailPage = () => {
                         </h2>
                         <div className='flex flex-row-reverse items-center gap-3'>
                             <span className='font text-sm'>
-                                {(action?.completed_mission_count / action?.missions.length) * 100}
+                                {(action?.completed_mission_count /
+                                    action
+                                        ?.missions
+                                        .length) *
+                                    100}
                                 ٪
                             </span>
                             <progress
                                 className='progress progress-warning flex-1'
                                 value={
-                                    (action?.completed_mission_count / action?.missions.length) * 100
+                                    (action?.completed_mission_count /
+                                        action
+                                            ?.missions
+                                            .length) *
+                                    100
                                 }
                                 max='100'
                             ></progress>
@@ -151,9 +168,11 @@ const MissionDetailPage = () => {
                                     </span>
                                 </div>
                                 <div className='text-lg font-bold'>
-                                    {
-                                        (action?.missions.length - action?.completed_mission_count) * 80
-                                    }
+                                    {(action
+                                        ?.missions
+                                        .length -
+                                        action?.completed_mission_count) *
+                                        80}
                                 </div>
                             </div>
                             <div
@@ -224,55 +243,62 @@ const MissionDetailPage = () => {
                         مراحل مأموریت
                     </h2>
                     <div className='space-y-3'>
-                        {action && action.missions && action?.missions.map(
-                            (mission) => ( mission.tasks.map(task =>
-                                    <div
-                                        key={mission.id}
-                                        className='mb-3 rounded-xl p-4'
-                                        style={{
-                                            backgroundColor:
-                                                '#00000052',
-                                        }}
-                                    >
-                                        <div className='flex items-center justify-between'>
-                                            {/* Step Info */}
-                                            <div className='flex items-center gap-3'>
-                                                <div
-                                                    className={`bg-pink-500 flex h-10 w-10 items-center justify-center rounded-lg p-2`}
-                                                >
-                                                    <FaPuzzlePiece
-                                                        size={
-                                                            18
-                                                        }
-                                                        className='text-white'
-                                                    />
-                                                </div>
-                                                <span className='font-medium'>
-                                                {
-                                                    task?.type
+                        {action &&
+                            action.missions &&
+                            action?.missions.map(
+                                (mission) =>
+                                    mission.tasks.map(
+                                        (
+                                            task,
+                                        ) => (
+                                            <div
+                                                key={
+                                                    mission.id
                                                 }
-                                            </span>
-                                            </div>
-
-                                            {/* Action Button */}
-                                            <button
-                                                className={`bg-yellow-500 cursor-pointer flex items-center gap-2 rounded-3xl px-4 py-2 font-medium text-white`}
+                                                className='mb-3 rounded-xl p-4'
+                                                style={{
+                                                    backgroundColor:
+                                                        '#00000052',
+                                                }}
                                             >
-                                                <FaPlay
-                                                    size={
-                                                        14
-                                                    }
-                                                />
-                                                {
-                                                    'آماده شروع'
-                                                }
-                                            </button>
-                                        </div>
-                                    </div>
-                                )
+                                                <div className='flex items-center justify-between'>
+                                                    {/* Step Info */}
+                                                    <div className='flex items-center gap-3'>
+                                                        <div
+                                                            className={`flex h-10 w-10 items-center justify-center rounded-lg bg-pink-500 p-2`}
+                                                        >
+                                                            <FaPuzzlePiece
+                                                                size={
+                                                                    18
+                                                                }
+                                                                className='text-white'
+                                                            />
+                                                        </div>
+                                                        <span className='font-medium'>
+                                                            {
+                                                                task?.type
+                                                            }
+                                                        </span>
+                                                    </div>
 
-                            ),
-                        )}
+                                                    {/* Action Button */}
+                                                    <button
+                                                        className={`flex cursor-pointer items-center gap-2 rounded-3xl bg-yellow-500 px-4 py-2 font-medium text-white`}
+                                                    >
+                                                        <FaPlay
+                                                            size={
+                                                                14
+                                                            }
+                                                        />
+                                                        {
+                                                            'آماده شروع'
+                                                        }
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        ),
+                                    ),
+                            )}
                     </div>
                 </section>
 
