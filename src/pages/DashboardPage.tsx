@@ -196,22 +196,24 @@ const DashboardPage = () => {
                         ٪ ۳۰ تا دریافت جایزه
                         بعدی!
                     </span>
-                     <div
-                    onClick={() => setIsScanning(true)}
-                    className='absolute bottom-20 z-20 right-4  lg:ml-[280px] group cursor-pointer'
-                >
-                    <div className='indicator'>
-                        <span className='indicator-item badge top-[12px] right-[12px] h-[32px] w-[32px] rounded-full border-none bg-rose-800 text-base animate-pulse group-hover:animate-bounce'>
-                            ⚡
-                        </span>
-                        <button className='btn btn-lg h-[98px] w-[98px] flex items-center justify-center gap-2 rounded-full bg-gradient-to-br from-yellow-400 via-yellow-500 to-orange-400 text-base text-rose-600 shadow-2xl border-4 border-yellow-200 transition-all duration-500 group-hover:scale-110 group-active:scale-95 group-hover:shadow-yellow-400/60 relative overflow-hidden'>
-                            <FaRocket className='text-yellow-700 animate-bounce-slow drop-shadow-lg' size={36} />
-                            <span className='font-bold whitespace-nowrap drop-shadow-lg transition-colors duration-300 group-hover:text-yellow-900'>ارتقا امتیاز</span>
-                        </button>
-                    </div>
-                </div>
+                 
                 </section>
-
+                   <div className='fixed bottom-24 justify-start mt-6'>
+                        <div
+                            onClick={() => setIsScanning(true)}
+                            className='cursor-pointer relative'
+                        >
+                            <div className='indicator'>
+                                <span className='indicator-item badge top-[12px] right-[12px] h-[32px] w-[32px] rounded-full border-none bg-rose-800 text-base animate-pulse'>
+                                    ⚡
+                                </span>
+                                <button className='btn btn-lg h-[98px] w-[98px] flex items-center justify-center gap-2 rounded-full bg-gradient-to-br from-yellow-400 via-yellow-500 to-orange-400 text-base text-rose-600 shadow-2xl border-4 border-yellow-200 transition-all duration-500 hover:shadow-yellow-400/60 active:shadow-lg relative overflow-hidden'>
+                                    <FaRocket className='text-yellow-700 animate-bounce-slow drop-shadow-lg' size={36} />
+                                    <span className='font-bold whitespace-nowrap drop-shadow-lg transition-colors duration-300 hover:text-yellow-900'>ارتقا امتیاز</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 {/* Floating Action Button */}
                
             </div>
