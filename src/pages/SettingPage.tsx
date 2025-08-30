@@ -45,7 +45,7 @@ const SettingsPage = () => {
                 </header>
 
                 {/* Profile Picture Section */}
-                <section className='mb-10 flex justify-center'>
+                <section className='mb-12 flex  justify-center'>
                     <div className='relative'>
                         <div className='avatar'>
                             <div className='w-32 rounded-full ring-4 ring-white'>
