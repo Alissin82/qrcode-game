@@ -35,13 +35,14 @@ const SettingsPage = () => {
             {/* Main container with responsive max-width */}
             <div className='mx-auto w-full max-w-xl p-4 pb-32'>
                 {/* Header */}
-                <header className='mb-10 flex items-center justify-between'>
-                    <h1 className='text-xl font-bold'>
-                        تنظیمات
-                    </h1>
+                <header className='mb-10 flex items-center justify-start'>
+
                     <button className='btn btn-square btn-ghost rounded-full bg-white/20'>
                         <FaArrowRight />
                     </button>
+                                        <h1 className='text-xl font-bold px-2'>
+                        تنظیمات
+                    </h1>
                 </header>
 
                 {/* Profile Picture Section */}
@@ -64,7 +65,7 @@ const SettingsPage = () => {
                 {/* Form Section */}
                 <form className='space-y-6 text-right'>
                     {/* Team Name Input */}
-                    <div>
+                    <div className='py-4'>
                         <label
                             htmlFor='teamName'
                             className='mb-2 block font-semibold'
@@ -75,7 +76,7 @@ const SettingsPage = () => {
                             type='text'
                             id='teamName'
                             placeholder='نام گروه خود را میتوانید از اینجا تغییر دهید'
-                            className='input input-bordered w-full bg-black/20 text-right placeholder:text-gray-400'
+                            className='input input-bordered input-lg w-full bg-black/20 text-right placeholder:text-gray-300 placeholder:text-xs'
                         />
                     </div>
 
@@ -93,7 +94,7 @@ const SettingsPage = () => {
                                 type='text'
                                 value={teamColor}
                                 readOnly
-                                className='input input-bordered w-full bg-black/20 pr-12 text-right'
+                                className='input input-bordered input-lg w-full bg-black/20 pr-12 text-right'
                             />
                             {/* This is the clickable swatch that opens the color picker */}
                             <label
@@ -123,8 +124,9 @@ const SettingsPage = () => {
                             type='submit'
                             className='btn btn-lg w-full rounded-xl border-none text-xl font-bold text-white'
                             style={{
-                                background:
-                                    'linear-gradient(to left, #10B981, #34D399)', // Green gradient
+                                background: isBoy
+                                    ? 'linear-gradient(to left, #10B981, #34D399)' // سبز وقتی true
+                                    : 'linear-gradient(to left, #F97316, #FB923C)', // نارنجی وقتی false
                             }}
                         >
                             ذخیره اطلاعات

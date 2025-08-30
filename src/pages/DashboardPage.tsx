@@ -5,7 +5,6 @@ import {
 } from 'react';
 import {
     FaMedal,
-    FaStar,
     FaTrophy,
 } from 'react-icons/fa6';
 import { TbCoinFilled } from 'react-icons/tb';
@@ -89,26 +88,28 @@ const DashboardPage = () => {
                     <section
                         className={`mb-8 flex w-1/2 items-center justify-between rounded-xl bg-black/10 p-4`}
                     >
-                        <span className='text-2xl font-bold tracking-widest text-indigo-300'>
-                            {team?.score}
-                        </span>
-                        <div className='flex items-center gap-2'>
+                                                <div className='flex items-center gap-2'>
                             <div className='rounded-full bg-indigo-300 p-1'>
                                 <FaTrophy />
                             </div>
                         </div>
+                        <span className='text-2xl font-bold tracking-widest text-indigo-300'>
+                            {team?.score}
+                        </span>
+
                     </section>
                     <section
                         className={`mb-8 flex w-1/2 items-center justify-between rounded-xl bg-black/10 p-4`}
                     >
-                        <span className='text-2xl font-bold tracking-widest text-yellow-500'>
-                            {team?.coin}
-                        </span>
-                        <div className='flex items-center gap-2'>
+                                                <div className='flex items-center gap-2'>
                             <div className='rounded-full bg-yellow-400 p-1 text-black'>
                                 <TbCoinFilled />
                             </div>
                         </div>
+                        <span className='text-2xl font-bold tracking-widest text-yellow-500'>
+                            {team?.coin}
+                        </span>
+
                     </section>
                 </div>
 
@@ -155,15 +156,13 @@ const DashboardPage = () => {
 
                 {/* Team Progress Section */}
                 <section className='mb-8 rounded-xl bg-black/10 p-6'>
+                <div className='flex justify-between items-center align-middle'>
                     <h3 className='mb-5 text-lg font-bold'>
                         پیشرفت تیم
                     </h3>
                     <div className='mb-2 flex items-center justify-between text-sm opacity-80'>
                         <span>۷۰ ٪</span>
-                        <span>
-                            ٪ ۳۰ تا دریافت جایزه
-                            بعدی!
-                        </span>
+                    </div>
                     </div>
                     <progress
                         dir='rtl'
@@ -171,6 +170,10 @@ const DashboardPage = () => {
                         value='70'
                         max='100'
                     ></progress>
+                                            <span className='flex justify-center my-2'>
+                            ٪ ۳۰ تا دریافت جایزه
+                            بعدی!
+                        </span>
                 </section>
                 <Upgrade/>
                 {/* Floating Action Button */}

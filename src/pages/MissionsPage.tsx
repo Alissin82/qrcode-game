@@ -20,6 +20,7 @@ import { TeamDataContext } from '../contexts/TeamDataContext.ts';
 import type { AxiosResponse } from 'axios';
 import type { ApiResponse } from '../types/apiResponse';
 import QrScanner from 'react-qr-scanner';
+import Upgrade from '../components/ui/Upgrade.tsx';
 
 const MissionsPage = () => {
     const navigate = useNavigate();
@@ -357,18 +358,7 @@ const MissionsPage = () => {
                 </section>
 
                 {/* Floating Action Button */}
-                <div className="fixed right-6 bottom-18 z-20 lg:right-auto lg:left-1/2 lg:ml-[280px]">
-                    <div className="indicator">
-                        <span className="indicator-item badge h-8 w-8 rounded-full border-none bg-rose-800 text-base">
-                            ⚡
-                        </span>
-                        <button
-                            className="btn btn-lg btn-warning h-18 w-18 flex-col rounded-full text-xs text-rose-600">
-                            <FaStar size={32} />
-                            ارتقا امتیاز
-                        </button>
-                    </div>
-                </div>
+              <Upgrade/>
             </div>
 
             {/* Bottom Navigation */}
