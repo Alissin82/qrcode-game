@@ -34,7 +34,6 @@ const DashboardPage = () => {
             const response: AxiosResponse<
                 ApiResponse<Team>
             > = await apiClient.get(`/teams/me`);
-            console.log(response.data.data);
             setTeam(response.data.data);
         }
 

@@ -121,7 +121,9 @@
 *.lale {
     font: lale !important;
 }
-
+*{
+    direction: rtl !important;
+}
 @theme {
     --font-display: 'dana';
     --color-primary-light: #e6fbfa;
