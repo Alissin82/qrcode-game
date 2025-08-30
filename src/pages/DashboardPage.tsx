@@ -152,7 +152,7 @@ const DashboardPage = () => {
 
                 {/* Team Progress Section */}
                 <section className='mb-8 rounded-xl bg-black/10 p-6'>
-                    <h3 className='mb-4 text-lg font-bold'>
+                    <h3 className='mb-5 text-lg font-bold'>
                         پیشرفت تیم
                     </h3>
                     <div className='mb-2 flex items-center justify-between text-sm opacity-80'>
