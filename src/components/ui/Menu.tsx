@@ -23,6 +23,29 @@ const Menu = () => {
     return (
         <footer className='fixed right-0 bottom-0 left-0 bg-black/20 backdrop-blur-sm'>
             <div className='mx-auto flex w-full max-w-xl items-center justify-around p-2 text-xs text-white'>
+                 <NavLink
+                    to='/dashboard'
+                    className={getLinkClass}
+                >
+                    <HomeIcon />
+                    <span>خانه</span>
+                </NavLink>
+                                <NavLink
+                    to='/missions'
+                    className={getLinkClass}
+                >
+                    <MissionIcon />
+                    <span>عملیات‌ها</span>
+                </NavLink>
+                <NavLink
+                    to='/gifts'
+                    className={getLinkClass}
+                >
+                    <FaMedal size={22} />
+
+                    <span>جوایز</span>
+                </NavLink>
+
                 <NavLink
                     to='/puzzles'
                     className={getLinkClass}
@@ -40,28 +63,8 @@ const Menu = () => {
                     <TeamIcon />
                     <span>تیم ها</span>
                 </NavLink>
-                <NavLink
-                    to='/gifts'
-                    className={getLinkClass}
-                >
-                    <FaMedal size={22} />
-
-                    <span>جوایز دریافتی</span>
-                </NavLink>
-                <NavLink
-                    to='/missions'
-                    className={getLinkClass}
-                >
-                    <MissionIcon />
-                    <span>عملیات‌ها</span>
-                </NavLink>
-                <NavLink
-                    to='/dashboard'
-                    className={getLinkClass}
-                >
-                    <HomeIcon />
-                    <span>خانه</span>
-                </NavLink>
+                 
+              
             </div>
         </footer>
     );
