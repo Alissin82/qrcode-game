@@ -19,6 +19,10 @@ import Menu from '../components/ui/Menu';
 import { TeamDataContext } from '../contexts/TeamDataContext.ts';
 import { apiClient } from '../utils';
 import Upgrade from '../components/ui/Upgrade.tsx';
+import type {
+    Action,
+    Meta,
+} from '../types/action';
 
 const MissionsPage = () => {
     const navigate = useNavigate();

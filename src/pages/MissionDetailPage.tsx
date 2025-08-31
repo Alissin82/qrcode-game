@@ -22,25 +22,28 @@ import Menu from '../components/ui/Menu';
 import { TeamDataContext } from '../contexts/TeamDataContext.ts';
 import type { ApiResponse } from '../types/apiResponse';
 import { apiClient } from '../utils';
+import type { ActionDetail } from '../types/action';
 
 const MissionDetailPage = () => {
     const { missionId } = useParams();
     const navigate = useNavigate();
     const [action, setAction] =
-        useState<Action | null>(null);
+        useState<ActionDetail>();
+
     useEffect(() => {
         async function fetchAction() {
             const response: AxiosResponse<
-                ApiResponse<Action>
+                ApiResponse<ActionDetail>
             > = await apiClient(
                 `/actions/${missionId}`,
             );
+
             setAction(response.data.data);
         }
 
         fetchAction();
     }, []);
-    console.log(action)
+
     const { data: teamData } = useContext(
         TeamDataContext,
     );
@@ -49,6 +52,37 @@ const MissionDetailPage = () => {
         ? 'bg-accent'
         : 'bg-secondary';
 
+    async function downloadFile(
+        url: string,
+        filename: string,
+    ) {
+        const response = await fetch(url, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+        });
+        const blob = await response.blob();
+        const link = document.createElement('a');
+        link.href =
+            window.URL.createObjectURL(blob);
+        link.download = filename;
+        link.click();
+    }
+
+    const handleDownload = () => {
+        try {
+            downloadFile(
+                action?.attachments[0]
+                    .download_api!,
+                'file.pdf',
+            );
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    if (!action) return;
+    console.log(action);
     return (
         <div
             className={`min-h-screen ${className} font-sans text-white`}
@@ -130,23 +164,28 @@ const MissionDetailPage = () => {
                         </h2>
                         <div className='flex flex-row-reverse items-center gap-3'>
                             <span className='font text-sm'>
-                                {(action?.completed_mission_count /
-                                    action
-                                        ?.missions
-                                        .length) *
-                                    100}
-                                ٪
+                                {action.meta
+                                    .total > 0
+                                    ? (action.meta
+                                          .completed /
+                                          action
+                                              .meta
+                                              .total) *
+                                      100
+                                    : 0}
+                                %
                             </span>
                             <progress
                                 className='progress progress-warning flex-1'
                                 value={
-                                    (action?.completed_mission_count /
+                                    (action.meta
+                                        .completed /
                                         action
-                                            ?.missions
-                                            .length) *
+                                            .meta
+                                            .total) *
                                     100
                                 }
-                                max='100'
+                                max={100}
                             ></progress>
                         </div>
                         <div className='mt-3 grid grid-cols-2 gap-4'>
@@ -188,7 +227,9 @@ const MissionDetailPage = () => {
                                 </div>
                                 <div className='text-lg font-bold'>
                                     {
-                                        action?.completed_mission_count
+                                        action
+                                            ?.meta
+                                            .completed
                                     }
                                 </div>
                             </div>
@@ -230,7 +271,12 @@ const MissionDetailPage = () => {
                             مرحله پس از تکمیل
                             مرحله قبلی باز می‌شود.
                         </p>
-                        <button className='btn w-full border-none bg-white text-black'>
+                        <button
+                            className='btn w-full border-none bg-white text-black'
+                            onClick={() =>
+                                handleDownload()
+                            }
+                        >
                             <FaDownload className='ml-2' />
                             دانلود راهنمای بازی
                         </button>
