@@ -17,8 +17,17 @@ export const GiftsPage = () => {
     const [activeTab, setActiveTab] =
         useState('all');
     const bgColor = isBoy
-        ? 'bg-accent'
-        : 'bg-secondary';
+        ? 'bg-blue-900'
+        : 'bg-pink-600';
+
+    // 🎨 استایل دکمه‌ها بر اساس جنسیت
+    const activeBtnColor = isBoy
+        ? 'bg-gradient-to-r from-blue-400 to-indigo-600 text-white'
+        : 'bg-gradient-to-r from-yellow-300 to-orange-500 text-black';
+
+    const claimBtnColor = isBoy
+        ? 'bg-gradient-to-r from-green-400 to-emerald-600 text-white'
+        : 'bg-gradient-to-r from-yellow-300 to-orange-500 text-black';
 
     return (
         <div
@@ -26,42 +35,54 @@ export const GiftsPage = () => {
         >
             <div className='mx-auto w-full max-w-xl p-4 pb-32'>
                 {/* Top Stats Section */}
-                <section className='mb-6 flex items-center justify-around rounded-2xl bg-black/20 p-6 text-center'>
+                <section className='mb-6 flex items-center justify-around rounded-2xl bg-black/20 p-6 text-center shadow-md'>
                     <div>
-                        <p className='text-2xl font-bold'>
+                        <p className='text-3xl font-extrabold'>
                             {MY_TEAM_DATA.score.toLocaleString(
                                 'fa-IR',
                             )}
                         </p>
-                        <p className='flex items-center gap-2 opacity-80'>
+                        <p className='mt-1 flex items-center justify-center gap-2 text-sm opacity-80'>
                             کل جوایز
-                            <FaMedal size={24} />
+                            <FaMedal size={22} />
                         </p>
                     </div>
                     <div className='h-16 w-px bg-white/20'></div>{' '}
-                    {/* Divider */}
                     <div>
-                        <p className='text-2xl font-bold'>
+                        <p className='text-3xl font-extrabold'>
                             ۲۴
                         </p>
-                        <p className='flex items-center gap-2 opacity-80'>
+                        <p className='mt-1 flex items-center justify-center gap-2 text-sm opacity-80'>
                             جوایز دریافتی
-                            <TbCoinFilled
-                                size={24}
-                            />
+                            <TbCoinFilled size={22} />
                         </p>
                     </div>
                 </section>
 
                 {/* Filter Tabs */}
-                <section className='mb-6 flex items-center justify-between rounded-2xl bg-black/20 p-2 text-sm'>
+                <section className='mb-6 flex items-center justify-between rounded-2xl bg-black/20 p-2 text-sm shadow-md'>
+                    <button
+                        onClick={() =>
+                            setActiveTab('all')
+                        }
+                        className={`btn flex-1 gap-2 rounded-xl font-bold transition ${activeTab === 'all'
+                            ? activeBtnColor
+                            : 'btn-ghost text-white hover:bg-white/10'
+                            }`}
+                    >
+                        همه جوایز
+                        <FaHeart />
+                    </button>
                     <button
                         onClick={() =>
                             setActiveTab(
                                 'achievements',
                             )
                         }
-                        className={`btn flex-1 ${activeTab === 'achievements' ? 'bg-white' : 'btn-ghost'}`}
+                        className={`btn flex-1 gap-2 rounded-xl font-bold transition ${activeTab === 'achievements'
+                            ? activeBtnColor
+                            : 'btn-ghost text-white hover:bg-white/10'
+                            }`}
                     >
                         دستاورد ها
                         <LuNotepadText />
@@ -70,64 +91,61 @@ export const GiftsPage = () => {
                         onClick={() =>
                             setActiveTab('daily')
                         }
-                        className={`btn flex-1 ${activeTab === 'daily' ? 'bg-white' : 'btn-ghost'}`}
+                        className={`btn flex-1 gap-2 rounded-xl font-bold transition ${activeTab === 'daily'
+                            ? activeBtnColor
+                            : 'btn-ghost text-white hover:bg-white/10'
+                            }`}
                     >
                         جوایز روزانه
                         <FaStar />
                     </button>
-                    <button
-                        onClick={() =>
-                            setActiveTab('all')
-                        }
-                        className={`btn flex-1 ${activeTab === 'all' ? 'bg-white' : 'btn-ghost'}`}
-                    >
-                        همه جوایز
-                        <FaHeart />
-                    </button>
+
                 </section>
 
                 {/* Gifts List */}
-                <section className='flex flex-col gap-2'>
+                <section className='flex flex-col gap-3'>
                     {GIFTS_DATA.map((gift) => (
                         <div
                             key={gift.id}
-                            className={`flex items-center justify-between rounded-2xl p-4 ${gift.claimed ? 'bg-white/30' : 'bg-black/20'}`}
+                            className={`flex items-center justify-between rounded-2xl p-4 shadow-md ${gift.claimed
+                                ? 'bg-white/30'
+                                : 'bg-black/20'
+                                }`}
                         >
                             <div className='flex items-center gap-4'>
+
+                                <div className='avatar placeholder flex items-center align-middle self-center'>
+                                    <div className={`w-16 h-16 flex items-center justify-center rounded-full ${gift.color}`}>
+                                        <span className='text-3xl flex items-center justify-center self-center '>
+                                            {gift.icon}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className='text-right'>
+                                    <p className='font-extrabold text-lg'>
+                                        {gift.title}
+                                    </p>
+                                    <p className='text-sm opacity-80'>
+                                        {gift.reward.toLocaleString(
+                                            'fa-IR',
+                                        )}{' '}
+                                        سکه
+                                    </p>
+                                </div>
+                            </div>
+                            <div className='flex items-center gap-4'>
                                 {gift.claimed ? (
-                                    <button className='btn btn-disabled bg-white/30 text-white'>
+                                    <button className='btn btn-disabled rounded-xl bg-gray-500/50 text-white shadow-inner'>
                                         دریافت شده
                                     </button>
                                 ) : (
-                                    <button className='btn btn-success'>
+                                    <button className={`btn rounded-xl font-bold shadow-md hover:scale-105 transition ${claimBtnColor}`}>
                                         دریافت
                                     </button>
                                 )}
                             </div>
-                            <div className='text-right'>
-                                <p className='font-bold'>
-                                    {gift.title}
-                                </p>
-                                <p className='text-sm'>
-                                    {gift.reward.toLocaleString(
-                                        'fa-IR',
-                                    )}{' '}
-                                    سکه
-                                </p>
-                            </div>
-                            <div
-                                className={`avatar placeholder`}
-                            >
-                                <div
-                                    className={`w-16 rounded-full ${gift.color}`}
-                                >
-                                    <span className='text-3xl'>
-                                        {
-                                            gift.icon
-                                        }
-                                    </span>
-                                </div>
-                            </div>
+
+
                         </div>
                     ))}
                 </section>

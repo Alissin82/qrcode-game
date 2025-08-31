@@ -12,7 +12,7 @@ import {
     FaKey,
     FaMapMarkerAlt,
     FaPlay,
-    FaPuzzlePiece
+    FaPuzzlePiece,
 } from 'react-icons/fa';
 import {
     useNavigate,
@@ -40,7 +40,7 @@ const MissionDetailPage = () => {
 
         fetchAction();
     }, []);
-
+    console.log(action)
     const { data: teamData } = useContext(
         TeamDataContext,
     );
@@ -303,7 +303,6 @@ const MissionDetailPage = () => {
                 </section>
 
                 {/* Floating Action Button */}
-
             </div>
 
             {/* Bottom Navigation */}
