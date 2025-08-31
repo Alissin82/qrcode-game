@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 import { apiClient } from '../utils';
 
 export const QuestionnairePage = () => {
-    
     const { id } = useParams();
     const [isBoy, setIsBoy] = useState(true);
 
@@ -44,7 +43,6 @@ export const QuestionnairePage = () => {
 
             if (res.status === 200) {
                 toast.success(`آفرین`);
-
             }
         } catch (error) {
             toast.error(`پاسخ شما اشتباه است`);

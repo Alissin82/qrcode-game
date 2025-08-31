@@ -23,40 +23,10 @@ const Menu = () => {
     return (
         <footer className='fixed right-0 bottom-0 left-0 bg-black/20 backdrop-blur-sm'>
             <div className='mx-auto flex w-full max-w-xl items-center justify-around p-2 text-xs text-white'>
-                 <NavLink
-                    to='/dashboard'
-                    className={getLinkClass}
-                >
-                    <HomeIcon />
-                    <span>خانه</span>
-                </NavLink>
-                                <NavLink
-                    to='/missions'
-                    className={getLinkClass}
-                >
-                    <MissionIcon />
-                    <span>عملیات‌ها</span>
-                </NavLink>
-                <NavLink
-                    to='/gifts'
-                    className={getLinkClass}
-                >
-                    <FaMedal size={22} />
-
-                    <span>جوایز</span>
-                </NavLink>
-
                 <NavLink
                     to='/dashboard'
                     className={getLinkClass}
                 >
-<<<<<<< HEAD
-                    <TbLayoutGridFilled
-                        size={24}
-                    />
-
-                    <span>پازل</span>
-=======
                     <HomeIcon />
                     <span>خانه</span>
                 </NavLink>
@@ -74,19 +44,8 @@ const Menu = () => {
                     <FaMedal size={22} />
 
                     <span>جوایز</span>
->>>>>>> 1b1b1c64585980855630239bc3040531f1b4bf02
                 </NavLink>
-                <NavLink
-                    to='/teams'
-                    className={getLinkClass}
-                >
-                    <TeamIcon />
-                    <span>تیم ها</span>
-                </NavLink>
-<<<<<<< HEAD
-                 
-              
-=======
+
                 <NavLink
                     to='/puzzles'
                     className={getLinkClass}
@@ -97,9 +56,13 @@ const Menu = () => {
 
                     <span>پازل</span>
                 </NavLink>
-
-
->>>>>>> 1b1b1c64585980855630239bc3040531f1b4bf02
+                <NavLink
+                    to='/teams'
+                    className={getLinkClass}
+                >
+                    <TeamIcon />
+                    <span>تیم ها</span>
+                </NavLink>
             </div>
         </footer>
     );
