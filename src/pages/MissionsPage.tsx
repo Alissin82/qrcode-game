@@ -69,10 +69,12 @@ const MissionsPage = () => {
         const response = await apiClient.post(
             `/actions/${id}/start`,
         );
-        console.log(response);
+        console.log(response.data.data.id);
         setScanning(false);
         if (response.status == 200)
-            navigate('/mission/1');
+            navigate(
+                `/mission/${response.data.data.id}`,
+            );
     }
 
     return (
