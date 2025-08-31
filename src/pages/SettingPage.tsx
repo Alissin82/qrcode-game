@@ -12,7 +12,7 @@ import Menu from '../components/ui/Menu';
 
 const SettingsPage = () => {
     // State to toggle between boy (blue) and girl (pink) themes
-    const [isBoy, setIsBoy] = useState(false);
+    const [isBoy, setIsBoy] = useState(true);
     // State to manage the team color from the color picker
     const [teamColor, setTeamColor] =
         useState('#1f4567');
@@ -35,6 +35,7 @@ const SettingsPage = () => {
             {/* Main container with responsive max-width */}
             <div className='mx-auto w-full max-w-xl p-4 pb-32'>
                 {/* Header */}
+<<<<<<< HEAD
                 <header className='mb-10 flex items-center justify-start'>
 
                     <button className='btn btn-square btn-ghost rounded-full bg-white/20'>
@@ -43,6 +44,16 @@ const SettingsPage = () => {
                                         <h1 className='text-xl font-bold px-2'>
                         تنظیمات
                     </h1>
+=======
+                <header className='mb-10 flex items-center'>
+                    <button className='btn btn-square btn-ghost rounded-full bg-white/20'>
+                        <FaArrowRight />
+                    </button>
+                    <h1 className='text-xl font-bold px-3'>
+                        تنظیمات
+                    </h1>
+
+>>>>>>> 1b1b1c64585980855630239bc3040531f1b4bf02
                 </header>
 
                 {/* Profile Picture Section */}
@@ -76,7 +87,11 @@ const SettingsPage = () => {
                             type='text'
                             id='teamName'
                             placeholder='نام گروه خود را میتوانید از اینجا تغییر دهید'
+<<<<<<< HEAD
                             className='input input-bordered input-lg w-full bg-black/20 text-right placeholder:text-gray-300 placeholder:text-xs'
+=======
+                            className='mb-5 py-6 input input-bordered w-full bg-black/20 text-right placeholder:text-gray-300'
+>>>>>>> 1b1b1c64585980855630239bc3040531f1b4bf02
                         />
                     </div>
 
@@ -94,7 +109,11 @@ const SettingsPage = () => {
                                 type='text'
                                 value={teamColor}
                                 readOnly
+<<<<<<< HEAD
                                 className='input input-bordered input-lg w-full bg-black/20 pr-12 text-right'
+=======
+                                className='input input-bordered w-full bg-black/20 py-6 px-8 text-right'
+>>>>>>> 1b1b1c64585980855630239bc3040531f1b4bf02
                             />
                             {/* This is the clickable swatch that opens the color picker */}
                             <label
@@ -120,6 +139,7 @@ const SettingsPage = () => {
 
                     {/* Save Button */}
                     <div className='pt-4'>
+<<<<<<< HEAD
                         <button
                             type='submit'
                             className='btn btn-lg w-full rounded-xl border-none text-xl font-bold text-white'
@@ -131,6 +151,20 @@ const SettingsPage = () => {
                         >
                             ذخیره اطلاعات
                         </button>
+=======
+    <button
+        type='submit'
+        className='btn btn-lg w-full rounded-xl border-none text-xl font-bold text-white'
+        style={{
+            background: isBoy
+                
+                ? 'linear-gradient(to right, #FCB917, #FB923C)' 
+                : 'linear-gradient(to left, #10B981, #34D399)'
+        }}
+    >
+        ذخیره اطلاعات
+    </button>
+>>>>>>> 1b1b1c64585980855630239bc3040531f1b4bf02
                     </div>
                 </form>
             </div>

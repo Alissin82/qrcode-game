@@ -11,10 +11,16 @@ import { TbCoinFilled } from 'react-icons/tb';
 import BellIcon from '../components/ui/icons/BellIcon';
 import SettingsIcon from '../components/ui/icons/SettingIcon';
 import Menu from '../components/ui/Menu';
+<<<<<<< HEAD
 import { apiClient } from '../utils';
 import type { AxiosResponse } from 'axios';
 import type { ApiResponse } from '../types/apiResponse';
 import Upgrade from '../components/ui/Upgrade';
+=======
+import Upgradee from '../components/ui/Upgrade';
+const DashboardPage = () => {
+    const [isBoy, setIsBoy] = useState(true);
+>>>>>>> 1b1b1c64585980855630239bc3040531f1b4bf02
 
 const DashboardPage = () => {
     const [team, setTeam] =
@@ -47,8 +53,14 @@ const DashboardPage = () => {
             {/* Main container with responsive max-width */}
             <div className='relative mx-auto w-full max-w-xl p-4 pb-24'>
                 {/* Header Section */}
+<<<<<<< HEAD
                 <header className='mb-6 flex items-center justify-between bg-white/20 p-4 rounded-2xl'>
                                         <div className='flex items-center gap-3 text-right'>
+=======
+                <header className='mb-6 flex items-center justify-between bg-white/10 p-4 rounded-xl'>
+                    <div className='flex items-center gap-3 text-right'>
+
+>>>>>>> 1b1b1c64585980855630239bc3040531f1b4bf02
                         <div className='avatar'>
                             <div className='ring-primary ring-offset-base-100 w-14 rounded-full ring ring-offset-2'>
                                 <img
@@ -59,25 +71,42 @@ const DashboardPage = () => {
                         </div>
                         <div>
                             <p className='font-bold'>
+<<<<<<< HEAD
                                 {team?.name}
+=======
+                                شهید سلیمانی
+>>>>>>> 1b1b1c64585980855630239bc3040531f1b4bf02
                             </p>
                             <p className='text-sm opacity-80'>
                                 سطح سرباز
                             </p>
                         </div>
+<<<<<<< HEAD
                         
+=======
+>>>>>>> 1b1b1c64585980855630239bc3040531f1b4bf02
                     </div>
                     <div className='flex items-center gap-3'>
                         <button className='btn btn-square btn-ghost bg-white/10'>
                             <SettingsIcon />
                         </button>
                         <div className='indicator'>
+<<<<<<< HEAD
                             <span className='indicator-item py-1 px-3 rounded-full bg-amber-500'>
                                 3
                             </span>
                             <button className='btn btn-square btn-ghost bg-white/10'>
                                 <BellIcon />
                             </button>
+=======
+                            <button className='btn btn-square btn-ghost bg-white/10'>
+                                <BellIcon />
+                            </button>
+                            <span className='indicator-item rounded-full py-1 px-3 bg-amber-600'>
+                                3
+                            </span>
+
+>>>>>>> 1b1b1c64585980855630239bc3040531f1b4bf02
                         </div>
                     </div>
 
@@ -88,26 +117,42 @@ const DashboardPage = () => {
                     <section
                         className={`mb-8 flex w-1/2 items-center justify-between rounded-xl bg-black/10 p-4`}
                     >
+<<<<<<< HEAD
                                                 <div className='flex items-center gap-2'>
+=======
+                        <div className='flex items-center gap-2'>
+>>>>>>> 1b1b1c64585980855630239bc3040531f1b4bf02
                             <div className='rounded-full bg-indigo-300 p-1'>
                                 <FaTrophy />
                             </div>
                         </div>
                         <span className='text-2xl font-bold tracking-widest text-indigo-300'>
+<<<<<<< HEAD
                             {team?.score}
+=======
+                            ۳,۲۰۰
+>>>>>>> 1b1b1c64585980855630239bc3040531f1b4bf02
                         </span>
 
                     </section>
                     <section
                         className={`mb-8 flex w-1/2 items-center justify-between rounded-xl bg-black/10 p-4`}
                     >
+<<<<<<< HEAD
                                                 <div className='flex items-center gap-2'>
+=======
+                        <div className='flex items-center gap-2'>
+>>>>>>> 1b1b1c64585980855630239bc3040531f1b4bf02
                             <div className='rounded-full bg-yellow-400 p-1 text-black'>
                                 <TbCoinFilled />
                             </div>
                         </div>
                         <span className='text-2xl font-bold tracking-widest text-yellow-500'>
+<<<<<<< HEAD
                             {team?.coin}
+=======
+                            ۳,۰۰۰,۰۰۰
+>>>>>>> 1b1b1c64585980855630239bc3040531f1b4bf02
                         </span>
 
                     </section>
@@ -170,6 +215,7 @@ const DashboardPage = () => {
                         value='70'
                         max='100'
                     ></progress>
+<<<<<<< HEAD
                                             <span className='flex justify-center my-2'>
                             ٪ ۳۰ تا دریافت جایزه
                             بعدی!
@@ -178,6 +224,12 @@ const DashboardPage = () => {
                 <Upgrade/>
                 {/* Floating Action Button */}
 
+=======
+                </section>
+                <Upgradee/>
+                {/* Floating Action Button */}
+     
+>>>>>>> 1b1b1c64585980855630239bc3040531f1b4bf02
             </div>
 
             {/* Bottom Navigation */}

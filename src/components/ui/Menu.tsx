@@ -47,6 +47,47 @@ const Menu = () => {
                 </NavLink>
 
                 <NavLink
+                    to='/dashboard'
+                    className={getLinkClass}
+                >
+<<<<<<< HEAD
+                    <TbLayoutGridFilled
+                        size={24}
+                    />
+
+                    <span>پازل</span>
+=======
+                    <HomeIcon />
+                    <span>خانه</span>
+                </NavLink>
+                <NavLink
+                    to='/missions'
+                    className={getLinkClass}
+                >
+                    <MissionIcon />
+                    <span>عملیات‌ها</span>
+                </NavLink>
+                <NavLink
+                    to='/gifts'
+                    className={getLinkClass}
+                >
+                    <FaMedal size={22} />
+
+                    <span>جوایز</span>
+>>>>>>> 1b1b1c64585980855630239bc3040531f1b4bf02
+                </NavLink>
+                <NavLink
+                    to='/teams'
+                    className={getLinkClass}
+                >
+                    <TeamIcon />
+                    <span>تیم ها</span>
+                </NavLink>
+<<<<<<< HEAD
+                 
+              
+=======
+                <NavLink
                     to='/puzzles'
                     className={getLinkClass}
                 >
@@ -56,15 +97,9 @@ const Menu = () => {
 
                     <span>پازل</span>
                 </NavLink>
-                <NavLink
-                    to='/teams'
-                    className={getLinkClass}
-                >
-                    <TeamIcon />
-                    <span>تیم ها</span>
-                </NavLink>
-                 
-              
+
+
+>>>>>>> 1b1b1c64585980855630239bc3040531f1b4bf02
             </div>
         </footer>
     );
