@@ -131,7 +131,7 @@ const LoginPage = () => {
                     <p className='mt-6 text-gray-600'>
                         جهت ورود به سامانه qr code
                         مربوط به تیم خود را اسکن
-                        کنید
+                        کنید.
                     </p>
                     {
                         <p
@@ -177,7 +177,8 @@ const LoginPage = () => {
                                 disabled
                                 value=''
                             >
-                                پسر
+                                جنسیت را انتخاب
+                                کنید .
                             </option>
                             <option value='male'>
                                 پسر

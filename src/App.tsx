@@ -119,20 +119,20 @@ function App() {
                             }
                         />
                         <Route
-                            path='video-mission'
+                            path='video-mission/:id'
                             element={
                                 <VideoMissionPage />
                             }
                         />
 
                         <Route
-                            path='upload-video-mission'
+                            path='upload-video-mission/:id'
                             element={
                                 <VideoUploadPage />
                             }
                         />
                         <Route
-                            path='questionnaire-mission'
+                            path='questionnaire-mission/:id'
                             element={
                                 <QuestionnairePage />
                             }

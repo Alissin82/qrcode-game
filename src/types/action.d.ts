@@ -34,6 +34,7 @@ interface ActionDetail {
     name: string;
     region_id: string;
     missions: Missions[];
+    estimated_time: number;
     region: {
         id: number;
         name: string;

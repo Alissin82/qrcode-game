@@ -81,8 +81,48 @@ const MissionDetailPage = () => {
         }
     };
 
+    const hanleStart = (task: any) => {
+        console.log(task);
+        console.log(task.id);
+        switch (task.type) {
+            case 'scan':
+                navigate(
+                    `/video-mission/${task.id}`,
+                );
+                break;
+            case 'question':
+                navigate(
+                    `/questionnaire-mission/${task.id}`,
+                );
+                break;
+
+            case 'content':
+                navigate(
+                    `/upload-video-mission/${task.id}`,
+                );
+                break;
+
+            case 'message':
+                navigate(
+                    `/upload-video-mission/${task.id}`,
+                );
+                break;
+
+            case 'intrupt':
+                navigate(
+                    `/upload-video-mission/${task.id}`,
+                );
+                break;
+
+            default:
+                console.warn(
+                    '⚠️ نوع تسک ناشناخته است:',
+                    task,
+                );
+        }
+    };
+
     if (!action) return;
-    console.log(action);
     return (
         <div
             className={`min-h-screen ${className} font-sans text-white`}
@@ -178,12 +218,7 @@ const MissionDetailPage = () => {
                             <progress
                                 className='progress progress-warning flex-1'
                                 value={
-                                    (action.meta
-                                        .completed /
-                                        action
-                                            .meta
-                                            .total) *
-                                    100
+                                    (10 / 5) * 100
                                 }
                                 max={100}
                             ></progress>
@@ -207,11 +242,9 @@ const MissionDetailPage = () => {
                                     </span>
                                 </div>
                                 <div className='text-lg font-bold'>
-                                    {(action
-                                        ?.missions
-                                        .length -
-                                        action?.completed_mission_count) *
-                                        80}
+                                    {
+                                        action.estimated_time
+                                    }
                                 </div>
                             </div>
                             <div
@@ -330,6 +363,11 @@ const MissionDetailPage = () => {
                                                     {/* Action Button */}
                                                     <button
                                                         className={`flex cursor-pointer items-center gap-2 rounded-3xl bg-yellow-500 px-4 py-2 font-medium text-white`}
+                                                        onClick={() =>
+                                                            hanleStart(
+                                                                task,
+                                                            )
+                                                        }
                                                     >
                                                         <FaPlay
                                                             size={

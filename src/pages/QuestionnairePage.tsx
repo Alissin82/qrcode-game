@@ -1,52 +1,73 @@
-import { useState } from 'react';
-import { QUESTIONS_DATA } from '../utils/constants';
+import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+import { useParams } from 'react-router-dom';
+import { apiClient } from '../utils';
 
 export const QuestionnairePage = () => {
+    
+    const { id } = useParams();
     const [isBoy, setIsBoy] = useState(true);
-    const [
-        currentQuestionIndex,
-        setCurrentQuestionIndex,
-    ] = useState(0);
+
+    const [loading, setLoading] =
+        useState<boolean>(true);
+
+    const [data, setData] = useState<any>();
+
     const [selectedAnswer, setSelectedAnswer] =
         useState<string | null>(null);
+    const [q, setQ] = useState<number | null>(
+        null,
+    );
+
     const bgColor = isBoy
         ? 'bg-accent'
         : 'bg-secondary';
 
-    const currentQuestion =
-        QUESTIONS_DATA[currentQuestionIndex];
-
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (
+        e: React.FormEvent,
+    ) => {
         e.preventDefault();
-        if (selectedAnswer === null) {
-            alert(
-                'لطفا یک گزینه را انتخاب کنید.',
-            );
-            return;
-        }
+        try {
+            if (q === null) {
+                alert(
+                    'لطفا یک گزینه را انتخاب کنید.',
+                );
+                return;
+            }
 
-        console.log({
-            question: currentQuestion.question,
-            answer: selectedAnswer,
-        });
+            const res = await apiClient.post(
+                `/tasks/${id}`,
+                {
+                    answer: q,
+                },
+            );
 
-        // Move to the next question or finish
-        if (
-            currentQuestionIndex <
-            QUESTIONS_DATA.length - 1
-        ) {
-            setCurrentQuestionIndex(
-                currentQuestionIndex + 1,
-            );
-            setSelectedAnswer(null); // Reset selection for next question
-        } else {
-            alert(
-                'شما به تمام سوالات پاسخ دادید!',
-            );
-            // Here you would navigate to a results page or back
+            if (res.status === 200) {
+                toast.success(`آفرین`);
+
+            }
+        } catch (error) {
+            toast.error(`پاسخ شما اشتباه است`);
         }
     };
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await apiClient.get(
+                    `/tasks/${id}`,
+                );
+                setData(res.data.data);
+                setLoading(false);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    if (loading) return;
     return (
         <div
             className={`min-h-screen ${bgColor} flex items-center justify-center font-sans text-white`}
@@ -86,7 +107,7 @@ export const QuestionnairePage = () => {
                         <h2 className='text-2xl font-bold'>
                             سوالات چهار گزینه ای
                         </h2>
-                        <p className='mt-2 opacity-80'>
+                        {/* <p className='mt-2 opacity-80'>
                             مرحله{' '}
                             {currentQuestionIndex +
                                 1}{' '}
@@ -94,7 +115,7 @@ export const QuestionnairePage = () => {
                             {
                                 QUESTIONS_DATA.length
                             }
-                        </p>
+                        </p> */}
                     </div>
 
                     <form
@@ -103,45 +124,68 @@ export const QuestionnairePage = () => {
                     >
                         <div className='my-2 rounded-2xl bg-black/20 p-6'>
                             <h3 className='mb-4 font-bold'>
-                                سوال{' '}
-                                {currentQuestionIndex +
-                                    1}
+                                {data.question}
                             </h3>
-                            <p>
-                                {
-                                    currentQuestion.question
-                                }
-                            </p>
                         </div>
 
                         <div className='flex flex-col gap-2'>
-                            {currentQuestion.options.map(
-                                (
-                                    option,
-                                    index,
-                                ) => (
-                                    <button
-                                        key={
-                                            index
-                                        }
-                                        type='button'
-                                        onClick={() =>
-                                            setSelectedAnswer(
-                                                option,
-                                            )
-                                        }
-                                        className={`btn btn-block h-auto justify-end py-3 text-right ${selectedAnswer === option ? 'btn-primary' : 'border-white/20 bg-black/20'}`}
-                                    >
-                                        {option}
-                                    </button>
-                                ),
-                            )}
+                            <button
+                                type='button'
+                                onClick={() => {
+                                    setSelectedAnswer(
+                                        data.option1,
+                                    );
+                                    setQ(1);
+                                }}
+                                className={`btn btn-block h-auto justify-start py-3 text-white ${data.option1 === selectedAnswer ? 'btn-primary' : 'border-white/20 bg-black/20'}`}
+                            >
+                                {data.option1}
+                            </button>
+                            <button
+                                type='button'
+                                onClick={() => {
+                                    setSelectedAnswer(
+                                        data.option2,
+                                    );
+                                    setQ(2);
+                                }}
+                                className={`btn btn-block h-auto justify-start py-3 text-white ${data.option2 === selectedAnswer ? 'btn-primary' : 'border-white/20 bg-black/20'}`}
+                            >
+                                {data.option2}
+                            </button>
+                            <button
+                                type='button'
+                                onClick={() => {
+                                    setSelectedAnswer(
+                                        data.option3,
+                                    );
+                                    setQ(3);
+                                }}
+                                className={`btn btn-block h-auto justify-start py-3 text-white ${data.option3 === selectedAnswer ? 'btn-primary' : 'border-white/20 bg-black/20'}`}
+                            >
+                                {data.option3}
+                            </button>
+                            <button
+                                type='button'
+                                onClick={() => {
+                                    setSelectedAnswer(
+                                        data.option4,
+                                    );
+                                    setQ(4);
+                                }}
+                                className={`btn btn-block h-auto justify-start py-3 text-white ${data.option4 === selectedAnswer ? 'btn-primary' : 'border-white/20 bg-black/20'}`}
+                            >
+                                {data.option4}
+                            </button>
                         </div>
 
                         <div className='pt-4'>
                             <button
                                 type='submit'
                                 className='btn btn-success btn-lg w-full'
+                                onClick={() =>
+                                    handleSubmit
+                                }
                             >
                                 ثبت پاسخ
                             </button>
