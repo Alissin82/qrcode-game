@@ -8,7 +8,6 @@ export const PuzzleListPage = () => {
         ? 'bg-accent'
         : 'bg-secondary';
 
-    // This would typically come from a router, but we'll simulate it for now
     const [selectedPuzzle, setSelectedPuzzle] =
         useState(null);
 
@@ -29,12 +28,12 @@ export const PuzzleListPage = () => {
             className={`min-h-screen ${bgColor} font-sans text-white`}
         >
             <div className='mx-auto w-full max-w-xl p-4 pb-32'>
-                <section className='mb-6 rounded-2xl bg-black/20 p-6 text-center'>
-                    <h2 className='mb-4 text-xl font-bold'>
+                <section className='mb-6 rounded-2xl bg-black/30 p-6 text-center shadow-lg shadow-black/50'>
+                    <h2 className='mb-4 text-xl font-extrabold tracking-wider'>
                         پیشرفت پازل
                     </h2>
                     <progress
-                        className='progress progress-primary mb-2 w-full'
+                        className='progress progress-primary mb-2 w-full h-4 rounded-full bg-white/20'
                         value={
                             (PUZZLE_DATA.completed /
                                 PUZZLE_DATA.total) *
@@ -42,30 +41,22 @@ export const PuzzleListPage = () => {
                         }
                         max='100'
                     ></progress>
-                    <div className='flex justify-between text-sm'>
+                    <div className='flex justify-between text-sm opacity-90 font-semibold'>
                         <span>
                             قطعه{' '}
-                            {
-                                PUZZLE_DATA.completed
-                            }{' '}
+                            {PUZZLE_DATA.completed}{' '}
                             / {PUZZLE_DATA.total}
                         </span>
                         <span>
-                            {
-                                PUZZLE_DATA.totalRewards
-                            }{' '}
+                            {PUZZLE_DATA.totalRewards}{' '}
                             کل جوایز
                         </span>
                         <span>
-                            {
-                                PUZZLE_DATA.completed
-                            }{' '}
+                            {PUZZLE_DATA.completed}{' '}
                             تکمیل شده
                         </span>
                         <span>
-                            {
-                                PUZZLE_DATA.inProgress
-                            }{' '}
+                            {PUZZLE_DATA.inProgress}{' '}
                             در دسترس
                         </span>
                     </div>
@@ -87,11 +78,11 @@ export const PuzzleListPage = () => {
                                     piece.status ===
                                     'locked'
                                 }
-                                className={`relative flex aspect-square flex-col items-center justify-center overflow-hidden rounded-2xl p-4 text-center ${piece.status === 'unlocked' ? 'bg-purple-500' : 'bg-black/20'}`}
+                                className={`relative flex aspect-square flex-col items-center justify-center overflow-hidden rounded-2xl p-4 text-center transition-transform duration-300 hover:scale-105 ${piece.status === 'unlocked' ? 'bg-gradient-to-br from-purple-500 to-pink-500 shadow-xl shadow-pink-600/50' : 'bg-black/20 shadow-inner'}`}
                             >
                                 {piece.status ===
                                     'locked' && (
-                                    <div className='absolute inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm'>
+                                    <div className='absolute inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm rounded-2xl'>
                                         <svg
                                             xmlns='http://www.w3.org/2000/svg'
                                             width='48'
@@ -115,12 +106,11 @@ export const PuzzleListPage = () => {
                                         </svg>
                                     </div>
                                 )}
-                                <div className='mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-black/20'>
-                                    {/* Placeholder Icon */}
+                                <div className='mb-2 flex h-14 w-14 items-center justify-center rounded-full bg-black/20 shadow-inner'>
                                     <svg
                                         xmlns='http://www.w3.org/2000/svg'
-                                        width='24'
-                                        height='24'
+                                        width='28'
+                                        height='28'
                                         viewBox='0 0 24 24'
                                         fill='none'
                                         stroke='currentColor'
@@ -132,14 +122,13 @@ export const PuzzleListPage = () => {
                                         <polyline points='14 2 14 8 20 8'></polyline>
                                     </svg>
                                 </div>
-                                <h3 className='font-bold'>
+                                <h3 className='font-bold tracking-wide'>
                                     {piece.title}
                                 </h3>
                                 {piece.action ===
                                     'scan' && (
-                                    <div className='mt-2 rounded-full bg-blue-900 px-3 py-1 text-xs text-white'>
-                                        اسکن QR
-                                        Code
+                                    <div className='mt-2  cursor-pointer rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 px-4 py-2 text-sm text-white font-bold shadow-lg shadow-pink-500/50'>
+                                        اسکن QR Code
                                     </div>
                                 )}
                             </button>
@@ -167,8 +156,8 @@ export const PuzzleDetailPage = ({
             className={`min-h-screen ${bgColor} flex items-center justify-center font-sans text-white`}
         >
             <div className='w-full max-w-xl p-4'>
-                <div className='flex flex-col items-center gap-6 rounded-2xl bg-white p-8 text-center text-black'>
-                    <div className='flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-pink-500 text-white'>
+                <div className='flex flex-col items-center gap-6 rounded-2xl bg-white p-8 text-center text-black shadow-2xl shadow-pink-600/50'>
+                    <div className='flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/50 animate-pulse'>
                         <svg
                             xmlns='http://www.w3.org/2000/svg'
                             width='40'
@@ -183,7 +172,7 @@ export const PuzzleDetailPage = ({
                             <path d='M3 6.5A2.5 2.5 0 0 1 5.5 4h13A2.5 2.5 0 0 1 21 6.5v11A2.5 2.5 0 0 1 18.5 20h-13A2.5 2.5 0 0 1 3 17.5v-11zM5 8v8M9 8v8M15 8v8M19 8v8M8 4v2M12 4v2M16 4v2'></path>
                         </svg>
                     </div>
-                    <h2 className='text-2xl font-bold'>
+                    <h2 className='text-3xl font-extrabold tracking-wide'>
                         اسکن QR Code
                     </h2>
 
@@ -191,7 +180,7 @@ export const PuzzleDetailPage = ({
                         <img
                             src='https://placehold.co/256x256/000000/FFFFFF?text=QR'
                             alt='QR Code Placeholder'
-                            className='h-full w-full'
+                            className='h-full w-full rounded-lg shadow-lg shadow-black/50'
                         />
                         <span className='absolute top-0 left-0 h-8 w-8 rounded-tl-lg border-t-4 border-l-4 border-yellow-400'></span>
                         <span className='absolute top-0 right-0 h-8 w-8 rounded-tr-lg border-t-4 border-r-4 border-blue-400'></span>
@@ -201,10 +190,11 @@ export const PuzzleDetailPage = ({
 
                     <button
                         onClick={onBack}
-                        className='btn btn-lg w-full rounded-full text-white'
+                        className='btn w-full rounded-full text-white text-xl font-bold py-6 shadow-2xl shadow-pink-500/50 transition-transform duration-300 hover:scale-110 hover:shadow-[0_0_35px_rgba(255,255,255,0.7)]'
                         style={{
-                            background:
-                                'linear-gradient(to left, #8B5CF6, #EC4899)',
+                            background: isBoy
+                                ? 'linear-gradient(to left, #4f46e5, #3b82f6, #06b6d4)'
+                                : 'linear-gradient(to left, #f59e0b, #f97316, #facc15)',
                         }}
                     >
                         اسکن QR Code

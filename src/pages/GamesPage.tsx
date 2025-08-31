@@ -4,7 +4,7 @@ import Menu from '../components/ui/Menu';
 import { GAMES_DATA } from '../utils/constants';
 
 export const GamesPage = () => {
-    const [isBoy, setIsBoy] = useState(true);
+    const [isBoy, setIsBoy] = useState(false);
     const [activeTab, setActiveTab] =
         useState('all');
     const bgColor = isBoy
@@ -17,11 +17,8 @@ export const GamesPage = () => {
         >
             <div className='mx-auto w-full max-w-xl p-4 pb-32'>
                 {/* Header */}
-                <header className='mb-6 flex items-center justify-between'>
-                    <h1 className='text-xl font-bold'>
-                        ستاره های طلایی
-                    </h1>
-                    <button className='btn btn-circle btn-ghost bg-white/20'>
+                <header className='mb-6 flex items-center justify-start gap-4'>
+                                        <button className='btn btn-circle btn-ghost bg-white/20'>
                         <svg
                             xmlns='http://www.w3.org/2000/svg'
                             width='24'
@@ -42,10 +39,14 @@ export const GamesPage = () => {
                             <polyline points='12 5 19 12 12 19'></polyline>
                         </svg>
                     </button>
+                    <h1 className='text-xl font-bold'>
+                        ستاره های طلایی
+                    </h1>
+
                 </header>
 
                 {/* Golden Star */}
-                <section className='mb-6 flex justify-center'>
+                <section className='mb-6 text-center bg-black/20 p-4 rounded-2xl'>
                     <div className='avatar placeholder'>
                         <div className='flex w-24 items-center justify-center rounded-full bg-yellow-500'>
                             <span className='flex h-full w-full items-center justify-center'>
@@ -55,10 +56,9 @@ export const GamesPage = () => {
                             </span>
                         </div>
                     </div>
-                </section>
-
+               
                 {/* Stats Section */}
-                <section className='mb-6 grid grid-cols-2 gap-4 text-center'>
+                <section className='mt-6 grid grid-cols-2 gap-4 text-center'>
                     <div className='rounded-2xl bg-black/20 p-4'>
                         <p className='text-2xl font-bold'>
                             ۲,۰۰۰,۰۰۰
@@ -76,35 +76,47 @@ export const GamesPage = () => {
                         </p>
                     </div>
                 </section>
+                 </section>
 
                 {/* Filter Tabs */}
-                <section className='mb-6 flex items-center justify-between rounded-2xl bg-black/20 p-2 text-sm'>
+                <section className='mb-6 flex items-center justify-between rounded-2xl p-2 text-sm gap-2'>
+                                        <button
+                        onClick={() => setActiveTab('all')}
+                        className={`flex-1 rounded-xl py-2 font-bold transition-all duration-300
+            ${activeTab === 'all'
+                                ? isBoy
+                                    ? 'bg-gradient-to-r from-blue-500 to-purple-600 shadow-lg scale-105 text-white'
+                                    : 'bg-gradient-to-r from-yellow-400 via-orange-400 to-pink-400 shadow-lg scale-105 text-white'
+                                : 'bg-white/20 hover:bg-white/30 text-black'
+                            }`}
+                    >
+                        همه بازی ها
+                    </button>
                     <button
-                        onClick={() =>
-                            setActiveTab(
-                                'digital',
-                            )
-                        }
-                        className={`btn flex-1 ${activeTab === 'digital' ? 'btn-primary' : 'btn-ghost'}`}
+                        onClick={() => setActiveTab('digital')}
+                        className={`flex-1 rounded-xl py-2 font-bold transition-all duration-300
+            ${activeTab === 'digital'
+                                ? isBoy
+                                    ? 'bg-gradient-to-r from-blue-500 to-purple-600 shadow-lg scale-105 text-white'
+                                    : 'bg-gradient-to-r from-yellow-400 via-orange-400 to-pink-400 shadow-lg scale-105 text-white'
+                                : 'bg-white/20 hover:bg-white/30 text-black'
+                            }`}
                     >
                         بازی دیجیتال
                     </button>
                     <button
-                        onClick={() =>
-                            setActiveTab('card')
-                        }
-                        className={`btn flex-1 ${activeTab === 'card' ? 'btn-primary' : 'btn-ghost'}`}
+                        onClick={() => setActiveTab('card')}
+                        className={`flex-1 rounded-xl py-2 font-bold transition-all duration-300
+            ${activeTab === 'card'
+                                ? isBoy
+                                    ? 'bg-gradient-to-r from-blue-500 to-purple-600 shadow-lg scale-105 text-white'
+                                    : 'bg-gradient-to-r from-yellow-400 via-orange-400 to-pink-400 shadow-lg scale-105 text-white'
+                                : 'bg-white/20 hover:bg-white/30 text-black'
+                            }`}
                     >
                         بازی کارتی
                     </button>
-                    <button
-                        onClick={() =>
-                            setActiveTab('all')
-                        }
-                        className={`btn flex-1 ${activeTab === 'all' ? 'btn-primary' : 'btn-ghost'}`}
-                    >
-                        همه بازی ها
-                    </button>
+
                 </section>
 
                 {/* Games List */}
@@ -117,17 +129,19 @@ export const GamesPage = () => {
                             key={game.id}
                             className='mt-2 flex items-center justify-between rounded-2xl bg-black/20 p-4'
                         >
-                            <button className='btn btn-circle btn-success'>
-                                <svg
-                                    xmlns='http://www.w3.org/2000/svg'
-                                    width='24'
-                                    height='24'
-                                    viewBox='0 0 24 24'
-                                    fill='currentColor'
+                            <div className='flex items-center gap-4'>
+                                                  <div className='avatar placeholder'>
+                                <div
+                                    className={`w-16 rounded-lg ${game.color}`}
                                 >
-                                    <path d='M8 5v14l11-7z'></path>
-                                </svg>
-                            </button>
+                                    <span className='text-3xl items-center justify-center flex h-full w-full'>
+                                        {
+                                            game.icon
+                                        }
+                                    </span>
+                                </div>
+                            </div>
+    
                             <div className='text-right'>
                                 <p className='font-bold'>
                                     {game.title}
@@ -138,17 +152,16 @@ export const GamesPage = () => {
                                     }
                                 </p>
                             </div>
-                            <div className='avatar placeholder'>
-                                <div
-                                    className={`w-16 rounded-lg ${game.color}`}
-                                >
-                                    <span className='text-3xl'>
-                                        {
-                                            game.icon
-                                        }
-                                    </span>
-                                </div>
                             </div>
+                              <button className={`btn btn-circle font-bold transition-all duration-300 
+      ${isBoy
+                                    ? 'bg-gradient-to-tr from-blue-500 to-purple-600 hover:scale-110'
+                                    : 'bg-gradient-to-tr from-yellow-400 via-orange-400 to-pink-400 hover:scale-110'
+                                }`}>
+                                <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='currentColor'>
+                                    <path d='M8 5v14l11-7z'></path>
+                                </svg>
+                            </button>
                         </div>
                     ))}
                 </section>
