@@ -25,6 +25,7 @@ import { useEffect, useState } from 'react';
 import { TeamDataContext } from './contexts/TeamDataContext.ts';
 import { apiClient } from './utils';
 import { config } from './config/config.ts';
+import GamesPages from './pages/GamesPages.tsx';
 
 function App() {
     const [teamData, setTeamData] =
@@ -141,6 +142,12 @@ function App() {
                             path='notifications'
                             element={
                                 <AnnouncementsPage />
+                            }
+                        />
+                        <Route
+                            path='games/:id'
+                            element={
+                                <GamesPages />
                             }
                         />
                     </Route>

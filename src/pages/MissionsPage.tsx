@@ -138,7 +138,7 @@ const MissionsPage = () => {
             {/* Main container with responsive max-width */}
             <div className='relative mx-auto w-full max-w-xl p-4 pb-24'>
                 {/* Stats Section */}
-                <div className='mb-6'>
+                {/* <div className='mb-6'>
                     <div
                         className='rounded-2xl p-6'
                         style={{
@@ -147,7 +147,6 @@ const MissionsPage = () => {
                         }}
                     >
                         <div className='grid grid-cols-2 gap-4'>
-                            {/* Right Section - Completed Operations */}
                             <div className='border-l border-white/20 pl-4 text-center'>
                                 <h3 className='mb-2 text-sm font-bold'>
                                     عملیات تکمیل
@@ -160,7 +159,6 @@ const MissionsPage = () => {
                                 </div>
                             </div>
 
-                            {/* Left Section - Completed Locations */}
                             <div className='pr-4 text-center'>
                                 <h3 className='mb-2 text-sm font-bold'>
                                     مکان های تکمیل
@@ -172,7 +170,7 @@ const MissionsPage = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
 
                 {/* Page Title */}
                 <div className='mb-6 text-center'>
