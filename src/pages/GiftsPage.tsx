@@ -10,7 +10,7 @@ import { TeamDataContext } from '../contexts/TeamDataContext';
 export const GiftsPage = () => {
     const { data: team } = useContext(TeamDataContext);
 
-    const [isBoy, setIsBoy] = useState(false);
+    const [isBoy, setIsBoy] = useState(true);
     // const [activeTab, setActiveTab] =
     //     useState('all');
 
