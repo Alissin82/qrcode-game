@@ -172,7 +172,7 @@ const MissionDetailPage = () => {
                             className="mb-3 flex flex-row items-center  gap-2"
                             dir="rtl"
                         >
-                            <div className="btn rounded-lg bg-purple-600 p-2">
+                            <div className="btn rounded-lg bg-purple-500 p-2">
                                 <img ref={iconRef} alt={'action icon'} className={' w-[32px] h-[32px]'} />
                             </div>
                             <h1 className="text-xl font-bold">
