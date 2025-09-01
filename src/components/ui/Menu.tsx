@@ -45,7 +45,7 @@ const Menu = () => {
 
                     <span>جوایز</span>
                 </NavLink>
-              {/*
+              
                 <NavLink
                     to='/puzzles'
                     className={getLinkClass}
@@ -56,7 +56,7 @@ const Menu = () => {
 
                     <span>پازل</span>
                 </NavLink>
-                */}
+                
                 <NavLink
                     to='/teams'
                     className={getLinkClass}

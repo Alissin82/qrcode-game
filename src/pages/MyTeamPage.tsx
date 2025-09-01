@@ -1,18 +1,23 @@
 import { useState } from 'react';
 import Menu from '../components/ui/Menu';
 import { MY_TEAM_DATA } from '../utils/constants';
+import ComingSoon from '../components/ui/Soon';
 
 // --- My Team Page Component ---
 export const MyTeamPage = () => {
     const [isBoy, setIsBoy] = useState(true);
+
+
     const bgColor = isBoy
         ? 'bg-gradient-to-br from-blue-900 via-indigo-800 to-blue-700'
         : 'bg-gradient-to-br from-pink-700 via-rose-600 to-pink-500';
 
     return (
+        
         <div
             className={`min-h-screen ${bgColor} font-sans text-white`}
         >
+         
             <div className='mx-auto w-full max-w-xl p-4 pb-32'>
                 {/* My Team Header */}
                 <header className='mb-8 flex items-center justify-between rounded-2xl bg-black/30 p-5 shadow-lg backdrop-blur-md transition hover:scale-[1.02] hover:shadow-2xl'>
@@ -72,6 +77,7 @@ export const MyTeamPage = () => {
                             اعضای تیم من
                         </h2>
                     </div>
+                  
                     <div className='space-y-4'>
                         {MY_TEAM_DATA.members.map((member, index) => (
                             <div
@@ -105,8 +111,9 @@ export const MyTeamPage = () => {
                             </div>
                         ))}
                     </div>
+               
                 </section>
-            </div>
+            </div>    
             <Menu />
         </div>
     );
