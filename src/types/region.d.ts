@@ -1,8 +1,9 @@
-interface Region{
+interface Region {
     id: number;
     name: string;
     x: number;
     y: number;
     lockable: boolean;
-    created_at: string
+    locked: boolean;
+    created_at: string;
 }

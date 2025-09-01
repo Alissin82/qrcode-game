@@ -11,26 +11,6 @@ export interface Mission {
     tasks: Task;
 }
 
-interface Task {
-    id: number;
-    mission_id: string;
-    type: string;
-    duration: string;
-    score: string;
-    question: null | string;
-    option1: null | string;
-    option2: null | string;
-    option3: null | string;
-    option4: null | string;
-    order: string;
-    answer: null | string;
-    content: null | string;
-    text: string;
-    need_review: string;
-    created_at: string;
-    updated_at: string;
-}
-
 interface Missions {
     id: number;
     title: string;

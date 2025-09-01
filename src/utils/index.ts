@@ -11,12 +11,19 @@ export function cn(...inputs: ClassValue[]) {
 export const apiClient = axios.create({
     baseURL: config.apiUrl,
     headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
         Accept: 'application/json',
         'Access-Control-Allow-Credentials': true,
     },
     withCredentials: true,
     withXSRFToken: true,
+});
+
+apiClient.interceptors.request.use((request) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+        request.headers.Authorization = `Bearer ${token}`;
+    }
+    return request;
 });
 
 export function gregorianToJalaali(date: string) {

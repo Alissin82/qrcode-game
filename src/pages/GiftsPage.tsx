@@ -11,6 +11,7 @@ import {
     GIFTS_DATA,
     MY_TEAM_DATA,
 } from '../utils/constants';
+import GetScors from '../components/ui/GetScors';
 
 export const GiftsPage = () => {
     const [isBoy, setIsBoy] = useState(false);
@@ -20,7 +21,6 @@ export const GiftsPage = () => {
         ? 'bg-blue-900'
         : 'bg-pink-600';
 
-    // 🎨 استایل دکمه‌ها بر اساس جنسیت
     const activeBtnColor = isBoy
         ? 'bg-gradient-to-r from-blue-400 to-indigo-600 text-white'
         : 'bg-gradient-to-r from-yellow-300 to-orange-500 text-black';
@@ -34,6 +34,7 @@ export const GiftsPage = () => {
             className={`min-h-screen ${bgColor} font-sans text-white`}
         >
             <div className='mx-auto w-full max-w-xl p-4 pb-32'>
+                <GetScors />
                 {/* Top Stats Section */}
                 <section className='mb-6 flex items-center justify-around rounded-2xl bg-black/20 p-6 text-center shadow-md'>
                     <div>
@@ -54,7 +55,9 @@ export const GiftsPage = () => {
                         </p>
                         <p className='mt-1 flex items-center justify-center gap-2 text-sm opacity-80'>
                             جوایز دریافتی
-                            <TbCoinFilled size={22} />
+                            <TbCoinFilled
+                                size={22}
+                            />
                         </p>
                     </div>
                 </section>
@@ -65,10 +68,11 @@ export const GiftsPage = () => {
                         onClick={() =>
                             setActiveTab('all')
                         }
-                        className={`btn flex-1 gap-2 rounded-xl font-bold transition ${activeTab === 'all'
-                            ? activeBtnColor
-                            : 'btn-ghost text-white hover:bg-white/10'
-                            }`}
+                        className={`btn flex-1 gap-2 rounded-xl font-bold transition ${
+                            activeTab === 'all'
+                                ? activeBtnColor
+                                : 'btn-ghost text-white hover:bg-white/10'
+                        }`}
                     >
                         همه جوایز
                         <FaHeart />
@@ -79,10 +83,12 @@ export const GiftsPage = () => {
                                 'achievements',
                             )
                         }
-                        className={`btn flex-1 gap-2 rounded-xl font-bold transition ${activeTab === 'achievements'
-                            ? activeBtnColor
-                            : 'btn-ghost text-white hover:bg-white/10'
-                            }`}
+                        className={`btn flex-1 gap-2 rounded-xl font-bold transition ${
+                            activeTab ===
+                            'achievements'
+                                ? activeBtnColor
+                                : 'btn-ghost text-white hover:bg-white/10'
+                        }`}
                     >
                         دستاورد ها
                         <LuNotepadText />
@@ -91,15 +97,15 @@ export const GiftsPage = () => {
                         onClick={() =>
                             setActiveTab('daily')
                         }
-                        className={`btn flex-1 gap-2 rounded-xl font-bold transition ${activeTab === 'daily'
-                            ? activeBtnColor
-                            : 'btn-ghost text-white hover:bg-white/10'
-                            }`}
+                        className={`btn flex-1 gap-2 rounded-xl font-bold transition ${
+                            activeTab === 'daily'
+                                ? activeBtnColor
+                                : 'btn-ghost text-white hover:bg-white/10'
+                        }`}
                     >
                         جوایز روزانه
                         <FaStar />
                     </button>
-
                 </section>
 
                 {/* Gifts List */}
@@ -107,23 +113,29 @@ export const GiftsPage = () => {
                     {GIFTS_DATA.map((gift) => (
                         <div
                             key={gift.id}
-                            className={`flex items-center justify-between rounded-2xl p-4 shadow-md ${gift.claimed
-                                ? 'bg-white/30'
-                                : 'bg-black/20'
-                                }`}
+                            className={`flex items-center justify-between rounded-2xl p-4 shadow-md ${
+                                gift.claimed
+                                    ? 'bg-white/30'
+                                    : 'bg-black/20'
+                            }`}
                         >
                             <div className='flex items-center gap-4'>
-
-                                <div className='avatar placeholder flex items-center align-middle self-center'>
-                                    <div className={`w-16 h-16 flex items-center justify-center rounded-full ${gift.color}`}>
-                                        <span className='text-3xl flex items-center justify-center self-center '>
-                                            {gift.icon}
+                                <div className='avatar placeholder flex items-center self-center align-middle'>
+                                    <div
+                                        className={`flex h-16 w-16 items-center justify-center rounded-full ${gift.color}`}
+                                    >
+                                        <span className='flex items-center justify-center self-center text-3xl'>
+                                            {
+                                                gift.icon
+                                            }
                                         </span>
                                     </div>
                                 </div>
                                 <div className='text-right'>
-                                    <p className='font-extrabold text-lg'>
-                                        {gift.title}
+                                    <p className='text-lg font-extrabold'>
+                                        {
+                                            gift.title
+                                        }
                                     </p>
                                     <p className='text-sm opacity-80'>
                                         {gift.reward.toLocaleString(
@@ -139,13 +151,13 @@ export const GiftsPage = () => {
                                         دریافت شده
                                     </button>
                                 ) : (
-                                    <button className={`btn rounded-xl font-bold shadow-md hover:scale-105 transition ${claimBtnColor}`}>
+                                    <button
+                                        className={`btn rounded-xl font-bold shadow-md transition hover:scale-105 ${claimBtnColor}`}
+                                    >
                                         دریافت
                                     </button>
                                 )}
                             </div>
-
-
                         </div>
                     ))}
                 </section>
