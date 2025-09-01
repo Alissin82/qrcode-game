@@ -1,14 +1,34 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ANNOUNCEMENTS_DATA } from '../utils/constants';
 import { useNavigate } from 'react-router-dom';
+import { apiClient, formatPersianDateTime, formatPersianDateRelative } from '../utils';
 
 export const AnnouncementsPage = () => {
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
+    const [list, setList] = useState<any>([]);
     const [isBoy, setIsBoy] = useState(true);
+
     const bgColor = isBoy
         ? 'bg-accent'
         : 'bg-secondary';
 
+    const getList = async () => {
+        try {
+            const res =
+                await apiClient.get(`/notify`);
+            setList(res.data.data);
+            setLoading(false);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        getList();
+    }, []);
+
+    if (loading) return;
     return (
         <div
             className={`min-h-screen ${bgColor} font-sans text-white`}
@@ -51,40 +71,36 @@ export const AnnouncementsPage = () => {
 
                 {/* Announcements List */}
                 <section className='space-y-8'>
-                    {ANNOUNCEMENTS_DATA.map(
-                        (item, index) => (
-                            <div key={item.id}>
-                                <div className='mb-3 flex items-baseline justify-between'>
-                                    <h2 className='text-base font-bold lg:text-lg'>
+                    {list.map((item : any) => (
+                        <div key={item.id}>
+                            <div className='mb-3 flex items-baseline justify-between'>
+                                <h2 className='text-base font-bold lg:text-lg'>
+                                    {item.title}
+                                </h2>
+                                <div className='text-sm opacity-80'>
+                                    <span>
                                         {
-                                            item.title
+                                            item.time
                                         }
-                                    </h2>
-                                    <div className='text-sm opacity-80'>
-                                        <span>
-                                            {
-                                                item.time
-                                            }
-                                        </span>
-                                        <span className='mx-2'>
-                                            {
-                                                item.date
-                                            }
-                                        </span>
-                                    </div>
+                                    </span>
+                                    <span className='mx-2'>
+                                        {
+                                            formatPersianDateTime(item.created_at, true)
+                                        }
+                                    </span>
                                 </div>
-                                <p className='leading-relaxed opacity-90'>
-                                    {item.content}
-                                </p>
-                                {/* Add a divider unless it's the last item */}
-                                {index <
-                                    ANNOUNCEMENTS_DATA.length -
-                                        1 && (
-                                    <div className='divider before:bg-white/20 after:bg-white/20'></div>
-                                )}
                             </div>
-                        ),
-                    )}
+                            <p className='leading-relaxed opacity-90'>
+                                {item.content}
+                            </p>
+                            {/* Add a divider unless it's the last item */}
+                            {/* {index <
+                                ANNOUNCEMENTS_DATA.length -
+                                    1 && (
+                                <div className='divider before:bg-white/20 after:bg-white/20'></div>
+                            )} */}
+                        </div>
+                    ))}
                 </section>
             </div>
             {/* The bottom menu would go here if needed */}
