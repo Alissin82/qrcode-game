@@ -39,7 +39,7 @@ function GetScors() {
         : 'bg-gradient-to-r from-yellow-300 to-orange-500 text-black';
 
     return (
-        <section className="mb-6 flex items-center justify-around gap-4 rounded-2xl bg-black/20 p-6 text-center shadow-md">
+        <section className="mb-8 flex items-center justify-around gap-4 rounded-2xl bg-black/20 p-6 text-center shadow-md">
             <button
                 onClick={() => {
                     setActiveTab("coin");
