@@ -16,7 +16,6 @@ import {
 } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
-import QrScanner from 'react-qr-scanner';
 import Menu from '../components/ui/Menu';
 import { TeamDataContext } from '../contexts/TeamDataContext.ts';
 import { apiClient } from '../utils';
@@ -63,9 +62,7 @@ const ActionsPage = () => {
             const fetchedActions =
                 response.data.data.actions;
             setActions(fetchedActions);
-            setMeta(
-                response.data.data.meta.actions,
-            );
+            setMeta(response.data.data.meta);
 
             // Fetch each image as a blob and set it
             fetchedActions.forEach(
@@ -125,7 +122,7 @@ const ActionsPage = () => {
                 `/mission/${response.data.data.id}`,
             );
     }
-    
+
     return (
         <div
             className={`min-h-screen ${className} font-sans text-white`}
@@ -141,21 +138,29 @@ const ActionsPage = () => {
             <div className='relative mx-auto w-full max-w-xl p-4 pb-24'>
                 <div className='mb-6'>
                     <div
-                        className='rounded-2xl p-6'
+                        className='rounded-2xl p-4'
                         style={{
                             backgroundColor:
                                 '#FFFFFF3D',
                         }}
                     >
                         <div className='grid grid-cols-2 gap-4'>
-                            <div className='border-l border-white/20 pl-4 text-center'>
+                            <div className='border-l border-white/20 text-center'>
                                 <h3 className='mb-2 text-sm font-bold'>
                                     عملیات تکمیل
                                     شده
                                 </h3>
                                 <div className='text-2xl font-bold text-white'>
                                     {
-                                        meta?.completed
+                                        meta
+                                            ?.actions
+                                            ?.total
+                                    }{' '}
+                                    /{' '}
+                                    {
+                                        meta
+                                            ?.actions
+                                            ?.completed
                                     }
                                 </div>
                             </div>
@@ -166,7 +171,17 @@ const ActionsPage = () => {
                                     شده
                                 </h3>
                                 <div className='text-2xl font-bold text-white'>
-                                    0
+                                    {
+                                        meta
+                                            ?.regions
+                                            ?.total
+                                    }{' '}
+                                    /{' '}
+                                    {
+                                        meta
+                                            ?.regions
+                                            ?.completed
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -215,11 +230,17 @@ const ActionsPage = () => {
                                         )}
                                         <div className='btn rounded-lg bg-purple-600 p-2'>
                                             <img
-                                                src={
-                                                    action
-                                                        .icon
-                                                        .download_url
-                                                }
+                                                ref={(
+                                                    el,
+                                                ) => {
+                                                    if (
+                                                        el
+                                                    )
+                                                        iconRefs.current[
+                                                            index
+                                                        ] =
+                                                            el;
+                                                }}
                                                 alt='action icon'
                                                 className='h-[32px] w-[32px]'
                                             />

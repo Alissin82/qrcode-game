@@ -7,6 +7,7 @@ interface Action {
     tasks: Task[];
     action_team_for: {
         status: 'Pending' | 'Timeout', 'Completed',
+        status_label: string,
         completed_task_count: number
     };
     tasks_count: number;
@@ -18,26 +19,10 @@ interface Action {
 }
 
 interface ActionDetail extends Action {
-    id: number;
-    name: string;
-    region_id: string;
-    tasks: Task[];
     estimated_time: number;
-    region: {
-        id: number;
-        name: string;
-        x: string;
-        y: string;
-        order: string;
-        lockable: string;
-        created_at: string;
-        updated_at: string;
-    };
     attachment_boy: Media;
     attachment_girl: Media;
-    icon: Media;
-    created_at: string;
-    meta: Meta;
+    team_completed_task_count: number;
 }
 
 interface Meta {
