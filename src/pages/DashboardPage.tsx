@@ -140,12 +140,11 @@ const DashboardPage = () => {
                 </div>
 
                 {/* Missions Section */}
-                <section className='mb-8 text-center'>
+                {/* <section className='mb-8 text-center'>
                     <h2 className='mb-6 text-2xl font-bold'>
                         آماده انجام ماموریت هستی؟
                     </h2>
                     <div className='grid grid-cols-2 gap-4'>
-                        {/* Daily Reward Card */}
                         <div className='bg-primary flex flex-col items-center justify-between rounded-2xl p-6'>
                             <div className='mb-4 rounded-full bg-white/20 p-2'>
                                 <FaMedal />
@@ -162,7 +161,6 @@ const DashboardPage = () => {
                                 500 سکه جایزه
                             </button>
                         </div>
-                        {/* Perform Mission Card */}
                         <div className='flex flex-col items-center justify-between rounded-2xl bg-yellow-500 p-6'>
                             <div className='mb-4 rounded-full bg-black/20 p-2'>
                                 <FaMedal />
@@ -178,10 +176,10 @@ const DashboardPage = () => {
                             </button>
                         </div>
                     </div>
-                </section>
+                </section> */}
 
                 {/* Team Progress Section */}
-                <section className='mb-8 rounded-xl bg-black/10 p-6'>
+                {/* <section className='mb-8 rounded-xl bg-black/10 p-6'>
                     <div className='flex items-center justify-between align-middle'>
                         <h3 className='mb-5 text-lg font-bold'>
                             پیشرفت تیم
@@ -199,9 +197,8 @@ const DashboardPage = () => {
                     <span className='my-2 flex justify-center'>
                         ٪ ۳۰ تا دریافت جایزه بعدی!
                     </span>
-                </section>
+                </section> */}
                 <Upgrade />
-                {/* Floating Action Button */}
             </div>
 
             {/* Bottom Navigation */}
