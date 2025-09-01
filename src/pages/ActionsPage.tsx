@@ -88,11 +88,11 @@ const ActionsPage = () => {
                         if (
                             iconRefs.current[
                                 index
-                            ]
+                                ]
                         ) {
                             iconRefs.current[
                                 index
-                            ].setAttribute(
+                                ].setAttribute(
                                 'src',
                                 imgUrl,
                             );
@@ -126,31 +126,32 @@ const ActionsPage = () => {
     return (
         <div
             className={`min-h-screen ${className} font-sans text-white`}
-            dir='rtl'
+            dir="rtl"
         >
             {scanning && (
                 <QrCodeScanner
                     onScan={handleScan}
-                    onError={() => {}}
+                    onError={() => {
+                    }}
                     isOpen={scanning}
                 />
             )}
-            <div className='relative mx-auto w-full max-w-xl p-4 pb-24'>
-                <div className='mb-6'>
+            <div className="relative mx-auto w-full max-w-xl p-4 pb-24">
+                <div className="mb-6">
                     <div
-                        className='rounded-2xl p-4'
+                        className="rounded-2xl p-4"
                         style={{
                             backgroundColor:
                                 '#FFFFFF3D',
                         }}
                     >
-                        <div className='grid grid-cols-2 gap-4'>
-                            <div className='border-l border-white/20 text-center'>
-                                <h3 className='mb-2 text-sm font-bold'>
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="border-l border-white/20 text-center">
+                                <h3 className="mb-2 text-sm font-bold">
                                     عملیات تکمیل
                                     شده
                                 </h3>
-                                <div className='text-2xl font-bold text-white'>
+                                <div className="text-2xl font-bold text-white">
                                     {
                                         meta
                                             ?.actions
@@ -165,12 +166,12 @@ const ActionsPage = () => {
                                 </div>
                             </div>
 
-                            <div className='pr-4 text-center'>
-                                <h3 className='mb-2 text-sm font-bold'>
+                            <div className="pr-4 text-center">
+                                <h3 className="mb-2 text-sm font-bold">
                                     مکان های تکمیل
                                     شده
                                 </h3>
-                                <div className='text-2xl font-bold text-white'>
+                                <div className="text-2xl font-bold text-white">
                                     {
                                         meta
                                             ?.regions
@@ -189,18 +190,18 @@ const ActionsPage = () => {
                 </div>
 
                 {/* Page Title */}
-                <div className='mb-6 text-center'>
-                    <h1 className='text-3xl font-bold'>
+                <div className="mb-6 text-center">
+                    <h1 className="text-3xl font-bold">
                         لیست عملیات
                     </h1>
-                    <p className='mt-2 text-sm opacity-80'>
+                    <p className="mt-2 text-sm opacity-80">
                         ماموریت‌های خود را انتخاب
                         کنید و جایزه بگیرید
                     </p>
                 </div>
 
                 {/* Missions Grid - Matching the image design */}
-                <div className='space-y-4'>
+                <div className="space-y-4">
                     {actions &&
                         actions?.length > 0 &&
                         actions.map(
@@ -209,13 +210,13 @@ const ActionsPage = () => {
                                     key={
                                         action.id
                                     }
-                                    className='mb-4 rounded-2xl p-4'
+                                    className="mb-4 rounded-2xl p-4"
                                     style={{
                                         backgroundColor:
                                             '#00000052',
                                     }}
                                 >
-                                    <div className='mb-4 flex items-center justify-between'>
+                                    <div className="mb-4 flex items-center justify-between">
                                         {action.started_by_team && (
                                             <div
                                                 className={`flex h-12 w-12 items-center justify-center rounded-lg bg-pink-500 p-3`}
@@ -224,11 +225,11 @@ const ActionsPage = () => {
                                                     size={
                                                         20
                                                     }
-                                                    className='text-white'
+                                                    className="text-white"
                                                 />
                                             </div>
                                         )}
-                                        <div className='btn rounded-lg bg-purple-600 p-2'>
+                                        <div className="btn rounded-lg bg-purple-500 p-2">
                                             <img
                                                 ref={(
                                                     el,
@@ -238,21 +239,21 @@ const ActionsPage = () => {
                                                     )
                                                         iconRefs.current[
                                                             index
-                                                        ] =
+                                                            ] =
                                                             el;
                                                 }}
-                                                alt='action icon'
-                                                className='h-[32px] w-[32px]'
+                                                alt="action icon"
+                                                className="h-[32px] w-[32px]"
                                             />
                                         </div>
-                                        <h3 className='mx-4 flex-1 text-right text-lg'>
+                                        <h3 className="mx-4 flex-1 text-right text-lg">
                                             {
                                                 action.name
                                             }
                                         </h3>
                                         {action.action_team_for ? (
-                                            <div className='flex items-center gap-2'>
-                                                <span className='text-sm'>
+                                            <div className="flex items-center gap-2">
+                                                <span className="text-sm">
                                                     {
                                                         action
                                                             .action_team_for
@@ -272,9 +273,9 @@ const ActionsPage = () => {
                                                         }
                                                     />
                                                 ) : action
-                                                      .action_team_for
-                                                      ?.status ==
-                                                  'Completed' ? (
+                                                    .action_team_for
+                                                    ?.status ==
+                                                'Completed' ? (
                                                     <FaCheck
                                                         size={
                                                             16
@@ -295,10 +296,10 @@ const ActionsPage = () => {
                                                 )}
                                             </div>
                                         ) : action
-                                              .region
-                                              .locked ? (
-                                            <div className='flex items-center gap-2'>
-                                                <span className='text-sm'>
+                                            .region
+                                            .locked ? (
+                                            <div className="flex items-center gap-2">
+                                                <span className="text-sm">
                                                     رزرو
                                                     شده
                                                 </span>
@@ -316,36 +317,36 @@ const ActionsPage = () => {
                                         ) : null}
                                     </div>
 
-                                    <div className='mb-4'>
+                                    <div className="mb-4">
                                         {action.action_team_for && (
                                             <>
-                                                <div className='mb-2 text-sm'>
+                                                <div className="mb-2 text-sm">
                                                     پیشرفت
                                                     کلی
                                                 </div>
-                                                <div className='flex items-center gap-2'>
+                                                <div className="flex items-center gap-2">
                                                     <progress
-                                                        className='progress progress-primary flex-1'
+                                                        className="progress progress-primary flex-1"
                                                         value={
                                                             action.action_team_for
                                                                 ? (action
-                                                                      .action_team_for
-                                                                      .completed_task_count /
-                                                                      action.tasks_count) *
-                                                                  100
+                                                                        .action_team_for
+                                                                        .completed_task_count /
+                                                                    action.tasks_count) *
+                                                                100
                                                                 : 0
                                                         }
                                                         max={
                                                             100
                                                         }
                                                     ></progress>
-                                                    <span className='text-sm'>
+                                                    <span className="text-sm">
                                                         {action.action_team_for
                                                             ? (action
-                                                                  .action_team_for
-                                                                  .completed_task_count /
-                                                                  action.tasks_count) *
-                                                              100
+                                                                    .action_team_for
+                                                                    .completed_task_count /
+                                                                action.tasks_count) *
+                                                            100
                                                             : 0}
 
                                                         %
@@ -354,18 +355,18 @@ const ActionsPage = () => {
                                             </>
                                         )}
                                     </div>
-                                    <div className='mb-4 grid grid-cols-2 gap-3'>
-                                        <div className='rounded-lg bg-blue-800/50 p-3'>
-                                            <div className='mb-1 text-sm'>
+                                    <div className="mb-4 grid grid-cols-2 gap-3">
+                                        <div className="rounded-lg bg-blue-800/50 p-3">
+                                            <div className="mb-1 text-sm">
                                                 مکان:
                                             </div>
-                                            <div className='flex items-center gap-2'>
+                                            <div className="flex items-center gap-2">
                                                 <FaMapMarkerAlt
                                                     size={
                                                         14
                                                     }
                                                 />
-                                                <span className='text-sm'>
+                                                <span className="text-sm">
                                                     {
                                                         action
                                                             .region
@@ -375,13 +376,13 @@ const ActionsPage = () => {
                                             </div>
                                         </div>
                                         {action.action_team_for ? (
-                                            <div className='rounded-lg bg-blue-800/50 p-3'>
-                                                <div className='mb-1 text-sm'>
+                                            <div className="rounded-lg bg-blue-800/50 p-3">
+                                                <div className="mb-1 text-sm">
                                                     وظایف
                                                     انجام
                                                     شده
                                                 </div>
-                                                <span className='text-sm'>
+                                                <span className="text-sm">
                                                     {
                                                         action
                                                             .action_team_for
@@ -390,12 +391,12 @@ const ActionsPage = () => {
                                                 </span>
                                             </div>
                                         ) : (
-                                            <div className='rounded-lg bg-blue-800/50 p-3'>
-                                                <div className='mb-1 text-sm'>
+                                            <div className="rounded-lg bg-blue-800/50 p-3">
+                                                <div className="mb-1 text-sm">
                                                     تعداد
                                                     وظایف
                                                 </div>
-                                                <span className='text-sm'>
+                                                <span className="text-sm">
                                                     {
                                                         action.tasks_count
                                                     }
@@ -439,7 +440,7 @@ const ActionsPage = () => {
                                         action
                                             .action_team_for
                                             .status ==
-                                            'Pending' && (
+                                        'Pending' && (
                                             <button
                                                 onClick={() =>
                                                     navigate(
@@ -457,17 +458,17 @@ const ActionsPage = () => {
                         )}
                 </div>
 
-                <section className='mt-8 rounded-xl bg-black/10 p-6'>
-                    <h3 className='mb-4 text-center text-lg font-bold'>
+                <section className="mt-8 rounded-xl bg-black/10 p-6">
+                    <h3 className="mb-4 text-center text-lg font-bold">
                         عملیات سریع
                     </h3>
-                    <div className='grid grid-cols-2 gap-4'>
-                        <button className='btn bg-primary border-none text-white'>
-                            <FaMedal className='mr-2' />
+                    <div className="grid grid-cols-2 gap-4">
+                        <button className="btn bg-primary border-none text-white">
+                            <FaMedal className="mr-2" />
                             ماموریت جدید
                         </button>
-                        <button className='btn border-none bg-yellow-500 text-white'>
-                            <FaStar className='mr-2' />
+                        <button className="btn border-none bg-yellow-500 text-white">
+                            <FaStar className="mr-2" />
                             جایزه روزانه
                         </button>
                     </div>
