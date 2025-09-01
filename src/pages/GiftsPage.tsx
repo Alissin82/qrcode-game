@@ -21,7 +21,6 @@ export const GiftsPage = () => {
         ? 'bg-blue-900'
         : 'bg-pink-600';
 
-    // 🎨 استایل دکمه‌ها بر اساس جنسیت
     const activeBtnColor = isBoy
         ? 'bg-gradient-to-r from-blue-400 to-indigo-600 text-white'
         : 'bg-gradient-to-r from-yellow-300 to-orange-500 text-black';

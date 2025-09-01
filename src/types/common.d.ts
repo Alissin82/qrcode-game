@@ -1,4 +1,6 @@
 interface Config {
     apiUrl: string;
-    host: string
+    host: string;
+    isProd: boolean;
+    token: string;
 }
