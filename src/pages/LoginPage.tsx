@@ -3,6 +3,7 @@ import QrScanner from 'react-qr-scanner';
 import { useNavigate } from 'react-router-dom';
 import { apiClient } from '../utils';
 import clsx from 'clsx';
+import { config } from '../config/config.ts';
 
 const LoginPage = () => {
     const navigate = useNavigate();
@@ -54,10 +55,8 @@ const LoginPage = () => {
                 },
             );
             if (response.status == 200) {
-                localStorage.setItem(
-                    'token',
-                    response.data.token,
-                );
+                localStorage.setItem('token', response.data.token);
+                console.log(response.data.token);
                 setIsDrawerOpen(true);
                 setStatusText({
                     text: '',
@@ -131,7 +130,7 @@ const LoginPage = () => {
                     <div>
 
                         {
-                            !import.meta.env.PROD &&
+                            !config.isProd &&
                             <>
                                 <label
                                     className="mb-1 block text-right text-sm font-medium text-gray-700"

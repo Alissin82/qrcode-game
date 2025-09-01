@@ -4,15 +4,9 @@ interface Action {
     id: number;
     name: string;
     region_id: string;
-    missions: [
-        {
-            id: number;
-            title: string;
-            score: string;
-            action_id: string;
-            created_at: string;
-        },
-    ];
+    tasks: Task[];
+    team_tasks_completed_count: number;
+    tasks_count: number;
     region: {
         id: number;
         name: string;
@@ -29,11 +23,11 @@ interface Action {
 }
 
 interface ActionDetail {
-    completed_mission_count: number;
+    team_completed_task_count: number;
     id: number;
     name: string;
     region_id: string;
-    missions: Missions[];
+    tasks: Task[];
     estimated_time: number;
     region: {
         id: number;
@@ -46,15 +40,21 @@ interface ActionDetail {
         updated_at: string;
     };
     started_by_team: boolean;
-    attachments: [
+    attachment: {
+        id: number;
+        uuid: string;
+        file_name: string;
+        mime_type: string;
+        download_url: string;
+    };
+    icon:
         {
             id: number;
             uuid: string;
             file_name: string;
             mime_type: string;
-            download_api: string;
-        },
-    ];
+            download_url: string;
+        };
     created_at: string;
     meta: Meta;
 }

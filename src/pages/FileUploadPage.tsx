@@ -1,5 +1,10 @@
-import { useContext, useMemo, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { TeamDataContext } from '../contexts/TeamDataContext.ts';
+import { useNavigate, useParams } from 'react-router-dom';
+import type { AxiosResponse } from 'axios';
+import type { ApiResponse } from '../types/apiResponse';
+import { apiClient } from '../utils';
+import toast from 'react-hot-toast';
 
 const VIDEO_UPLOAD_DATA = {
     title: 'پیدا کردن مکان و بارگذاری ویدیو',
@@ -7,34 +12,72 @@ const VIDEO_UPLOAD_DATA = {
     totalSteps: 7,
 };
 
-export const VideoUploadPage = () => {
-    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+export const UploadFileMission = () => {
+    const { id: taskId } = useParams();
 
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [data, setData] = useState<FileUpload>();
+    const [loading, setLoading] = useState(true);
     const { data: teamData } = useContext(TeamDataContext);
     const className = useMemo(() => {
         return teamData?.gender ? 'bg-accent' : 'bg-secondary';
     }, [teamData]);
+
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        try {
+            if (!selectedFile) {
+                toast.error('لطفا یک فایل آپلود کنید.');
+                return;
+            }
+
+            const res: AxiosResponse<ApiResponse<any>> = await apiClient.post(`/tasks/${taskId}/file-upload/${data?.id}`, {
+                    file: selectedFile,
+                },
+            );
+
+            if (res.status == 200) {
+                toast.success(`با موفقیت انجام شد`);
+            }
+            setTimeout(() => navigate(`/mission/${data?.id}`));
+        } catch (error) {
+            toast.error(`با خطا مواجه شد`);
+        }
+    };
 
     const handleFileChange = (
         e: React.ChangeEvent<HTMLInputElement>,
     ) => {
         if (e.target.files && e.target.files[0]) {
             setSelectedFile(e.target.files[0]);
-            console.log(
-                'File selected:',
-                e.target.files[0].name,
-            );
         }
     };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res: AxiosResponse<ApiResponse<Task>> = await apiClient.get(`/tasks/${taskId}`);
+                setData(res.data.data.taskable as FileUpload);
+                setLoading(false);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     return (
         <div
             className={`min-h-screen ${className} flex items-center justify-center font-sans text-white`}
         >
             <div className="w-full max-w-xl p-4 text-center">
-                {/* Header */}
                 <header className="mb-8 flex items-center justify-between">
-                    <h1 className="text-xl font-bold">
+                    <h1
+                        onClick={() => navigate(-1)}
+                        className="text-xl font-bold">
                         بازگشت
                     </h1>
                     <button className="btn btn-circle btn-ghost bg-white/20">
@@ -82,22 +125,15 @@ export const VideoUploadPage = () => {
 
                     <div className="mb-2 space-y-4 rounded-2xl bg-black/20 p-6 text-right">
                         <h3 className="font-bold">
-                            راهنمای انجام ویدیو
+                            راهنمای آپلود فایل
                         </h3>
                         <p>
-                            لطفاً یک ویدیو از محیط
-                            اطراف خود ضبط کرده و
-                            آپلود کنید. ویدیو باید
-                            حداقل ۳۰ ثانیه و
-                            حداکثر ۲ دقیقه باشد.
+
                         </p>
                         <div className="flex items-center gap-2 rounded-lg bg-black/20 p-3">
                             <span>📍</span>
                             <p className="text-sm">
-                                نکته: مطمئن شوید
-                                ویدیو با کیفیت
-                                مناسب و صدای واضح
-                                ضبط شده باشد.
+                                نکته: مطعن شوید که فایل را به درستی آپلود میکنید
                             </p>
                         </div>
                     </div>

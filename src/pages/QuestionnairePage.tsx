@@ -1,49 +1,43 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import toast from 'react-hot-toast';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { apiClient } from '../utils';
+import { TeamDataContext } from '../contexts/TeamDataContext.ts';
+import type { AxiosResponse } from 'axios';
+import type { ApiResponse } from '../types/apiResponse';
 
 export const QuestionnairePage = () => {
     const { id } = useParams();
-    const [isBoy, setIsBoy] = useState(true);
 
-    const [loading, setLoading] =
-        useState<boolean>(true);
+    const { data: teamData } = useContext(TeamDataContext);
+    const className = useMemo(() => {
+        return teamData?.gender ? 'bg-accent' : 'bg-secondary';
+    }, [teamData]);
 
-    const [data, setData] = useState<any>();
+    const [loading, setLoading] = useState<boolean>(true);
+    const [data, setData] = useState<MCQ>();
+    const navigate = useNavigate();
+    const [selectedAnswer, setSelectedAnswer] = useState<Option | null>(null);
 
-    const [selectedAnswer, setSelectedAnswer] =
-        useState<string | null>(null);
-    const [q, setQ] = useState<number | null>(
-        null,
-    );
-
-    const bgColor = isBoy
-        ? 'bg-accent'
-        : 'bg-secondary';
-
-    const handleSubmit = async (
-        e: React.FormEvent,
-    ) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            if (q === null) {
-                alert(
-                    'لطفا یک گزینه را انتخاب کنید.',
-                );
+            if (selectedAnswer === null) {
+                toast.error('لطفا یک گزینه را انتخاب کنید.');
                 return;
             }
 
-            const res = await apiClient.post(
-                `/tasks/${id}`,
-                {
-                    answer: q,
+            const res: AxiosResponse<ApiResponse<any>> = await apiClient.post(`/tasks/${id}/mcq/${data?.id}`, {
+                    answer: selectedAnswer.value,
                 },
             );
 
-            if (res.status === 200) {
+            if (res.data.code === 'CORRECT') {
                 toast.success(`آفرین`);
+            } else {
+                toast.error(`جواب شما غلط بود`);
             }
+            setTimeout(() => navigate(`/mission/${data?.id}`));
         } catch (error) {
             toast.error(`پاسخ شما اشتباه است`);
         }
@@ -52,10 +46,8 @@ export const QuestionnairePage = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await apiClient.get(
-                    `/tasks/${id}`,
-                );
-                setData(res.data.data);
+                const res: AxiosResponse<ApiResponse<Task>> = await apiClient.get(`/tasks/${id}`);
+                setData(res.data.data.taskable as MCQ);
                 setLoading(false);
             } catch (error) {
                 console.log(error);
@@ -65,125 +57,86 @@ export const QuestionnairePage = () => {
         fetchData();
     }, []);
 
-    if (loading) return;
     return (
         <div
-            className={`min-h-screen ${bgColor} flex items-center justify-center font-sans text-white`}
+            className={`min-h-screen ${className} flex items-center justify-center font-sans text-white`}
         >
-            <div className='w-full max-w-xl p-4 text-center'>
-                {/* Header */}
-                <header className='mb-8 flex items-center justify-between'>
-                    <h1 className='text-xl font-bold'>
+            <div className="w-full max-w-xl p-4 text-center">
+                <header className="mb-8 flex items-center justify-between">
+                    <h1
+                        onClick={() => navigate(-1)}
+                        className="text-xl font-bold">
                         بازگشت
                     </h1>
-                    <button className='btn btn-circle btn-ghost bg-white/20'>
+                    <button className="btn btn-circle btn-ghost bg-white/20">
                         <svg
-                            xmlns='http://www.w3.org/2000/svg'
-                            width='24'
-                            height='24'
-                            viewBox='0 0 24 24'
-                            fill='none'
-                            stroke='currentColor'
-                            strokeWidth='2'
-                            strokeLinecap='round'
-                            strokeLinejoin='round'
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                         >
                             <line
-                                x1='5'
-                                y1='12'
-                                x2='19'
-                                y2='12'
+                                x1="5"
+                                y1="12"
+                                x2="19"
+                                y2="12"
                             ></line>
-                            <polyline points='12 5 19 12 12 19'></polyline>
+                            <polyline points="12 5 19 12 12 19"></polyline>
                         </svg>
                     </button>
                 </header>
 
-                {/* Main Content */}
-                <main className='space-y-6'>
-                    <div className='rounded-2xl bg-black/20 p-6'>
-                        <h2 className='text-2xl font-bold'>
+                <main className="space-y-6">
+                    <div className="rounded-2xl bg-black/20 p-6">
+                        <h2 className="text-2xl font-bold">
                             سوالات چهار گزینه ای
                         </h2>
-                        {/* <p className='mt-2 opacity-80'>
-                            مرحله{' '}
-                            {currentQuestionIndex +
-                                1}{' '}
-                            از{' '}
-                            {
-                                QUESTIONS_DATA.length
-                            }
-                        </p> */}
                     </div>
 
                     <form
                         onSubmit={handleSubmit}
-                        className='space-y-4 text-right'
+                        className="space-y-4 text-right"
                     >
-                        <div className='my-2 rounded-2xl bg-black/20 p-6'>
-                            <h3 className='mb-4 font-bold'>
-                                {data.question}
+                        <div className="my-2 rounded-2xl bg-black/20 p-6">
+                            <h3 className="mb-4 font-bold">
+                                {data?.question}
                             </h3>
                         </div>
 
-                        <div className='flex flex-col gap-2'>
-                            <button
-                                type='button'
-                                onClick={() => {
-                                    setSelectedAnswer(
-                                        data.option1,
-                                    );
-                                    setQ(1);
-                                }}
-                                className={`btn btn-block h-auto justify-start py-3 text-white ${data.option1 === selectedAnswer ? 'btn-primary' : 'border-white/20 bg-black/20'}`}
-                            >
-                                {data.option1}
-                            </button>
-                            <button
-                                type='button'
-                                onClick={() => {
-                                    setSelectedAnswer(
-                                        data.option2,
-                                    );
-                                    setQ(2);
-                                }}
-                                className={`btn btn-block h-auto justify-start py-3 text-white ${data.option2 === selectedAnswer ? 'btn-primary' : 'border-white/20 bg-black/20'}`}
-                            >
-                                {data.option2}
-                            </button>
-                            <button
-                                type='button'
-                                onClick={() => {
-                                    setSelectedAnswer(
-                                        data.option3,
-                                    );
-                                    setQ(3);
-                                }}
-                                className={`btn btn-block h-auto justify-start py-3 text-white ${data.option3 === selectedAnswer ? 'btn-primary' : 'border-white/20 bg-black/20'}`}
-                            >
-                                {data.option3}
-                            </button>
-                            <button
-                                type='button'
-                                onClick={() => {
-                                    setSelectedAnswer(
-                                        data.option4,
-                                    );
-                                    setQ(4);
-                                }}
-                                className={`btn btn-block h-auto justify-start py-3 text-white ${data.option4 === selectedAnswer ? 'btn-primary' : 'border-white/20 bg-black/20'}`}
-                            >
-                                {data.option4}
-                            </button>
+                        <div className="flex flex-col gap-2">
+                            {
+                                loading ?
+                                    <div className={'w-[100vw] gap-4 h-[100vh] flex items-center justify-center'}>
+                                        <p>در حال بارگذاری</p>
+                                        <span role="status" aria-label="Loading"
+                                              className="inline-block w-6 h-6 animate-spin rounded-full border-2 border-gray-300 border-t-transparent"></span>
+
+                                    </div>
+                                    :
+                                    data?.options.map((i: Option) => (
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                setSelectedAnswer(i);
+                                            }}
+                                            className={`btn btn-block h-auto justify-start py-3 text-white ${i.value === selectedAnswer?.value ? 'btn-primary' : 'border-white/20 bg-black/20'}`}
+                                        >
+                                            {i.label}
+                                        </button>
+                                    ))
+                            }
                         </div>
 
-                        <div className='pt-4'>
+                        <div className="pt-4">
                             <button
-                                type='submit'
-                                className='btn btn-success btn-lg w-full'
-                                onClick={() =>
-                                    handleSubmit
-                                }
+                                type="submit"
+                                className="btn btn-success btn-lg w-full"
+                                onClick={handleSubmit}
                             >
                                 ثبت پاسخ
                             </button>

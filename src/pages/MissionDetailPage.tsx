@@ -1,7 +1,7 @@
 import type { AxiosResponse } from 'axios';
 import {
     useContext,
-    useEffect,
+    useEffect, useMemo, useRef,
     useState,
 } from 'react';
 import {
@@ -9,7 +9,7 @@ import {
     FaBook,
     FaClock,
     FaDownload,
-    FaKey,
+    FaKey, FaLock,
     FaMapMarkerAlt,
     FaPlay,
     FaPuzzlePiece,
@@ -27,35 +27,32 @@ import type { ActionDetail } from '../types/action';
 const MissionDetailPage = () => {
     const { missionId } = useParams();
     const navigate = useNavigate();
-    const [action, setAction] =
-        useState<ActionDetail>();
+    const iconRef = useRef<HTMLImageElement>(null);
+    const [action, setAction] = useState<ActionDetail>();
+
+    const { data: teamData } = useContext(TeamDataContext);
+    const className = useMemo(() => {
+        return teamData?.gender ? 'bg-accent' : 'bg-secondary';
+    }, [teamData]);
 
     useEffect(() => {
         async function fetchAction() {
-            const response: AxiosResponse<
-                ApiResponse<ActionDetail>
-            > = await apiClient(
-                `/actions/${missionId}`,
-            );
-
+            const response: AxiosResponse<ApiResponse<ActionDetail>> = await apiClient(`/actions/${missionId}`);
             setAction(response.data.data);
+            const imgResponse = await fetch(response.data.data.icon.download_url, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
+            });
+            const blob = await imgResponse.blob();
+            iconRef?.current?.setAttribute('src', window.URL.createObjectURL(blob));
         }
 
         fetchAction();
     }, []);
 
-    const { data: teamData } = useContext(
-        TeamDataContext,
-    );
 
-    let className = teamData?.gender
-        ? 'bg-accent'
-        : 'bg-secondary';
-
-    async function downloadFile(
-        url: string,
-        filename: string,
-    ) {
+    async function downloadFile(url: string, filename: string) {
         const response = await fetch(url, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -71,54 +68,34 @@ const MissionDetailPage = () => {
 
     const handleDownload = () => {
         try {
-            downloadFile(
-                action?.attachments[0]
-                    .download_api!,
-                'file.pdf',
-            );
+            downloadFile(action?.attachment.download_url!, 'file.pdf');
         } catch (error) {
             console.log(error);
         }
     };
 
     const hanleStart = (task: any) => {
-        console.log(task);
-        console.log(task.id);
         switch (task.type) {
-            case 'scan':
-                navigate(
-                    `/video-mission/${task.id}`,
-                );
+            case '':
+                navigate(`/video-mission/${task.id}`);
                 break;
-            case 'question':
-                navigate(
-                    `/questionnaire-mission/${task.id}`,
-                );
+            case 'MCQ':
+                navigate(`/questionnaire-mission/${task.id}`);
                 break;
 
-            case 'content':
-                navigate(
-                    `/upload-video-mission/${task.id}`,
-                );
+            case 'UploadFile':
+                navigate(`/upload-file-mission/${task.id}`);
                 break;
 
             case 'message':
-                navigate(
-                    `/upload-video-mission/${task.id}`,
-                );
+                navigate(`/upload-video-mission/${task.id}`);
                 break;
 
             case 'intrupt':
-                navigate(
-                    `/upload-video-mission/${task.id}`,
-                );
+                navigate(`/upload-video-mission/${task.id}`);
                 break;
-
             default:
-                console.warn(
-                    '⚠️ نوع تسک ناشناخته است:',
-                    task,
-                );
+                console.warn('⚠️ نوع تسک ناشناخته است:', task);
         }
     };
 
@@ -126,63 +103,55 @@ const MissionDetailPage = () => {
     return (
         <div
             className={`min-h-screen ${className} font-sans text-white`}
-            dir='rtl'
+            dir="rtl"
         >
             {/* Main container with responsive max-width */}
             <div
-                className='relative mx-auto w-full max-w-xl p-4 pb-24'
-                dir='rtl'
+                className="relative mx-auto w-full max-w-xl p-4 pb-24"
+                dir="rtl"
             >
                 {/* Header Section */}
                 <header>
                     {/* Back Button */}
-                    <div className='mb-4 flex items-center justify-start'>
+                    <div className="mb-4 flex items-center justify-start">
                         <button
-                            onClick={() =>
-                                navigate(
-                                    '/missions',
-                                )
-                            }
-                            className='btn btn-circle bg-white text-black hover:bg-gray-100'
+                            onClick={() => navigate('/missions')}
+                            className="btn btn-circle bg-white text-black hover:bg-gray-100"
                         >
                             <FaArrowRight />
                         </button>
-                        <span className='text mr-3 font-bold'>
+                        <span className="text mr-3 font-bold">
                             بازگشت
                         </span>
                     </div>
 
                     {/* Mission Title Card */}
                     <div
-                        className='rounded-t-2xl p-6'
-                        dir='rtl'
+                        className="rounded-t-2xl p-6"
+                        dir="rtl"
                         style={{
                             backgroundColor:
                                 '#00000052',
                         }}
                     >
                         <div
-                            className='mb-3 flex flex-row-reverse items-center justify-end gap-2'
-                            dir='rtl'
+                            className="mb-3 flex flex-row items-center  gap-2"
+                            dir="rtl"
                         >
-                            <h1 className='text-xl font-bold'>
+                            <div className="btn rounded-lg bg-purple-600 p-2">
+                                <img ref={iconRef} alt={'action icon'} className={' w-[32px] h-[32px]'} />
+                            </div>
+                            <h1 className="text-xl font-bold">
                                 {action?.name}
                             </h1>
-                            <div className='btn rounded-lg bg-purple-600 p-2'>
-                                <FaKey
-                                    size={20}
-                                    className='text-yellow-400'
-                                />
-                            </div>
                         </div>
-                        <div className='flex items-center gap-2'>
+                        <div className="flex items-center gap-2">
                             <FaMapMarkerAlt
                                 size={16}
                             />
-                            <span className='text-sm'>
+                            <span className="text-sm">
                                 {
-                                    action?.region
-                                        .name
+                                    action?.region.name
                                 }
                             </span>
                         </div>
@@ -191,78 +160,66 @@ const MissionDetailPage = () => {
 
                 {/* Overall Progress Section */}
 
-                <section className='mb-6'>
+                <section className="mb-6">
                     <div
-                        className='mb-4 rounded-b-xl p-4'
+                        className="mb-4 rounded-b-xl p-4"
                         style={{
                             backgroundColor:
                                 '#00000052',
                         }}
                     >
-                        <h2 className='mb-2 text-right text-lg font-bold'>
+                        <h2 className="mb-2 text-right text-lg font-bold">
                             پیشرفت کلی
                         </h2>
-                        <div className='flex flex-row-reverse items-center gap-3'>
-                            <span className='font text-sm'>
-                                {action.meta
-                                    .total > 0
-                                    ? (action.meta
-                                          .completed /
-                                          action
-                                              .meta
-                                              .total) *
-                                      100
-                                    : 0}
-                                %
+                        <div className="flex flex-row-reverse items-center gap-3">
+                            <span className="font text-sm">
+                                {(action.team_completed_task_count / action.team_completed_task_count) * 100
+                                }%
                             </span>
                             <progress
-                                className='progress progress-warning flex-1'
-                                value={
-                                    (10 / 5) * 100
-                                }
+                                className="progress progress-warning flex-1"
+                                value={(action.team_completed_task_count / action.team_completed_task_count) * 100}
                                 max={100}
                             ></progress>
                         </div>
-                        <div className='mt-3 grid grid-cols-2 gap-4'>
+                        <div className="mt-3 grid grid-cols-2 gap-4">
                             <div
-                                className='rounded-xl p-4'
+                                className="rounded-xl p-4"
                                 style={{
                                     backgroundColor:
                                         '#FFFFFF3D',
                                 }}
                             >
-                                <div className='mb-2 flex items-center gap-2'>
+                                <div className="mb-2 flex items-center gap-2">
                                     <FaClock
                                         size={16}
                                     />
-                                    <span className='text-sm'>
+                                    <span className="text-sm">
                                         زمان
                                         تخمینی
                                         عملیات:
                                     </span>
                                 </div>
-                                <div className='text-lg font-bold'>
+                                <div className="text-lg font-bold">
                                     {
                                         action.estimated_time
                                     }
                                 </div>
                             </div>
                             <div
-                                className='rounded-xl p-4'
+                                className="rounded-xl p-4"
                                 style={{
                                     backgroundColor:
                                         '#FFFFFF3D',
                                 }}
                             >
-                                <div className='mb-2 text-sm'>
+                                <div className="mb-2 text-sm">
                                     عملیات انجام
                                     شده
                                 </div>
-                                <div className='text-lg font-bold'>
+                                <div className="text-lg font-bold">
                                     {
-                                        action
-                                            ?.meta
-                                            .completed
+                                        action?.team_completed_task_count == action.tasks.length
                                     }
                                 </div>
                             </div>
@@ -273,21 +230,21 @@ const MissionDetailPage = () => {
                 </section>
 
                 {/* Instructions Section */}
-                <section className='mb-6'>
+                <section className="mb-6">
                     <div
-                        className='rounded-2xl p-6'
+                        className="rounded-2xl p-6"
                         style={{
                             backgroundColor:
                                 '#00000052',
                         }}
                     >
-                        <div className='mb-4 flex items-center gap-3'>
-                            <h2 className='text-lg font-bold'>
+                        <div className="mb-4 flex items-center gap-3">
+                            <h2 className="text-lg font-bold">
                                 راهنمای انجام
                             </h2>
                             <FaBook size={20} />
                         </div>
-                        <p className='mb-4 text-right text-sm leading-relaxed'>
+                        <p className="mb-4 text-right text-sm leading-relaxed">
                             برای تکمیل ماموریت،
                             تمام مراحل باید به
                             ترتیب انجام شوند. هر
@@ -305,84 +262,89 @@ const MissionDetailPage = () => {
                             مرحله قبلی باز می‌شود.
                         </p>
                         <button
-                            className='btn w-full border-none bg-white text-black'
-                            onClick={() =>
-                                handleDownload()
-                            }
+                            className="btn px-[24px] border-none bg-white text-black rounded-[16px]"
+                            onClick={handleDownload}
                         >
-                            <FaDownload className='ml-2' />
+                            <FaDownload className="ml-2" />
                             دانلود راهنمای بازی
                         </button>
                     </div>
                 </section>
 
-                {/* Mission Steps Section */}
-                <section className='mb-6'>
-                    <h2 className='mb-4 text-right text-lg font-bold'>
+                <section className="mb-6">
+                    <h2 className="mb-4 text-right text-lg font-bold">
                         مراحل مأموریت
                     </h2>
-                    <div className='space-y-3'>
-                        {action &&
-                            action.missions &&
-                            action?.missions.map(
-                                (mission) =>
-                                    mission.tasks.map(
-                                        (
-                                            task,
-                                        ) => (
-                                            <div
-                                                key={
-                                                    mission.id
+                    <div className="space-y-3">
+                        {action && action.tasks.map((task: Task) => (
+                            <div
+                                key={task.id}
+                                className="mb-3 rounded-xl p-4"
+                                style={{
+                                    backgroundColor:
+                                        '#00000052',
+                                }}
+                            >
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-3">
+                                        <div
+                                            className={`flex h-10 w-10 items-center justify-center rounded-lg bg-pink-500 p-2`}
+                                        >
+                                            <FaPuzzlePiece
+                                                size={
+                                                    18
                                                 }
-                                                className='mb-3 rounded-xl p-4'
-                                                style={{
-                                                    backgroundColor:
-                                                        '#00000052',
-                                                }}
-                                            >
-                                                <div className='flex items-center justify-between'>
-                                                    {/* Step Info */}
-                                                    <div className='flex items-center gap-3'>
-                                                        <div
-                                                            className={`flex h-10 w-10 items-center justify-center rounded-lg bg-pink-500 p-2`}
-                                                        >
-                                                            <FaPuzzlePiece
-                                                                size={
-                                                                    18
-                                                                }
-                                                                className='text-white'
-                                                            />
-                                                        </div>
-                                                        <span className='font-medium'>
+                                                className="text-white"
+                                            />
+                                        </div>
+                                        <span className="font-medium">
                                                             {
-                                                                task?.type
+                                                                task?.type_label
                                                             }
                                                         </span>
-                                                    </div>
+                                    </div>
+                                    {
+                                        task.locked_for_team ?
+                                            <button
+                                                className={`flex cursor-pointer items-center gap-2 rounded-3xl bg-[#0000003D] px-4 py-2 font-medium text-white`}
+                                                onClick={() => hanleStart(task)}
+                                            >
+                                                <FaLock
+                                                    size={
+                                                        14
+                                                    }
+                                                />
+                                                {
+                                                    'در صف ...'
+                                                }
+                                            </button> :
+                                            !task.done_by_team ?
+                                                <button
+                                                    className={`flex cursor-pointer items-center gap-2 rounded-3xl bg-yellow-500 px-4 py-2 font-medium text-white`}
+                                                    onClick={() => hanleStart(task)}
+                                                >
+                                                    <FaPlay
+                                                        size={
+                                                            14
+                                                        }
+                                                    />
+                                                    {
+                                                        'آماده شروع'
+                                                    }
+                                                </button> :
+                                                <button
+                                                    className={`flex cursor-pointer items-center gap-2 rounded-3xl bg-[#0000003D] px-4 py-2 font-medium text-white`}
+                                                >
+                                                    {
+                                                        'قبلا انجام شده'
+                                                    }
+                                                </button>
+                                    }
 
-                                                    {/* Action Button */}
-                                                    <button
-                                                        className={`flex cursor-pointer items-center gap-2 rounded-3xl bg-yellow-500 px-4 py-2 font-medium text-white`}
-                                                        onClick={() =>
-                                                            hanleStart(
-                                                                task,
-                                                            )
-                                                        }
-                                                    >
-                                                        <FaPlay
-                                                            size={
-                                                                14
-                                                            }
-                                                        />
-                                                        {
-                                                            'آماده شروع'
-                                                        }
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        ),
-                                    ),
-                            )}
+                                </div>
+                            </div>
+                        ))
+                        }
                     </div>
                 </section>
 
