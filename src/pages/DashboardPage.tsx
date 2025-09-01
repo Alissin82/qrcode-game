@@ -57,7 +57,7 @@ const DashboardPage = () => {
                 <header className='mb-6 flex items-center justify-between rounded-2xl bg-white/20 p-4'>
                     <div className='flex items-center gap-3 text-right'>
                         <div className='avatar'>
-                            <div className='ring-primary ring-offset-base-100 w-14 rounded-full ring ring-amber-200 ring-offset-2'>
+                            <div className='ring-offset-base-100 w-14 rounded-full ring ring-amber-200 ring-offset-2'>
                                 <img
                                     src='/images/logo3.jpg'
                                     alt='User Avatar'
@@ -130,7 +130,7 @@ const DashboardPage = () => {
                     >
                         <div className='flex items-center gap-2'>
                             <div className='rounded-full bg-yellow-400 p-1 text-black'>
-                                <TbCoinFilled />
+                                <img src="/images/coin_1fa99.png" alt="nist" width={16} height={16} />
                             </div>
                         </div>
                         <span className='text-2xl font-bold tracking-widest text-yellow-500'>
