@@ -257,14 +257,14 @@ const MissionsPage = () => {
                                             {action
                                                 .meta
                                                 .total >
-                                            0
+                                                0
                                                 ? (action
-                                                      .meta
-                                                      .completed /
-                                                      action
-                                                          .meta
-                                                          .total) *
-                                                  100
+                                                    .meta
+                                                    .completed /
+                                                    action
+                                                        .meta
+                                                        .total) *
+                                                100
                                                 : 0}
                                             %
                                         </span>
