@@ -8,7 +8,10 @@ import {
     FaMedal,
     FaTrophy,
 } from 'react-icons/fa6';
-import { LuLogOut } from 'react-icons/lu';
+import {
+    LuAlarmClock,
+    LuLogOut,
+} from 'react-icons/lu';
 import { TbCoinFilled } from 'react-icons/tb';
 import SettingsIcon from '../components/ui/icons/SettingIcon';
 import Menu from '../components/ui/Menu';
@@ -16,10 +19,8 @@ import Upgrade from '../components/ui/Upgrade';
 import { TeamDataContext } from '../contexts/TeamDataContext.ts';
 import type { ApiResponse } from '../types/apiResponse';
 import { apiClient } from '../utils';
-import {
-    Navigate,
-    useNavigate,
-} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import BellIcon from '../components/ui/icons/BellIcon.tsx';
 
 const DashboardPage = () => {
     const navigate = useNavigate();
@@ -73,9 +74,28 @@ const DashboardPage = () => {
                         </div>
                     </div>
                     <div className='flex items-center gap-3'>
-                        <button className='btn btn-square btn-ghost bg-white/10'>
+                        <button
+                            className='btn btn-square btn-ghost bg-white/10'
+                            onClick={() =>
+                                navigate(
+                                    '/settings',
+                                )
+                            }
+                        >
                             <SettingsIcon />
                         </button>
+                        <div
+                            className='indicator'
+                            onClick={() =>
+                                navigate(
+                                    '/notifications',
+                                )
+                            }
+                        >
+                            <button className='btn btn-square btn-ghost bg-white/10'>
+                                <BellIcon />
+                            </button>
+                        </div>
                         <div
                             className='indicator'
                             onClick={() =>
@@ -83,7 +103,9 @@ const DashboardPage = () => {
                             }
                         >
                             <button className='btn btn-square btn-ghost bg-white/10'>
-                                <LuLogOut />
+                                <LuLogOut
+                                    size={24}
+                                />
                             </button>
                         </div>
                     </div>

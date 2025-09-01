@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { ANNOUNCEMENTS_DATA } from '../utils/constants';
+import { useNavigate } from 'react-router-dom';
 
 export const AnnouncementsPage = () => {
+    const navigate = useNavigate();
     const [isBoy, setIsBoy] = useState(true);
     const bgColor = isBoy
         ? 'bg-accent'
@@ -13,11 +15,15 @@ export const AnnouncementsPage = () => {
         >
             <div className='mx-auto w-full max-w-xl p-4 pb-32 text-right'>
                 {/* Header */}
-                <header className='mb-10 flex items-center justify-between'>
-                    <h1 className='text-xl font-bold'>
-                        جدیدترین اعلانات
-                    </h1>
-                    <button className='btn btn-circle btn-ghost bg-white/20'>
+                <header className='mb-10 flex items-center justify-start gap-x-2'>
+                    <button
+                        className='btn btn-circle btn-ghost bg-white/20'
+                        onClick={() => {
+                            navigate(
+                                '/dashboard',
+                            );
+                        }}
+                    >
                         <svg
                             xmlns='http://www.w3.org/2000/svg'
                             width='24'
@@ -38,6 +44,9 @@ export const AnnouncementsPage = () => {
                             <polyline points='12 5 19 12 12 19'></polyline>
                         </svg>
                     </button>
+                    <h1 className='text-xl font-bold'>
+                        جدیدترین اعلانات
+                    </h1>
                 </header>
 
                 {/* Announcements List */}

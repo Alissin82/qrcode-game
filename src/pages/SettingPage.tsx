@@ -1,25 +1,76 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 // --- Icon Components ---
 // NOTE: The following icons are from the 'react-icons' library.
 // Make sure to install it by running: npm install react-icons
 import { FaArrowRight } from 'react-icons/fa6';
-import { TbCamera } from 'react-icons/tb';
 import Menu from '../components/ui/Menu';
+import { TeamDataContext } from '../contexts/TeamDataContext';
+import { apiClient } from '../utils';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import type { AxiosResponse } from 'axios';
+import type { ApiResponse } from '../types/apiResponse';
 
 // --- Placeholder for Bottom Menu ---
 // You can replace this with your actual Menu component
 
 const SettingsPage = () => {
+    const navigate = useNavigate();
+    const { data: team, setData: setTeam } =
+        useContext(TeamDataContext);
+
     // State to toggle between boy (blue) and girl (pink) themes
     const [isBoy, setIsBoy] = useState(true);
     // State to manage the team color from the color picker
     const [teamColor, setTeamColor] =
         useState('#1f4567');
+    // State for team name input
+    const [teamName, setTeamName] = useState(
+        team?.name || '',
+    );
+    // State for gender selection
+    const [gender, setGender] = useState('');
 
     // Handler function to update the team color state
     const handleColorChange = (e: any) => {
         setTeamColor(e.target.value);
+    };
+
+    async function fetchTeam() {
+        const response: AxiosResponse<
+            ApiResponse<Team>
+        > = await apiClient.get(`/teams/me`);
+        setTeam(response.data.data);
+    }
+
+    // Handler function to handle form submission
+    const handleSubmit = async (
+        e: React.FormEvent,
+    ) => {
+        e.preventDefault();
+        try {
+            const res = await apiClient.put(
+                `/teams`,
+                {
+                    gender:
+                        gender === 'true'
+                            ? true
+                            : false,
+                    color: teamColor,
+                    name: teamName,
+                },
+            );
+
+            toast.success(
+                'اطلاعات با موفقیت ویرایش شد.',
+            );
+            fetchTeam()
+            navigate('/dashboard');
+        } catch (error) {
+            toast.error(`دوباره امتحان کنید.`);
+            console.log(error);
+        }
     };
 
     // Dynamically set the background color based on the isBoy state
@@ -45,7 +96,7 @@ const SettingsPage = () => {
                 </header>
 
                 {/* Profile Picture Section */}
-                <section className='mb-12 flex justify-center'>
+                {/* <section className='mb-12 flex justify-center'>
                     <div className='relative'>
                         <div className='avatar'>
                             <div className='w-32 rounded-full ring-4 ring-white'>
@@ -59,10 +110,13 @@ const SettingsPage = () => {
                             <TbCamera size={20} />
                         </button>
                     </div>
-                </section>
+                </section> */}
 
                 {/* Form Section */}
-                <form className='space-y-6 text-right'>
+                <form
+                    onSubmit={handleSubmit}
+                    className='space-y-6 text-right'
+                >
                     {/* Team Name Input */}
                     <div className='py-4'>
                         <label
@@ -74,7 +128,16 @@ const SettingsPage = () => {
                         <input
                             type='text'
                             id='teamName'
-                            placeholder='نام گروه خود را میتوانید از اینجا تغییر دهید'
+                            value={teamName}
+                            onChange={(e) =>
+                                setTeamName(
+                                    e.target
+                                        .value,
+                                )
+                            }
+                            placeholder={
+                                team?.name
+                            }
                             className='input input-bordered input-lg w-full bg-black/20 text-right placeholder:text-xs placeholder:text-gray-300'
                         />
                     </div>
@@ -116,7 +179,27 @@ const SettingsPage = () => {
                             />
                         </div>
                     </div>
-
+                    <select
+                        id='gender'
+                        className='select select-bordered input input-bordered mt-8 h-12 w-full rounded-lg bg-black/20 text-right'
+                        value={gender}
+                        onChange={(e) =>
+                            setGender(
+                                e.target.value,
+                            )
+                        }
+                        required
+                    >
+                        <option disabled value=''>
+                            جنسیت را انتخاب کنید .
+                        </option>
+                        <option value='true'>
+                            پسر
+                        </option>
+                        <option value='false'>
+                            دختر
+                        </option>
+                    </select>
                     {/* Save Button */}
                     <div className='pt-4'>
                         <button

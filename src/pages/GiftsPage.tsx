@@ -1,22 +1,25 @@
-import { useState } from 'react';
 import {
-    FaHeart,
-    FaMedal,
-    FaStar,
-} from 'react-icons/fa6';
-import { LuNotepadText } from 'react-icons/lu';
+    useContext,
+    useEffect,
+    useState,
+} from 'react';
+import { FaMedal } from 'react-icons/fa6';
 import { TbCoinFilled } from 'react-icons/tb';
-import Menu from '../components/ui/Menu';
-import {
-    GIFTS_DATA,
-    MY_TEAM_DATA,
-} from '../utils/constants';
 import GetScors from '../components/ui/GetScors';
+import Menu from '../components/ui/Menu';
+// import { MY_TEAM_DATA } from '../utils/constants';
+import { apiClient } from '../utils';
+import { TeamDataContext } from '../contexts/TeamDataContext';
 
 export const GiftsPage = () => {
+    const { data: team } = useContext(
+        TeamDataContext,
+    );
+
     const [isBoy, setIsBoy] = useState(false);
-    const [activeTab, setActiveTab] =
-        useState('all');
+    // const [activeTab, setActiveTab] =
+    //     useState('all');
+
     const bgColor = isBoy
         ? 'bg-blue-900'
         : 'bg-pink-600';
@@ -38,22 +41,20 @@ export const GiftsPage = () => {
                 <section className='mb-6 flex items-center justify-around rounded-2xl bg-black/20 p-6 text-center shadow-md'>
                     <div>
                         <p className='text-3xl font-extrabold'>
-                            {MY_TEAM_DATA.score.toLocaleString(
-                                'fa-IR',
-                            )}
+                            {team?.coin}
                         </p>
                         <p className='mt-1 flex items-center justify-center gap-2 text-sm opacity-80'>
-                            کل جوایز
+                            سکه
                             <FaMedal size={22} />
                         </p>
                     </div>
                     <div className='h-16 w-px bg-white/20'></div>{' '}
                     <div>
                         <p className='text-3xl font-extrabold'>
-                            ۲۴
+                            {team?.score}
                         </p>
                         <p className='mt-1 flex items-center justify-center gap-2 text-sm opacity-80'>
-                            جوایز دریافتی
+                            امتیاز
                             <TbCoinFilled
                                 size={22}
                             />
