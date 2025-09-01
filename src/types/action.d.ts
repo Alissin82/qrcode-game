@@ -41,8 +41,14 @@ interface ActionDetail extends Action {
 }
 
 interface Meta {
-    total: number;
-    completed: number;
+    regions: {
+        total: number;
+        completed: number;
+    },
+    actions: {
+        total: number;
+        completed: number;
+    }
 }
 
 interface Media {

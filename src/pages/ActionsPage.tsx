@@ -10,7 +10,6 @@ import {
     FaClock, FaLock,
     FaMapMarkerAlt,
     FaMedal,
-    FaPencilAlt,
     FaPlay,
     FaStar,
 } from 'react-icons/fa';
@@ -26,6 +25,7 @@ import type {
     Meta,
 } from '../types/action';
 import QrCodeScanner from '../components/ui/QrCodeScanner.tsx';
+import type { AxiosResponse } from 'axios';
 
 const ActionsPage = () => {
     const navigate = useNavigate();
@@ -47,7 +47,7 @@ const ActionsPage = () => {
             const response: AxiosResponse<ApiResponse<any>> = await apiClient.get(`/actions`);
             const fetchedActions = response.data.data.actions;
             setActions(fetchedActions);
-            setMeta(response.data.data.meta.actions);
+            setMeta(response.data.data.meta);
 
             // Fetch each image as a blob and set it
             fetchedActions.forEach(async (action: Action, index: number) => {
@@ -88,17 +88,17 @@ const ActionsPage = () => {
             <div className="relative mx-auto w-full max-w-xl p-4 pb-24">
                 <div className="mb-6">
                     <div
-                        className="rounded-2xl p-6"
+                        className="rounded-2xl p-4"
                         style={{ backgroundColor: '#FFFFFF3D' }}
                     >
                         <div className="grid grid-cols-2 gap-4">
-                            <div className="border-l border-white/20 pl-4 text-center">
+                            <div className="border-l border-white/20 text-center">
                                 <h3 className="mb-2 text-sm font-bold">
                                     عملیات تکمیل
                                     شده
                                 </h3>
                                 <div className="text-2xl font-bold text-white">
-                                    {meta?.completed}
+                                    {meta?.actions?.total} / {meta?.actions?.completed}
                                 </div>
                             </div>
 
@@ -108,7 +108,7 @@ const ActionsPage = () => {
                                     شده
                                 </h3>
                                 <div className="text-2xl font-bold text-white">
-                                    0
+                                    {meta?.regions?.total} / {meta?.regions?.completed}
                                 </div>
                             </div>
                         </div>
