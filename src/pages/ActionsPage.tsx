@@ -15,7 +15,6 @@ import {
 } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
-import QrScanner from 'react-qr-scanner';
 import Menu from '../components/ui/Menu';
 import { TeamDataContext } from '../contexts/TeamDataContext.ts';
 import { apiClient } from '../utils';

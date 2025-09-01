@@ -206,11 +206,11 @@ const MissionDetailPage = () => {
                         </h2>
                         <div className="flex flex-row-reverse items-center gap-3">
                             <span className="font text-sm">
-                                {action.team_completed_task_count ? (action.team_completed_task_count / action.team_completed_task_count) * 100 : 0}%
+                                {action.team_completed_task_count ? (action.team_completed_task_count / action.tasks_count) * 100 : 0}%
                             </span>
                             <progress
                                 className="progress progress-warning flex-1"
-                                value={action.team_completed_task_count ? (action.team_completed_task_count / action.team_completed_task_count) * 100 : 0}
+                                value={action.team_completed_task_count ? (action.team_completed_task_count / action.tasks_count) * 100 : 0}
                                 max={100}
                             ></progress>
                         </div>
@@ -218,8 +218,7 @@ const MissionDetailPage = () => {
                             <div
                                 className="rounded-xl p-2"
                                 style={{
-                                    backgroundColor:
-                                        '#FFFFFF3D',
+                                    backgroundColor: '#FFFFFF3D',
                                 }}
                             >
                                 <div className="mb-2 flex items-center gap-1">
