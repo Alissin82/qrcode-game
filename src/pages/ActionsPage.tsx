@@ -125,7 +125,7 @@ const ActionsPage = () => {
                 `/mission/${response.data.data.id}`,
             );
     }
-    console.log(meta)
+    
     return (
         <div
             className={`min-h-screen ${className} font-sans text-white`}

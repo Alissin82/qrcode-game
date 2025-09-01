@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 export const GamesPage = () => {
     const navigate = useNavigate();
     const [isBoy, setIsBoy] = useState(false);
+    const [isLoading, setIsLoading] =
+        useState(true);
     const [activeTab, setActiveTab] =
         useState('all');
     const bgColor = isBoy
@@ -33,8 +35,9 @@ export const GamesPage = () => {
                 await apiClient.get(
                     `/games/score`,
                 );
-            console.log(res.data.data);
+
             setScore(res.data.data);
+            setIsLoading(false);
         } catch (error) {
             console.log(error);
         }
@@ -49,6 +52,7 @@ export const GamesPage = () => {
         getScores();
     }, []);
 
+    if (isLoading) return;
     return (
         <div
             className={`min-h-screen ${bgColor} font-sans text-white`}
