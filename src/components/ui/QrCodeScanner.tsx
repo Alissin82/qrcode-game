@@ -1,6 +1,5 @@
 import QrScanner from 'react-qr-scanner';
 import { useCallback, useEffect, useState } from 'react';
-import { config } from '../../config/config.ts';
 import clsx from 'clsx';
 
 interface QrCodeScannerProps {
@@ -17,7 +16,7 @@ function QrCodeScanner({ onScan, onError, isOpen, onClose }: QrCodeScannerProps)
   const handleScan = useCallback((data: QrData | null) => {
     if (data && data.text) {
       try {
-        JSON.parse(data.text);
+        JSON.parse(data.text); // بررسی معتبر بودن JSON
         setQrData(data);
         setStatusText({ text: '✅ کد با موفقیت اسکن شد', success: true });
       } catch {
@@ -31,6 +30,8 @@ function QrCodeScanner({ onScan, onError, isOpen, onClose }: QrCodeScannerProps)
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
+      setQrData(undefined);
+      setStatusText({ text: '', success: true });
     }
     return () => {
       document.body.style.overflow = '';
@@ -42,10 +43,10 @@ function QrCodeScanner({ onScan, onError, isOpen, onClose }: QrCodeScannerProps)
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
       <div className="relative flex w-[90%] max-w-md flex-col items-center rounded-2xl bg-white shadow-2xl p-6">
-        
+
         {/* آیکون بالا */}
-        <div className="flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 mb-4">
-          #
+        <div className="flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-pink-500 to-blue-600 mb-4">
+          <span className="text-2xl text-white">📷</span>
         </div>
 
         {/* عنوان */}
@@ -63,7 +64,8 @@ function QrCodeScanner({ onScan, onError, isOpen, onClose }: QrCodeScannerProps)
               video: { facingMode: 'environment' },
             }}
           />
-          {/* قاب گوشه‌ها */}
+
+          {/* قاب رنگی گوشه‌ها */}
           <div className="absolute inset-0 rounded-lg">
             <div className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-yellow-400 rounded-tl-lg"></div>
             <div className="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-blue-500 rounded-tr-lg"></div>
@@ -90,13 +92,25 @@ function QrCodeScanner({ onScan, onError, isOpen, onClose }: QrCodeScannerProps)
         {/* دکمه‌ها */}
         <div className="w-full flex flex-col gap-3">
           <button
-            onClick={() => qrData && onScan(qrData.text)}
-            className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-pink-500 py-3 text-base font-bold text-white shadow-md hover:opacity-90"
+            disabled={!qrData}
+            onClick={() => {
+              if (qrData) {
+                onScan(qrData.text);
+                onClose(); // بستن بعد از اسکن موفق
+              }
+            }}
+            className={clsx(
+              'w-full rounded-xl py-3 text-base font-bold shadow-md transition',
+              qrData
+                ? 'bg-gradient-to-r from-blue-600 to-pink-500 text-white hover:opacity-90'
+                : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+            )}
           >
             اسکن QR Code
           </button>
+
           <button
-            onClick={onClose}
+            onClick={onClose} 
             className="w-full rounded-xl bg-gray-100 py-3 text-base font-bold text-gray-600 hover:bg-gray-200"
           >
             انصراف

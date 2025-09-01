@@ -179,8 +179,14 @@ const MissionDetailPage = () => {
 
     return (
         <div className={`min-h-screen ${className} font-sans text-white`} dir="rtl">
-            {scanning && <QrCodeScanner onScan={handleEnd} onError={() => {}} isOpen={scanning} />}
-
+            {scanning && (
+                <QrCodeScanner
+                    onScan={handleEnd}
+                    onError={() => { }}
+                    isOpen={scanning}
+                    onClose={() => setScanning(false)}
+                />
+            )}
             <div className="relative mx-auto w-full max-w-xl p-4 pb-24" dir="rtl">
                 {/* Header Section */}
                 <header>
@@ -242,7 +248,7 @@ const MissionDetailPage = () => {
                                 value={
                                     action.team_completed_task_count
                                         ? (action.team_completed_task_count / action.tasks_count) *
-                                          100
+                                        100
                                         : 0
                                 }
                                 max={100}
