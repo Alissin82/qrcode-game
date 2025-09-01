@@ -1,19 +1,24 @@
+import { useEffect, useState } from 'react';
 import {
     BrowserRouter,
     Route,
     Routes,
 } from 'react-router-dom';
-import './style.css';
+import GuestLayout from './components/layouts/GuestLayout.tsx';
 import ProtectedLayout from './components/layouts/ProtectedLayout';
+import { config } from './config/config.ts';
+import { TeamDataContext } from './contexts/TeamDataContext.ts';
+import ActionsPage from './pages/ActionsPage.tsx';
 import { AnnouncementsPage } from './pages/AnnouncementsPage';
 import DashboardPage from './pages/DashboardPage';
+import { UploadFileMission } from './pages/FileUploadPage.tsx';
+import GamePages from './pages/GamePages.tsx';
 import { GamesPage } from './pages/GamesPage';
 import { GiftsPage } from './pages/GiftsPage';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import MapPage from './pages/MapPage';
 import MissionDetailPage from './pages/MissionDetailPage';
-import ActionsPage from './pages/ActionsPage.tsx';
 import { MyTeamPage } from './pages/MyTeamPage';
 import { PuzzleListPage } from './pages/PuzzlesPage';
 import { QuestionnairePage } from './pages/QuestionnairePage';
@@ -21,24 +26,22 @@ import SettingsPage from './pages/SettingPage';
 import { TeamsLeaderboardPage } from './pages/TeamsPage';
 import { VideoMissionPage } from './pages/VideoMissionPage';
 import { VideoUploadPage } from './pages/VideoUploadPage';
-import { useEffect, useState } from 'react';
-import { TeamDataContext } from './contexts/TeamDataContext.ts';
+import './style.css';
 import { apiClient } from './utils';
-import { config } from './config/config.ts';
-import { UploadFileMission } from './pages/FileUploadPage.tsx';
-import GuestLayout from './components/layouts/GuestLayout.tsx';
 
 function App() {
-    const [teamData, setTeamData] = useState<Team | null>(null);
+    const [teamData, setTeamData] =
+        useState<Team | null>(null);
 
     useEffect(() => {
-        apiClient.get(`${config.host}sanctum/csrf-cookie`);
+        apiClient.get(
+            `${config.host}sanctum/csrf-cookie`,
+        );
     }, []);
 
     return (
         <>
             {
-
                 <BrowserRouter>
                     <TeamDataContext.Provider
                         value={{
@@ -48,112 +51,131 @@ function App() {
                     >
                         <Routes>
                             <Route
-                                element={<ProtectedLayout />}
+                                element={
+                                    <ProtectedLayout />
+                                }
                             >
                                 <Route
-                                    path="/"
-                                    element={<HomePage />}
+                                    path='/'
+                                    element={
+                                        <HomePage />
+                                    }
                                 />
                                 <Route
-                                    path="dashboard"
+                                    path='dashboard'
                                     element={
                                         <DashboardPage />
                                     }
                                 />
                                 <Route
-                                    path="/settings"
+                                    path='/settings'
                                     element={
                                         <SettingsPage />
                                     }
                                 />
                                 <Route
-                                    path="teams"
+                                    path='teams'
                                     element={
                                         <TeamsLeaderboardPage />
                                     }
                                 />
                                 <Route
-                                    path="my-team"
+                                    path='my-team'
                                     element={
                                         <MyTeamPage />
                                     }
                                 />
                                 <Route
-                                    path="gifts"
+                                    path='gifts'
                                     element={
                                         <GiftsPage />
                                     }
                                 />
                                 <Route
-                                    path="missions"
+                                    path='missions'
                                     element={
                                         <ActionsPage />
                                     }
                                 />
                                 <Route
-                                    path="mission/:missionId"
+                                    path='mission/:missionId'
                                     element={
                                         <MissionDetailPage />
                                     }
                                 />
                                 <Route
-                                    path="map"
-                                    element={<MapPage />}
+                                    path='map'
+                                    element={
+                                        <MapPage />
+                                    }
                                 />
                                 <Route
-                                    path="puzzles"
+                                    path='puzzles'
                                     element={
                                         <PuzzleListPage />
                                     }
                                 />
                                 <Route
-                                    path="games"
+                                    path='games'
                                     element={
                                         <GamesPage />
                                     }
                                 />
                                 <Route
-                                    path="video-mission/:id"
+                                    path='games/:id'
+                                    element={
+                                        <GamePages />
+                                    }
+                                />
+                                <Route
+                                    path='video-mission/:id'
                                     element={
                                         <VideoMissionPage />
                                     }
                                 />
                                 <Route
-                                    path="upload-file-mission/:id"
+                                    path='upload-file-mission/:id'
                                     element={
                                         <UploadFileMission />
                                     }
                                 />
                                 <Route
-                                    path="upload-video-mission/:id"
+                                    path='upload-video-mission/:id'
                                     element={
                                         <VideoUploadPage />
                                     }
                                 />
                                 <Route
-                                    path="questionnaire-mission/:id"
+                                    path='questionnaire-mission/:id'
                                     element={
                                         <QuestionnairePage />
                                     }
                                 />
                                 <Route
-                                    path="notifications"
+                                    path='notifications'
                                     element={
                                         <AnnouncementsPage />
                                     }
                                 />
                             </Route>
-                            <Route element={<GuestLayout />}>
+                            <Route
+                                element={
+                                    <GuestLayout />
+                                }
+                            >
                                 <Route
-                                    path="/login"
-                                    element={<LoginPage />}
+                                    path='/login'
+                                    element={
+                                        <LoginPage />
+                                    }
                                 />
                             </Route>
                             <Route
-                                path="*"
+                                path='*'
                                 element={
                                     <p>
-                                        صفحه ی مورد نظر
+                                        صفحه ی
+                                        مورد نظر
                                         یافت نشد
                                     </p>
                                 }
@@ -163,7 +185,6 @@ function App() {
                 </BrowserRouter>
             }
         </>
-
     );
 }
 
