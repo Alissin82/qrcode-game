@@ -11,7 +11,6 @@ import {
     FaLock,
     FaMapMarkerAlt,
     FaMedal,
-    FaPencilAlt,
     FaPlay,
     FaStar,
 } from 'react-icons/fa';
