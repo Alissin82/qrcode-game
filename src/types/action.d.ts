@@ -13,14 +13,7 @@ interface Action {
     region: Region;
     started_by_team: boolean;
     created_at: string;
-    icon:
-        {
-            id: number;
-            uuid: string;
-            file_name: string;
-            mime_type: string;
-            download_url: string;
-        };
+    icon: Media;
     meta: Meta;
 }
 
@@ -40,21 +33,9 @@ interface ActionDetail extends Action {
         created_at: string;
         updated_at: string;
     };
-    attachment: {
-        id: number;
-        uuid: string;
-        file_name: string;
-        mime_type: string;
-        download_url: string;
-    };
-    icon:
-        {
-            id: number;
-            uuid: string;
-            file_name: string;
-            mime_type: string;
-            download_url: string;
-        };
+    attachment_boy: Media;
+    attachment_girl: Media;
+    icon: Media;
     created_at: string;
     meta: Meta;
 }
@@ -64,7 +45,10 @@ interface Meta {
     completed: number;
 }
 
-interface MissionsRequest {
-    actions: Action[];
-    meta: Meta;
+interface Media {
+    id: number;
+    uuid: string;
+    file_name: string;
+    mime_type: string;
+    download_url: string;
 }

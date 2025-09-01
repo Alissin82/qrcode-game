@@ -71,7 +71,10 @@ const MissionDetailPage = () => {
 
     const handleDownload = () => {
         try {
-            downloadFile(action?.attachment.download_url!, 'file.pdf');
+            if (teamData?.gender)
+                downloadFile(action?.attachment_boy.download_url!, 'file.pdf');
+            else
+                downloadFile(action?.attachment_girl.download_url!, 'file.pdf');
         } catch (error) {
             console.log(error);
         }
