@@ -1,15 +1,21 @@
 import { useState } from 'react';
 import Menu from '../components/ui/Menu';
 import { PUZZLE_DATA } from '../utils/constants';
+import ComingSoon from '../components/ui/Soon';
 
 export const PuzzleListPage = () => {
     const [isBoy, setIsBoy] = useState(true);
+    const [selectedPuzzle, setSelectedPuzzle] = useState(null);
     const bgColor = isBoy
         ? 'bg-accent'
         : 'bg-secondary';
 
-    const [selectedPuzzle, setSelectedPuzzle] =
-        useState(null);
+     const hasAPI =
+        PUZZLE_DATA &&
+        PUZZLE_DATA.pieces &&
+        PUZZLE_DATA.pieces.length > 0;
+
+
 
     if (selectedPuzzle) {
         return (
@@ -28,6 +34,11 @@ export const PuzzleListPage = () => {
             className={`min-h-screen ${bgColor} font-sans text-white`}
         >
             <div className='mx-auto w-full max-w-xl p-4 pb-32'>
+                {hasAPI ? (
+
+                <ComingSoon message="بخش پازل‌ها بزودی فعال می‌شود 🧩🚀" />
+                ):(
+                                     <>
                 <section className='mb-6 rounded-2xl bg-black/30 p-6 text-center shadow-lg shadow-black/50'>
                     <h2 className='mb-4 text-xl font-extrabold tracking-wider'>
                         پیشرفت پازل
@@ -135,6 +146,8 @@ export const PuzzleListPage = () => {
                         ),
                     )}
                 </section>
+                </>
+                )}
             </div>
             <Menu />
         </div>

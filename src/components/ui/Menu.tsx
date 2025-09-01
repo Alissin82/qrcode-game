@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { FaMedal } from 'react-icons/fa6';
-import { TbLayoutGridFilled } from 'react-icons/tb';
 import { NavLink } from 'react-router-dom';
 import HomeIcon from './icons/HomeIcon';
 import MissionIcon from './icons/MissionIcon';
