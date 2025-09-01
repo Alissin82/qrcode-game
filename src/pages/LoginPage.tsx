@@ -6,7 +6,7 @@ import clsx from 'clsx';
 
 const LoginPage = () => {
     const navigate = useNavigate();
-    const [qrData, setQrData] = useState<{ hash: string; }>();
+    const [qrData, setQrData] = useState<{ hash: string; }>({ hash: '' });
     const [gender, setGender] = useState('');
     const [deviceType, setDeviceType] = useState('');
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -127,10 +127,26 @@ const LoginPage = () => {
                     }
                 </div>
 
-                {/* Form Section */}
                 <div className="space-y-6">
-                    {/* Gender Dropdown */}
                     <div>
+
+                        {
+                            !import.meta.env.PROD &&
+                            <>
+                                <label
+                                    className="mb-1 block text-right text-sm font-medium text-gray-700"
+                                >
+                                    هش برای لاگین
+                                </label>
+                                <input
+                                    className="input w-full bg-gray-100 text-right"
+                                    value={qrData?.hash}
+                                    onChange={(e) => setQrData({ hash: e.target.value })}
+                                >
+                                </input>
+                            </>
+                        }
+
                         <label
                             htmlFor="gender"
                             className="mb-1 block text-right text-sm font-medium text-gray-700"
@@ -141,12 +157,7 @@ const LoginPage = () => {
                             id="gender"
                             className="select select-bordered w-full bg-gray-100 text-right"
                             value={gender}
-                            onChange={(e) =>
-                                setGender(
-                                    e.target
-                                        .value,
-                                )
-                            }
+                            onChange={(e) => setGender(e.target.value)}
                             required
                         >
                             <option
@@ -219,7 +230,6 @@ const LoginPage = () => {
                 </div>
             </div>
 
-            {/* Confirmation Drawer (Modal) */}
             <div
                 className={`modal modal-bottom !absolute !w-full !p-0 ${isDrawerOpen ? 'modal-open' : ''}`}
             >
