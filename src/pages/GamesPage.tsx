@@ -15,13 +15,26 @@ export const GamesPage = () => {
 
     const [gamesList, setGamesList] =
         useState<any>([]);
+    const [score, setScore] = useState<any>();
 
     const getGames = async () => {
         try {
             const res =
                 await apiClient.get(`/games`);
-            console.log(res.data.data);
             setGamesList(res.data.data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const getScores = async () => {
+        try {
+            const res =
+                await apiClient.get(
+                    `/games/score`,
+                );
+            console.log(res.data.data);
+            setScore(res.data.data);
         } catch (error) {
             console.log(error);
         }
@@ -33,6 +46,7 @@ export const GamesPage = () => {
 
     useEffect(() => {
         getGames();
+        getScores();
     }, []);
 
     return (
@@ -85,7 +99,9 @@ export const GamesPage = () => {
                     <section className='mt-6 grid grid-cols-2 gap-4 text-center'>
                         <div className='rounded-2xl bg-black/20 p-4'>
                             <p className='text-2xl font-bold'>
-                                ۲,۰۰۰,۰۰۰
+                                {
+                                    score.total_score
+                                }
                             </p>
                             <p className='text-sm opacity-80'>
                                 امتیاز کلی تیم شما
@@ -93,7 +109,9 @@ export const GamesPage = () => {
                         </div>
                         <div className='rounded-2xl bg-black/20 p-4'>
                             <p className='text-2xl font-bold'>
-                                ۱,۰۰۰,۰۰۰
+                                {
+                                    score.incoming_score
+                                }
                             </p>
                             <p className='text-sm opacity-80'>
                                 امتیاز های دریافتی
@@ -103,7 +121,7 @@ export const GamesPage = () => {
                 </section>
 
                 {/* Filter Tabs */}
-                <section className='mb-6 flex items-center justify-between gap-2 rounded-2xl p-2 text-sm'>
+                {/* <section className='mb-6 flex items-center justify-between gap-2 rounded-2xl p-2 text-sm'>
                     <button
                         onClick={() =>
                             setActiveTab('all')
@@ -149,12 +167,12 @@ export const GamesPage = () => {
                     >
                         بازی کارتی
                     </button>
-                </section>
+                </section> */}
 
                 {/* Games List */}
                 <section className='space-y-3'>
                     <h3 className='mb-2 text-right text-lg font-bold'>
-                        همه بازی ها
+                        لیست بازی ها
                     </h3>
                     {gamesList.map(
                         (item: any) => (

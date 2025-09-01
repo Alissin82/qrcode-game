@@ -34,7 +34,6 @@ export const GiftsPage = () => {
             className={`min-h-screen ${bgColor} font-sans text-white`}
         >
             <div className='mx-auto w-full max-w-xl p-4 pb-32'>
-                <GetScors />
                 {/* Top Stats Section */}
                 <section className='mb-6 flex items-center justify-around rounded-2xl bg-black/20 p-6 text-center shadow-md'>
                     <div>
@@ -62,8 +61,10 @@ export const GiftsPage = () => {
                     </div>
                 </section>
 
+                <GetScors />
+
                 {/* Filter Tabs */}
-                <section className='mb-6 flex items-center justify-between rounded-2xl bg-black/20 p-2 text-sm shadow-md'>
+                {/* <section className='mb-6 flex items-center justify-between rounded-2xl bg-black/20 p-2 text-sm shadow-md'>
                     <button
                         onClick={() =>
                             setActiveTab('all')
@@ -106,10 +107,10 @@ export const GiftsPage = () => {
                         جوایز روزانه
                         <FaStar />
                     </button>
-                </section>
+                </section> */}
 
                 {/* Gifts List */}
-                <section className='flex flex-col gap-3'>
+                {/* <section className='flex flex-col gap-3'>
                     {GIFTS_DATA.map((gift) => (
                         <div
                             key={gift.id}
@@ -160,7 +161,7 @@ export const GiftsPage = () => {
                             </div>
                         </div>
                     ))}
-                </section>
+                </section> */}
             </div>
             <Menu />
         </div>

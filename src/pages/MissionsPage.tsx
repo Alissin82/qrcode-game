@@ -73,14 +73,13 @@ const MissionsPage = () => {
         const response = await apiClient.post(
             `/actions/${id}/start`,
         );
-        console.log(response.data.data.id);
         setScanning(false);
         if (response.status == 200)
             navigate(
                 `/mission/${response.data.data.id}`,
             );
     }
-    console.log(actions)
+
     return (
         <div
             className={`min-h-screen ${className} font-sans text-white`}
