@@ -57,9 +57,9 @@ const DashboardPage = () => {
                 <header className='mb-6 flex items-center justify-between rounded-2xl bg-white/20 p-4'>
                     <div className='flex items-center gap-3 text-right'>
                         <div className='avatar'>
-                            <div className='ring-primary ring-offset-base-100 w-14 rounded-full ring ring-offset-2'>
+                            <div className='ring-primary ring-offset-base-100 w-14 rounded-full ring ring-amber-200 ring-offset-2'>
                                 <img
-                                    src='/images/profile.jpg'
+                                    src='/images/logo3.jpg'
                                     alt='User Avatar'
                                 />
                             </div>

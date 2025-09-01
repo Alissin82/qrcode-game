@@ -1,8 +1,4 @@
-import {
-    useContext,
-    useEffect,
-    useState,
-} from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FaMedal } from 'react-icons/fa6';
 import { TbCoinFilled } from 'react-icons/tb';
 import GetScors from '../components/ui/GetScors';
@@ -12,17 +8,13 @@ import { apiClient } from '../utils';
 import { TeamDataContext } from '../contexts/TeamDataContext';
 
 export const GiftsPage = () => {
-    const { data: team } = useContext(
-        TeamDataContext,
-    );
+    const { data: team } = useContext(TeamDataContext);
 
     const [isBoy, setIsBoy] = useState(false);
     // const [activeTab, setActiveTab] =
     //     useState('all');
 
-    const bgColor = isBoy
-        ? 'bg-blue-900'
-        : 'bg-pink-600';
+    const bgColor = isBoy ? 'bg-blue-900' : 'bg-pink-600';
 
     const activeBtnColor = isBoy
         ? 'bg-gradient-to-r from-blue-400 to-indigo-600 text-white'
@@ -33,31 +25,23 @@ export const GiftsPage = () => {
         : 'bg-gradient-to-r from-yellow-300 to-orange-500 text-black';
 
     return (
-        <div
-            className={`min-h-screen ${bgColor} font-sans text-white`}
-        >
-            <div className='mx-auto w-full max-w-xl p-4 pb-32'>
+        <div className={`min-h-screen ${bgColor} font-sans text-white`}>
+            <div className="mx-auto w-full max-w-xl p-4 pb-32">
                 {/* Top Stats Section */}
-                <section className='mb-6 flex items-center justify-around rounded-2xl bg-black/20 p-6 text-center shadow-md'>
+                <section className="mb-6 flex items-center justify-around rounded-2xl bg-black/20 p-6 text-center shadow-md">
                     <div>
-                        <p className='text-3xl font-extrabold'>
-                            {team?.coin}
-                        </p>
-                        <p className='mt-1 flex items-center justify-center gap-2 text-sm opacity-80'>
+                        <p className="text-3xl font-extrabold">{team?.coin}</p>
+                        <p className="mt-1 flex items-center justify-center gap-2 text-sm opacity-80">
                             سکه
                             <FaMedal size={22} />
                         </p>
                     </div>
-                    <div className='h-16 w-px bg-white/20'></div>{' '}
+                    <div className="h-16 w-px bg-white/20"></div>{' '}
                     <div>
-                        <p className='text-3xl font-extrabold'>
-                            {team?.score}
-                        </p>
-                        <p className='mt-1 flex items-center justify-center gap-2 text-sm opacity-80'>
+                        <p className="text-3xl font-extrabold">{team?.score}</p>
+                        <p className="mt-1 flex items-center justify-center gap-2 text-sm opacity-80">
                             امتیاز
-                            <TbCoinFilled
-                                size={22}
-                            />
+                            <TbCoinFilled size={22} />
                         </p>
                     </div>
                 </section>
