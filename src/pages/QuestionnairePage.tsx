@@ -27,7 +27,7 @@ export const QuestionnairePage = () => {
                 return;
             }
 
-            const res: AxiosResponse<ApiResponse<any>> = await apiClient.post(`/tasks/${id}/mcq/${data?.id}`, {
+            const res: AxiosResponse<ApiResponse<any>> = await apiClient.post(`/mcq/${data?.id}`, {
                     answer: selectedAnswer.value,
                 },
             );

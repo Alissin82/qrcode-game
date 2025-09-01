@@ -22,12 +22,8 @@ const DashboardPage = () => {
     const { data: team, setData: setTeam } = useContext(TeamDataContext);
 
     const className = useMemo(() => {
-        return team?.gender
-            ? 'bg-accent'
-            : 'bg-secondary';
+        return team?.gender ? 'bg-accent' : 'bg-secondary';
     }, [team]);
-
-    const [isScanning, setIsScanning] = useState(false);
 
     useEffect(() => {
         async function fetchTeam() {

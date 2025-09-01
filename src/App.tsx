@@ -29,24 +29,10 @@ import { UploadFileMission } from './pages/FileUploadPage.tsx';
 import GuestLayout from './components/layouts/GuestLayout.tsx';
 
 function App() {
-    const [isLoading, setIsLoading] = useState(true);
     const [teamData, setTeamData] = useState<Team | null>(null);
 
     useEffect(() => {
         apiClient.get(`${config.host}sanctum/csrf-cookie`);
-
-        // async function fetchTeam() {
-        //     try {
-        //         const response = await apiClient.get('/teams/me');
-        //         setTeamData(response.data.data);
-        //         setIsLoading(false);
-        //     } catch (e) {
-        //         setIsLoading(false);
-        //     }
-        //
-        // }
-
-        // if (!teamData) fetchTeam();
     }, []);
 
     return (

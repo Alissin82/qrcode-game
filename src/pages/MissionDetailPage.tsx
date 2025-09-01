@@ -1,4 +1,4 @@
-import type { AxiosResponse } from 'axios';
+import { type AxiosResponse } from 'axios';
 import {
     useContext,
     useEffect, useMemo, useRef,
@@ -9,7 +9,7 @@ import {
     FaBook,
     FaClock,
     FaDownload,
-    FaKey, FaLock,
+    FaLock,
     FaMapMarkerAlt,
     FaPlay,
     FaPuzzlePiece,
@@ -22,13 +22,16 @@ import Menu from '../components/ui/Menu';
 import { TeamDataContext } from '../contexts/TeamDataContext.ts';
 import type { ApiResponse } from '../types/apiResponse';
 import { apiClient } from '../utils';
-import type { ActionDetail } from '../types/action';
+import type { Action, ActionDetail } from '../types/action';
+import toast from 'react-hot-toast';
+import QrCodeScanner from '../components/ui/QrCodeScanner.tsx';
 
 const MissionDetailPage = () => {
     const { missionId } = useParams();
     const navigate = useNavigate();
     const iconRef = useRef<HTMLImageElement>(null);
     const [action, setAction] = useState<ActionDetail>();
+    const [scanning, setScanning] = useState(false);
 
     const { data: teamData } = useContext(TeamDataContext);
     const className = useMemo(() => {
@@ -100,12 +103,40 @@ const MissionDetailPage = () => {
     };
 
     if (!action) return;
+
+    async function handleStartScanning() {
+        setScanning(true);
+
+    }
+
+    async function handleEnd(id: any) {
+        if (id != action?.id) {
+            toast.error('لطفا کارت همین عملیات را اسکن کنید.');
+            return;
+        }
+
+        try {
+            const response: AxiosResponse<ApiResponse<Action>> = await apiClient.post(`actions/${id}/end`);
+            if (response.status == 200) {
+                toast.success('عملیات با موفقیت تکمیل شد');
+                navigate('/missions');
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
     return (
         <div
             className={`min-h-screen ${className} font-sans text-white`}
             dir="rtl"
         >
-            {/* Main container with responsive max-width */}
+            {
+                scanning &&
+                <QrCodeScanner onScan={handleEnd} onError={() => {
+                }} isOpen={scanning} />
+            }
+
             <div
                 className="relative mx-auto w-full max-w-xl p-4 pb-24"
                 dir="rtl"
@@ -162,10 +193,9 @@ const MissionDetailPage = () => {
 
                 <section className="mb-6">
                     <div
-                        className="mb-4 rounded-b-xl p-4"
+                        className="mb-4 rounded-b-xl p-3"
                         style={{
-                            backgroundColor:
-                                '#00000052',
+                            backgroundColor: '#00000052',
                         }}
                     >
                         <h2 className="mb-2 text-right text-lg font-bold">
@@ -173,31 +203,28 @@ const MissionDetailPage = () => {
                         </h2>
                         <div className="flex flex-row-reverse items-center gap-3">
                             <span className="font text-sm">
-                                {(action.team_completed_task_count / action.team_completed_task_count) * 100
-                                }%
+                                {action.team_completed_task_count ? (action.team_completed_task_count / action.team_completed_task_count) * 100 : 0}%
                             </span>
                             <progress
                                 className="progress progress-warning flex-1"
-                                value={(action.team_completed_task_count / action.team_completed_task_count) * 100}
+                                value={action.team_completed_task_count ? (action.team_completed_task_count / action.team_completed_task_count) * 100 : 0}
                                 max={100}
                             ></progress>
                         </div>
-                        <div className="mt-3 grid grid-cols-2 gap-4">
+                        <div className="mt-3 grid grid-cols-2 gap-2">
                             <div
-                                className="rounded-xl p-4"
+                                className="rounded-xl p-2"
                                 style={{
                                     backgroundColor:
                                         '#FFFFFF3D',
                                 }}
                             >
-                                <div className="mb-2 flex items-center gap-2">
+                                <div className="mb-2 flex items-center gap-1">
                                     <FaClock
                                         size={16}
                                     />
                                     <span className="text-sm">
-                                        زمان
-                                        تخمینی
-                                        عملیات:
+                                        زمان تخمینی عملیات:
                                     </span>
                                 </div>
                                 <div className="text-lg font-bold">
@@ -207,35 +234,30 @@ const MissionDetailPage = () => {
                                 </div>
                             </div>
                             <div
-                                className="rounded-xl p-4"
+                                className="rounded-xl p-2"
                                 style={{
                                     backgroundColor:
                                         '#FFFFFF3D',
                                 }}
                             >
                                 <div className="mb-2 text-sm">
-                                    عملیات انجام
-                                    شده
+                                    وظایف انجام شده
                                 </div>
                                 <div className="text-lg font-bold">
                                     {
-                                        action?.team_completed_task_count == action.tasks.length
+                                        action?.team_completed_task_count ?? 0
                                     }
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    {/* Stats Cards */}
                 </section>
 
-                {/* Instructions Section */}
                 <section className="mb-6">
                     <div
                         className="rounded-2xl p-6"
                         style={{
-                            backgroundColor:
-                                '#00000052',
+                            backgroundColor: '#00000052',
                         }}
                     >
                         <div className="mb-4 flex items-center gap-3">
@@ -247,19 +269,7 @@ const MissionDetailPage = () => {
                         <p className="mb-4 text-right text-sm leading-relaxed">
                             برای تکمیل ماموریت،
                             تمام مراحل باید به
-                            ترتیب انجام شوند. هر
-                            مرحله پس از تکمیل
-                            مرحله قبلی باز می‌شود.
-                            برای تکمیل ماموریت،
-                            تمام مراحل باید به
-                            ترتیب انجام شوند. هر
-                            مرحله پس از تکمیل
-                            مرحله قبلی باز می‌شود.
-                            برای تکمیل ماموریت،
-                            تمام مراحل باید به
-                            ترتیب انجام شوند. هر
-                            مرحله پس از تکمیل
-                            مرحله قبلی باز می‌شود.
+                            ترتیب انجام شوند.
                         </p>
                         <button
                             className="btn px-[24px] border-none bg-white text-black rounded-[16px]"
@@ -276,14 +286,11 @@ const MissionDetailPage = () => {
                         مراحل مأموریت
                     </h2>
                     <div className="space-y-3">
-                        {action && action.tasks.map((task: Task) => (
+                        {action && action.tasks.map((task: Task<MCQ | FileUpload>) => (
                             <div
                                 key={task.id}
                                 className="mb-3 rounded-xl p-4"
-                                style={{
-                                    backgroundColor:
-                                        '#00000052',
-                                }}
+                                style={{ backgroundColor: '#00000052' }}
                             >
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-3">
@@ -291,17 +298,13 @@ const MissionDetailPage = () => {
                                             className={`flex h-10 w-10 items-center justify-center rounded-lg bg-pink-500 p-2`}
                                         >
                                             <FaPuzzlePiece
-                                                size={
-                                                    18
-                                                }
+                                                size={18}
                                                 className="text-white"
                                             />
                                         </div>
                                         <span className="font-medium">
-                                                            {
-                                                                task?.type_label
-                                                            }
-                                                        </span>
+                                            {task?.type_label}
+                                        </span>
                                     </div>
                                     {
                                         task.locked_for_team ?
@@ -310,9 +313,7 @@ const MissionDetailPage = () => {
                                                 onClick={() => hanleStart(task)}
                                             >
                                                 <FaLock
-                                                    size={
-                                                        14
-                                                    }
+                                                    size={14}
                                                 />
                                                 {
                                                     'در صف ...'
@@ -345,13 +346,44 @@ const MissionDetailPage = () => {
                             </div>
                         ))
                         }
+                        {
+                            action.tasks.filter((task: Task<MCQ | FileUpload>) => !task.done_by_team) &&
+                            <div
+                                className="mb-3 rounded-xl p-4"
+                                style={{ backgroundColor: '#00000052' }}
+                            >
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-3">
+                                        <div
+                                            className={`flex h-10 w-10 items-center justify-center rounded-lg bg-pink-500 p-2`}
+                                        >
+                                            <FaPuzzlePiece
+                                                size={18}
+                                                className="text-white"
+                                            />
+                                        </div>
+                                        <span className="font-medium">
+                                            اسکن کنید
+                                        </span>
+                                    </div>
+                                    {
+                                        <button
+                                            className={`flex cursor-pointer items-center gap-2 rounded-3xl bg-yellow-500 px-4 py-2 font-medium text-white`}
+                                            onClick={handleStartScanning}
+                                        >
+                                            <FaPlay size={14} />
+                                            {
+                                                'تکمیل عملیات'
+                                            }
+                                        </button>
+                                    }
+
+                                </div>
+                            </div>
+                        }
                     </div>
                 </section>
-
-                {/* Floating Action Button */}
             </div>
-
-            {/* Bottom Navigation */}
             <Menu />
         </div>
     );

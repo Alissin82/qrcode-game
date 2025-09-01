@@ -20,7 +20,6 @@ export const GiftsPage = () => {
         ? 'bg-blue-900'
         : 'bg-pink-600';
 
-    // 🎨 استایل دکمه‌ها بر اساس جنسیت
     const activeBtnColor = isBoy
         ? 'bg-gradient-to-r from-blue-400 to-indigo-600 text-white'
         : 'bg-gradient-to-r from-yellow-300 to-orange-500 text-black';
@@ -33,26 +32,28 @@ export const GiftsPage = () => {
         <div
             className={`min-h-screen ${bgColor} font-sans text-white`}
         >
-            <div className='mx-auto w-full max-w-xl p-4 pb-32'>
+            <div className="mx-auto w-full max-w-xl p-4 pb-32">
                 {/* Top Stats Section */}
-                <section className='mb-6 flex items-center justify-around rounded-2xl bg-black/20 p-6 text-center shadow-md'>
+                <section
+                    className="mb-6 flex items-center justify-around rounded-2xl bg-black/20 p-6 text-center shadow-md">
                     <div>
-                        <p className='text-3xl font-extrabold'>
+                        <p className="text-3xl font-extrabold">
                             {MY_TEAM_DATA.score.toLocaleString(
                                 'fa-IR',
                             )}
                         </p>
-                        <p className='mt-1 flex items-center justify-center gap-2 text-sm opacity-80'>
+                        <p className="mt-1 flex items-center justify-center gap-2 text-sm opacity-80">
                             کل جوایز
                             <FaMedal size={22} />
                         </p>
                     </div>
-                    <div className='h-16 w-px bg-white/20'></div>{' '}
+                    <div className="h-16 w-px bg-white/20"></div>
+                    {' '}
                     <div>
-                        <p className='text-3xl font-extrabold'>
+                        <p className="text-3xl font-extrabold">
                             ۲۴
                         </p>
-                        <p className='mt-1 flex items-center justify-center gap-2 text-sm opacity-80'>
+                        <p className="mt-1 flex items-center justify-center gap-2 text-sm opacity-80">
                             جوایز دریافتی
                             <TbCoinFilled size={22} />
                         </p>
@@ -60,7 +61,8 @@ export const GiftsPage = () => {
                 </section>
 
                 {/* Filter Tabs */}
-                <section className='mb-6 flex items-center justify-between rounded-2xl bg-black/20 p-2 text-sm shadow-md'>
+                <section
+                    className="mb-6 flex items-center justify-between rounded-2xl bg-black/20 p-2 text-sm shadow-md">
                     <button
                         onClick={() =>
                             setActiveTab('all')
@@ -68,7 +70,7 @@ export const GiftsPage = () => {
                         className={`btn flex-1 gap-2 rounded-xl font-bold transition ${activeTab === 'all'
                             ? activeBtnColor
                             : 'btn-ghost text-white hover:bg-white/10'
-                            }`}
+                        }`}
                     >
                         همه جوایز
                         <FaHeart />
@@ -82,7 +84,7 @@ export const GiftsPage = () => {
                         className={`btn flex-1 gap-2 rounded-xl font-bold transition ${activeTab === 'achievements'
                             ? activeBtnColor
                             : 'btn-ghost text-white hover:bg-white/10'
-                            }`}
+                        }`}
                     >
                         دستاورد ها
                         <LuNotepadText />
@@ -94,7 +96,7 @@ export const GiftsPage = () => {
                         className={`btn flex-1 gap-2 rounded-xl font-bold transition ${activeTab === 'daily'
                             ? activeBtnColor
                             : 'btn-ghost text-white hover:bg-white/10'
-                            }`}
+                        }`}
                     >
                         جوایز روزانه
                         <FaStar />
@@ -103,29 +105,30 @@ export const GiftsPage = () => {
                 </section>
 
                 {/* Gifts List */}
-                <section className='flex flex-col gap-3'>
+                <section className="flex flex-col gap-3">
                     {GIFTS_DATA.map((gift) => (
                         <div
                             key={gift.id}
                             className={`flex items-center justify-between rounded-2xl p-4 shadow-md ${gift.claimed
                                 ? 'bg-white/30'
                                 : 'bg-black/20'
-                                }`}
+                            }`}
                         >
-                            <div className='flex items-center gap-4'>
+                            <div className="flex items-center gap-4">
 
-                                <div className='avatar placeholder flex items-center align-middle self-center'>
-                                    <div className={`w-16 h-16 flex items-center justify-center rounded-full ${gift.color}`}>
-                                        <span className='text-3xl flex items-center justify-center self-center '>
+                                <div className="avatar placeholder flex items-center align-middle self-center">
+                                    <div
+                                        className={`w-16 h-16 flex items-center justify-center rounded-full ${gift.color}`}>
+                                        <span className="text-3xl flex items-center justify-center self-center ">
                                             {gift.icon}
                                         </span>
                                     </div>
                                 </div>
-                                <div className='text-right'>
-                                    <p className='font-extrabold text-lg'>
+                                <div className="text-right">
+                                    <p className="font-extrabold text-lg">
                                         {gift.title}
                                     </p>
-                                    <p className='text-sm opacity-80'>
+                                    <p className="text-sm opacity-80">
                                         {gift.reward.toLocaleString(
                                             'fa-IR',
                                         )}{' '}
@@ -133,13 +136,15 @@ export const GiftsPage = () => {
                                     </p>
                                 </div>
                             </div>
-                            <div className='flex items-center gap-4'>
+                            <div className="flex items-center gap-4">
                                 {gift.claimed ? (
-                                    <button className='btn btn-disabled rounded-xl bg-gray-500/50 text-white shadow-inner'>
+                                    <button
+                                        className="btn btn-disabled rounded-xl bg-gray-500/50 text-white shadow-inner">
                                         دریافت شده
                                     </button>
                                 ) : (
-                                    <button className={`btn rounded-xl font-bold shadow-md hover:scale-105 transition ${claimBtnColor}`}>
+                                    <button
+                                        className={`btn rounded-xl font-bold shadow-md hover:scale-105 transition ${claimBtnColor}`}>
                                         دریافت
                                     </button>
                                 )}

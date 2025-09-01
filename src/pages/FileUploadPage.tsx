@@ -6,60 +6,60 @@ import type { ApiResponse } from '../types/apiResponse';
 import { apiClient } from '../utils';
 import toast from 'react-hot-toast';
 
-const VIDEO_UPLOAD_DATA = {
-    title: 'پیدا کردن مکان و بارگذاری ویدیو',
-    currentStep: 3,
-    totalSteps: 7,
-};
 
 export const UploadFileMission = () => {
     const { id: taskId } = useParams();
+    const navigate = useNavigate();
 
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
-    const [data, setData] = useState<FileUpload>();
+    const [task, setTask] = useState<Task<FileUpload>>();
     const [loading, setLoading] = useState(true);
+
     const { data: teamData } = useContext(TeamDataContext);
     const className = useMemo(() => {
         return teamData?.gender ? 'bg-accent' : 'bg-secondary';
     }, [teamData]);
 
-    const navigate = useNavigate();
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+    const handleSubmit = async () => {
         try {
             if (!selectedFile) {
                 toast.error('لطفا یک فایل آپلود کنید.');
                 return;
             }
-
-            const res: AxiosResponse<ApiResponse<any>> = await apiClient.post(`/tasks/${taskId}/file-upload/${data?.id}`, {
-                    file: selectedFile,
+            const data = {
+                file: selectedFile,
+            };
+            const res: AxiosResponse<ApiResponse<any>> = await apiClient.post(`/file-upload/${task?.taskable.id}`, data,
+                {
+                    'headers': {
+                        'Content-Type': 'multipart/form-data',
+                    },
                 },
             );
 
             if (res.status == 200) {
                 toast.success(`با موفقیت انجام شد`);
             }
-            setTimeout(() => navigate(`/mission/${data?.id}`));
+            setTimeout(() => navigate(`/mission/${task?.id}`));
         } catch (error) {
             toast.error(`با خطا مواجه شد`);
         }
     };
 
-    const handleFileChange = (
-        e: React.ChangeEvent<HTMLInputElement>,
-    ) => {
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        console.log(e.target.files);
         if (e.target.files && e.target.files[0]) {
             setSelectedFile(e.target.files[0]);
+            console.log('fileing');
+            handleSubmit();
         }
     };
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res: AxiosResponse<ApiResponse<Task>> = await apiClient.get(`/tasks/${taskId}`);
-                setData(res.data.data.taskable as FileUpload);
+                const res: AxiosResponse<ApiResponse<Task<FileUpload>>> = await apiClient.get(`/tasks/${taskId}`);
+                setTask(res.data.data);
                 setLoading(false);
             } catch (error) {
                 console.log(error);
@@ -75,60 +75,60 @@ export const UploadFileMission = () => {
         >
             <div className="w-full max-w-xl p-4 text-center">
                 <header className="mb-8 flex items-center justify-between">
-                    <h1
-                        onClick={() => navigate(-1)}
-                        className="text-xl font-bold">
-                        بازگشت
-                    </h1>
-                    <button className="btn btn-circle btn-ghost bg-white/20">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        >
-                            <line
-                                x1="5"
-                                y1="12"
-                                x2="19"
-                                y2="12"
-                            ></line>
-                            <polyline points="12 5 19 12 12 19"></polyline>
-                        </svg>
-                    </button>
+                    <div
+                        onClick={() => navigate(`/mission/${task?.action_id}`)}
+                        className={'flex justify-between items-center w-full'}>
+                        <p
+                            className="text-xl font-bold ">
+                            بازگشت
+                        </p>
+                        <button className="btn btn-circle btn-ghost bg-white/20">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            >
+                                <line
+                                    x1="5"
+                                    y1="12"
+                                    x2="19"
+                                    y2="12"
+                                ></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </button>
+                    </div>
                 </header>
 
-                {/* Main Content */}
                 <main className="space-y-6">
-                    <div className="mb-2 rounded-2xl bg-black/20 p-6">
+                    <div className="mb-2 rounded-2xl bg-black/20 p-4">
                         <h2 className="text-2xl font-bold">
-                            {
-                                VIDEO_UPLOAD_DATA.title
-                            }
+                            آپلود فایل
                         </h2>
                         <p className="mt-2 opacity-80">
                             مرحله{' '}
                             {
-                                VIDEO_UPLOAD_DATA.currentStep
+                                task?.order + 1
                             }{' '}
                             از{' '}
                             {
-                                VIDEO_UPLOAD_DATA.totalSteps
+                                task?.action_tasks_count
                             }
                         </p>
                     </div>
 
-                    <div className="mb-2 space-y-4 rounded-2xl bg-black/20 p-6 text-right">
+                    <div className="mb-2 flex flex-col gap-2 space-y-4 rounded-2xl bg-black/20 p-4 text-right">
                         <h3 className="font-bold">
                             راهنمای آپلود فایل
                         </h3>
                         <p>
-
+                            {task?.taskable.description}
                         </p>
                         <div className="flex items-center gap-2 rounded-lg bg-black/20 p-3">
                             <span>📍</span>
@@ -139,7 +139,7 @@ export const UploadFileMission = () => {
                     </div>
 
                     <div className="flex flex-col items-center gap-4 rounded-2xl bg-black/20 p-8">
-                        <div className="flex h-20 w-20 items-center justify-center rounded-full bg-pink-500">
+                        <div className="flex h-20 w-20 items-center justify-center rounded-full bg-pink-500 relative">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="36"
@@ -162,26 +162,23 @@ export const UploadFileMission = () => {
                             </svg>
                         </div>
                         <h3 className="text-lg font-bold">
-                            انتخاب ویدیو
+                            انتخاب فایل
                         </h3>
                         <p className="text-sm opacity-80">
-                            ویدیو خود را از گالری
+                            فایل خود را از گالری
                             انتخاب کنید
                         </p>
                         <label
                             htmlFor="video-upload"
-                            className="btn btn-outline w-full max-w-xs border-white/50 text-white"
+                            className="btn btn-outline max-w-xs border-white/50 opacity-[1%] absolute w-full h-[200px]"
                         >
-                            انتخاب ویدیو
                         </label>
                         <input
                             id="video-upload"
                             type="file"
-                            accept="video/*"
+                            accept="application/*"
                             className="hidden"
-                            onChange={
-                                handleFileChange
-                            }
+                            onChange={handleFileChange}
                         />
                         {selectedFile && (
                             <p className="mt-2 text-sm">

@@ -97,7 +97,7 @@ function QrCodeScanner({ onScan, onError, isOpen }: QrCodeScannerProps) {
                     }
                     <button
                         onClick={handleClick}
-                        className={'h-[90px]  w-full rounded-[12px] text-[36px] font-bold text-white bg-gradient-to-r from-[#EF4770] to-[#074F9A]'}>
+                        className={'h-[54px]  w-full rounded-[12px] text-[18px] font-bold text-white bg-gradient-to-r from-[#EF4770] to-[#074F9A]'}>
                         تایید
                     </button>
                 </div>
