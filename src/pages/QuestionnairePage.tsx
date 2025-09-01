@@ -15,7 +15,7 @@ export const QuestionnairePage = () => {
     }, [teamData]);
 
     const [loading, setLoading] = useState<boolean>(true);
-    const [data, setData] = useState<MCQ>();
+    const [taskData, setTaskData] = useState<Task<MCQ>>();
     const navigate = useNavigate();
     const [selectedAnswer, setSelectedAnswer] = useState<Option | null>(null);
 
@@ -27,7 +27,7 @@ export const QuestionnairePage = () => {
                 return;
             }
 
-            const res: AxiosResponse<ApiResponse<any>> = await apiClient.post(`/mcq/${data?.id}`, {
+            const res: AxiosResponse<ApiResponse<any>> = await apiClient.post(`/mcq/${taskData?.taskable.id}`, {
                     answer: selectedAnswer.value,
                 },
             );
@@ -37,7 +37,7 @@ export const QuestionnairePage = () => {
             } else {
                 toast.error(`جواب شما غلط بود`);
             }
-            setTimeout(() => navigate(`/mission/${data?.id}`));
+            setTimeout(() => navigate(`/mission/${taskData?.action_id}`), 1250);
         } catch (error) {
             toast.error(`پاسخ شما اشتباه است`);
         }
@@ -46,8 +46,8 @@ export const QuestionnairePage = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res: AxiosResponse<ApiResponse<Task>> = await apiClient.get(`/tasks/${id}`);
-                setData(res.data.data.taskable as MCQ);
+                const res: AxiosResponse<ApiResponse<Task<MCQ>>> = await apiClient.get(`/tasks/${id}`);
+                setTaskData(res.data.data);
                 setLoading(false);
             } catch (error) {
                 console.log(error);
@@ -63,32 +63,35 @@ export const QuestionnairePage = () => {
         >
             <div className="w-full max-w-xl p-4 text-center">
                 <header className="mb-8 flex items-center justify-between">
-                    <h1
-                        onClick={() => navigate(-1)}
-                        className="text-xl font-bold">
-                        بازگشت
-                    </h1>
-                    <button className="btn btn-circle btn-ghost bg-white/20">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        >
-                            <line
-                                x1="5"
-                                y1="12"
-                                x2="19"
-                                y2="12"
-                            ></line>
-                            <polyline points="12 5 19 12 12 19"></polyline>
-                        </svg>
-                    </button>
+                    <div
+                        onClick={() => navigate(`/mission/${taskData?.action_id}`)}
+                        className={'flex justify-between items-center w-full'}>
+                        <p
+                            className="text-xl font-bold ">
+                            بازگشت
+                        </p>
+                        <button className="btn btn-circle btn-ghost bg-white/20">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            >
+                                <line
+                                    x1="5"
+                                    y1="12"
+                                    x2="19"
+                                    y2="12"
+                                ></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </button>
+                    </div>
                 </header>
 
                 <main className="space-y-6">
@@ -104,7 +107,7 @@ export const QuestionnairePage = () => {
                     >
                         <div className="my-2 rounded-2xl bg-black/20 p-6">
                             <h3 className="mb-4 font-bold">
-                                {data?.question}
+                                {taskData?.taskable.question}
                             </h3>
                         </div>
 
@@ -118,8 +121,9 @@ export const QuestionnairePage = () => {
 
                                     </div>
                                     :
-                                    data?.options.map((i: Option) => (
+                                    taskData?.taskable.options.map((i: Option, idx) => (
                                         <button
+                                            key={idx}
                                             type="button"
                                             onClick={() => {
                                                 setSelectedAnswer(i);

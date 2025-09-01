@@ -267,9 +267,8 @@ const MissionDetailPage = () => {
                             <FaBook size={20} />
                         </div>
                         <p className="mb-4 text-right text-sm leading-relaxed">
-                            برای تکمیل ماموریت،
-                            تمام مراحل باید به
-                            ترتیب انجام شوند.
+                            برای تکمیل ماموریت، تمام مراحل باید به ترتیب انجام شوند.
+                            پس از انجام تمام وظایف، میتوانید کارت پایان را اسکن کنید.
                         </p>
                         <button
                             className="btn px-[24px] border-none bg-white text-black rounded-[16px]"
@@ -347,39 +346,71 @@ const MissionDetailPage = () => {
                         ))
                         }
                         {
-                            action.tasks.filter((task: Task<MCQ | FileUpload>) => !task.done_by_team) &&
-                            <div
-                                className="mb-3 rounded-xl p-4"
-                                style={{ backgroundColor: '#00000052' }}
-                            >
-                                <div className="flex items-center justify-between">
-                                    <div className="flex items-center gap-3">
-                                        <div
-                                            className={`flex h-10 w-10 items-center justify-center rounded-lg bg-pink-500 p-2`}
-                                        >
-                                            <FaPuzzlePiece
-                                                size={18}
-                                                className="text-white"
-                                            />
-                                        </div>
-                                        <span className="font-medium">
+                            action.tasks.filter((task: Task<MCQ | FileUpload>) => !task.done_by_team).length == 0 ?
+                                <div
+                                    className="mb-3 rounded-xl p-4"
+                                    style={{ backgroundColor: '#00000052' }}
+                                >
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex items-center gap-3">
+                                            <div
+                                                className={`flex h-10 w-10 items-center justify-center rounded-lg bg-pink-500 p-2`}
+                                            >
+                                                <FaPuzzlePiece
+                                                    size={18}
+                                                    className="text-white"
+                                                />
+                                            </div>
+                                            <span className="font-medium">
                                             اسکن کنید
                                         </span>
-                                    </div>
-                                    {
-                                        <button
-                                            className={`flex cursor-pointer items-center gap-2 rounded-3xl bg-yellow-500 px-4 py-2 font-medium text-white`}
-                                            onClick={handleStartScanning}
-                                        >
-                                            <FaPlay size={14} />
-                                            {
-                                                'تکمیل عملیات'
-                                            }
-                                        </button>
-                                    }
+                                        </div>
+                                        {
+                                            <button
+                                                className={`flex cursor-pointer items-center gap-2 rounded-3xl bg-yellow-500 px-4 py-2 font-medium text-white`}
+                                                onClick={handleStartScanning}
+                                            >
+                                                <FaPlay size={14} />
+                                                {
+                                                    'تکمیل عملیات'
+                                                }
+                                            </button>
+                                        }
 
+                                    </div>
+                                </div> :
+                                <div
+                                    className="mb-3 rounded-xl p-4"
+                                    style={{ backgroundColor: '#00000052' }}
+                                >
+                                    <div className="flex items-center justify-between opacity-65">
+                                        <div className="flex items-center gap-3">
+                                            <div
+                                                className={`flex h-10 w-10 items-center justify-center rounded-lg bg-pink-500 p-2`}
+                                            >
+                                                <FaLock
+                                                    size={18}
+                                                    className="text-white"
+                                                />
+                                            </div>
+                                            <span className="font-medium">
+                                            پایان عملیات
+                                        </span>
+                                        </div>
+                                        {
+                                            <button
+                                                className={`flex items-center gap-2 rounded-3xl bg-gray-600 px-4 py-2 font-medium text-white`}
+                                            >
+                                                <FaLock size={14} />
+                                                {
+                                                    'اسکن'
+                                                }
+                                            </button>
+                                        }
+
+                                    </div>
                                 </div>
-                            </div>
+
                         }
                     </div>
                 </section>

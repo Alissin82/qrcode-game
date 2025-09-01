@@ -24,8 +24,7 @@ interface Action {
     meta: Meta;
 }
 
-interface ActionDetail {
-    team_completed_task_count: number;
+interface ActionDetail extends Action {
     id: number;
     name: string;
     region_id: string;
@@ -41,7 +40,6 @@ interface ActionDetail {
         created_at: string;
         updated_at: string;
     };
-    started_by_team: boolean;
     attachment: {
         id: number;
         uuid: string;
