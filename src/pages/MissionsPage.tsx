@@ -80,7 +80,7 @@ const MissionsPage = () => {
                 `/mission/${response.data.data.id}`,
             );
     }
-
+    console.log(actions)
     return (
         <div
             className={`min-h-screen ${className} font-sans text-white`}

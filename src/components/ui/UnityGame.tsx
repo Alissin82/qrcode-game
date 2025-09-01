@@ -3,20 +3,20 @@ import {
     Unity,
     useUnityContext,
 } from 'react-unity-webgl';
+import { apiClient } from '../../utils';
+import {
+    useNavigate,
+    useParams,
+} from 'react-router-dom';
 
 function UnityGame({
     currentGame,
 }: {
     currentGame: any;
 }) {
-    console.log(currentGame);
-    console.log(
-        `${currentGame.base_url}${currentGame.name}/Build/WebBuilds.loader.js`,
-    );
-    console.log(
-        `${currentGame.base_url}${currentGame.name}/Build/WebBuilds.data`,
-    );
+    const { id: gameId } = useParams();
 
+    const navigate = useNavigate();
     const {
         unityProvider,
         isLoaded,
@@ -29,19 +29,27 @@ function UnityGame({
         codeUrl: `${currentGame.base_url}${currentGame.name}/Build/WebBuilds.wasm`,
     });
 
+    const handleSendPoint = async (
+        pointsEarned: any,
+    ) => {
+        try {
+            const res = await apiClient.post(
+                `/games/${gameId}`,
+                { score: pointsEarned },
+            );
+            if (res.status === 200) {
+                navigate('/');
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     const handleGameOver = useCallback(
         (pointsEarned: unknown) => {
             if (typeof pointsEarned !== 'number')
                 return;
-            // router.post(
-            //     route(
-            //         'active-game.points-earned',
-            //         {
-            //             points_earned:
-            //                 pointsEarned,
-            //         },
-            //     ),
-            // );
+            handleSendPoint(pointsEarned);
         },
         [],
     );
@@ -63,10 +71,6 @@ function UnityGame({
         handleGameOver,
     ]);
 
-    // if (!isLoaded)
-    //     return (
-
-    //     );
     return (
         <>
             {!isLoaded && (

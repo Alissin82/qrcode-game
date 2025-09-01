@@ -1,20 +1,22 @@
 import {
-    useCallback,
     useEffect,
-    useState,
+    useState
 } from 'react';
 
-import { apiClient } from '../utils';
+import { useParams } from 'react-router-dom';
 import UnityGame from '../components/ui/UnityGame';
+import { apiClient } from '../utils';
 
 export default function GamePages() {
+    const { id: gameId } = useParams();
     const [currentGame, setCurrentGame] =
         useState();
 
     const getGame = async () => {
         try {
-            const res =
-                await apiClient.get(`/games/1`);
+            const res = await apiClient.get(
+                `/games/${gameId}`,
+            );
             setCurrentGame(res.data.data);
         } catch (error) {
             console.log(error);

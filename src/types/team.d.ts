@@ -10,6 +10,13 @@
 //     start: Date|string
 // }
 
+interface TeamLeadbord {
+    id: number;
+    name: string;
+    score: number;
+    score_teams_count: number;
+}
+
 interface Team {
     id: number;
     name: string;
