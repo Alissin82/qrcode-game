@@ -174,14 +174,14 @@ const MissionsPage = () => {
 
                                 {/* Details Section */}
                                 <div className="mb-4 grid grid-cols-2 gap-3">
-                                    <div className="rounded-lg bg-blue-800/50 p-3">
+                                    <div className="rounded-lg bg-black/50 p-3">
                                         <div className="mb-1 text-sm">مکان:</div>
                                         <div className="flex items-center gap-2">
                                             <FaMapMarkerAlt size={14} />
                                             <span className="text-sm">{action.region.name}</span>
                                         </div>
                                     </div>
-                                    <div className="rounded-lg bg-blue-800/50 p-3">
+                                    <div className="rounded-lg bg-black/50 p-3">
                                         <div className="mb-1 text-sm">عملیات انجام شده</div>
                                         <span className="text-sm">{action.meta.completed}</span>
                                     </div>
