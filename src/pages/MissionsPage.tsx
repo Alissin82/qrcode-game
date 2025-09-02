@@ -163,24 +163,9 @@ const MissionsPage = () => {
                                             }
                                             max={100}
                                         ></progress>
-<<<<<<< HEAD
                                         <span className="text-sm">
                                             {action.meta.total > 0
                                                 ? (action.meta.completed / action.meta.total) * 100
-=======
-                                        <span className='text-sm'>
-                                            {action
-                                                .meta
-                                                .total >
-                                                0
-                                                ? (action
-                                                    .meta
-                                                    .completed /
-                                                    action
-                                                        .meta
-                                                        .total) *
-                                                100
->>>>>>> 10aaf153510a966dcbd27dcdd4398b00aaa4d934
                                                 : 0}
                                             %
                                         </span>
