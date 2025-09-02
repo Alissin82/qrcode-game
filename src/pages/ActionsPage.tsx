@@ -38,13 +38,18 @@ const ActionsPage = () => {
             // Fetch each image as a blob and set it
             fetchedActions.forEach(async (action: Action, index: number) => {
                 try {
-                    const imgResponse = await apiClient.get(action.icon.download_url, {
-                        responseType: 'blob',
-                    });
-                    const imgUrl = URL.createObjectURL(imgResponse.data);
+                    let src: string;
+                    if (action.icon.disk == 's3') {
+                        src = action.icon.download_url;
+                    } else {
+                        const imgResponse = await apiClient.get(action.icon.download_url, {
+                            responseType: 'blob',
+                        });
+                        src = URL.createObjectURL(imgResponse.data);
+                    }
 
                     if (iconRefs.current[index]) {
-                        iconRefs.current[index].setAttribute('src', imgUrl);
+                        iconRefs.current[index].setAttribute('src', src);
                     }
                 } catch (err) {
                     console.error(`Failed to load image for action ${action.id}`, err);
@@ -56,7 +61,8 @@ const ActionsPage = () => {
     }, []);
 
     async function handleScan(data: any) {
-        if (data.type != 'action_start') return toast.error('لطفا qr code همین عملیات را اسکن کنید.');
+        if (data.type != 'action_start')
+            return toast.error('لطفا qr code همین عملیات را اسکن کنید.');
         if (data.id != cardId) return toast.error('لطفا qr code همین عملیات را اسکن کنید.');
         try {
             const response = await apiClient.post(`/actions/${data.id}/start`);

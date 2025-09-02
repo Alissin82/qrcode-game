@@ -1,17 +1,7 @@
 import type { AxiosResponse } from 'axios';
-import {
-    useContext,
-    useEffect,
-    useMemo,
-} from 'react';
-import {
-    FaMedal,
-    FaTrophy,
-} from 'react-icons/fa6';
-import {
-    LuAlarmClock,
-    LuLogOut,
-} from 'react-icons/lu';
+import { useContext, useEffect, useMemo } from 'react';
+import { FaMedal, FaTrophy } from 'react-icons/fa6';
+import { LuAlarmClock, LuLogOut } from 'react-icons/lu';
 import { TbCoinFilled } from 'react-icons/tb';
 import SettingsIcon from '../components/ui/icons/SettingIcon';
 import Menu from '../components/ui/Menu';
@@ -24,9 +14,9 @@ import BellIcon from '../components/ui/icons/BellIcon.tsx';
 
 const DashboardPage = () => {
     const navigate = useNavigate();
-    const { data: team, setData: setTeam } =
-        useContext(TeamDataContext);
+    const { data: team, setData: setTeam } = useContext(TeamDataContext);
 
+<<<<<<< HEAD
 const className = useMemo(() => {
     if (team?.gender === true) {
         return 'bg-accent'; // پسر
@@ -34,12 +24,15 @@ const className = useMemo(() => {
         return 'bg-pink-500'; // دختر
     }
 }, [team]);
+=======
+    const className = useMemo(() => {
+        return team?.gender ? 'bg-accent' : 'bg-secondary';
+    }, [team]);
+>>>>>>> e6c794c2fb6616cff2203022f7ef2412dfd51f58
 
     useEffect(() => {
         async function fetchTeam() {
-            const response: AxiosResponse<
-                ApiResponse<Team>
-            > = await apiClient.get(`/teams/me`);
+            const response: AxiosResponse<ApiResponse<Team>> = await apiClient.get(`/teams/me`);
             setTeam(response.data.data);
         }
 
@@ -52,90 +45,65 @@ const className = useMemo(() => {
     };
 
     return (
-        <div
-            className={`min-h-screen ${className} font-sans text-white`}
-        >
-            <div className='relative mx-auto w-full max-w-xl p-4 pb-24'>
-                <header className='mb-6 flex items-center justify-between rounded-2xl bg-white/20 p-4'>
-                    <div className='flex items-center gap-3 text-right'>
-                        <div className='avatar'>
-                            <div className='ring-offset-base-100 w-14 rounded-full ring ring-amber-200 ring-offset-2'>
-                                <img
-                                    src='/images/logo3.jpg'
-                                    alt='User Avatar'
-                                />
+        <div className={`min-h-screen ${className} font-sans text-white`}>
+            <div className="relative mx-auto w-full max-w-xl p-4 pb-24">
+                <header className="mb-6 flex items-center justify-between rounded-2xl bg-white/20 p-4">
+                    <div className="flex items-center gap-3 text-right">
+                        <div className="avatar">
+                            <div className="ring-primary ring-offset-base-100 w-14 rounded-full ring ring-offset-2">
+                                <img src="/images/logo3.jpg" alt="User Avatar" />
                             </div>
                         </div>
                         <div>
-                            <p className='font-bold'>
-                                {team?.name}
-                            </p>
+                            <p className="font-bold">{team?.name}</p>
                             {/* <p className="text-sm opacity-80">
                                 سطح سرباز
                             </p> */}
                         </div>
                     </div>
-                    <div className='flex items-center gap-3'>
+                    <div className="flex items-center gap-3">
                         <button
-                            className='btn btn-square btn-ghost bg-white/10'
-                            onClick={() =>
-                                navigate(
-                                    '/settings',
-                                )
-                            }
+                            className="btn btn-square btn-ghost bg-white/10"
+                            onClick={() => navigate('/settings')}
                         >
                             <SettingsIcon />
                         </button>
-                        <div
-                            className='indicator'
-                            onClick={() =>
-                                navigate(
-                                    '/notifications',
-                                )
-                            }
-                        >
-                            <button className='btn btn-square btn-ghost bg-white/10'>
+                        <div className="indicator" onClick={() => navigate('/notifications')}>
+                            <button className="btn btn-square btn-ghost bg-white/10">
                                 <BellIcon />
                             </button>
                         </div>
-                        <div
-                            className='indicator'
-                            onClick={() =>
-                                handleLogout()
-                            }
-                        >
-                            <button className='btn btn-square btn-ghost bg-white/10'>
-                                <LuLogOut
-                                    size={24}
-                                />
+                        <div className="indicator" onClick={() => handleLogout()}>
+                            <button className="btn btn-square btn-ghost bg-white/10">
+                                <LuLogOut size={24} />
                             </button>
                         </div>
                     </div>
                 </header>
 
                 {/* Coins Section */}
-                <div className='flex items-center justify-between gap-2'>
+                <div className="flex items-center justify-between gap-2">
                     <section
                         className={`mb-8 flex w-1/2 items-center justify-between rounded-xl bg-black/10 p-4`}
                     >
-                        <div className='flex items-center gap-2'>
-                            <div className='rounded-full bg-indigo-300 p-1'>
+                        <div className="flex items-center gap-2">
+                            <div className="rounded-full bg-indigo-300 p-1">
                                 <FaTrophy />
                             </div>
                         </div>
-                        <span className='text-2xl font-bold tracking-widest text-indigo-300'>
+                        <span className="text-2xl font-bold tracking-widest text-indigo-300">
                             {team?.score}
                         </span>
                     </section>
                     <section
                         className={`mb-8 flex w-1/2 items-center justify-between rounded-xl bg-black/10 p-4`}
                     >
-                        <div className='flex items-center gap-2'>
-                            <div className='rounded-full bg-yellow-400 p-1 text-black'>
-                                <img src="/images/coin_1fa99.png" alt="nist" width={16} height={16} />
+                        <div className="flex items-center gap-2">
+                            <div className="rounded-full bg-yellow-400 p-1 text-black">
+                                <TbCoinFilled />
                             </div>
                         </div>
-                        <span className='text-2xl font-bold tracking-widest text-yellow-500'>
+                        <span className="text-2xl font-bold tracking-widest text-yellow-500">
                             {team?.coin}
                         </span>
                     </section>
@@ -202,8 +170,6 @@ const className = useMemo(() => {
                 </section> */}
                 <Upgrade />
             </div>
-
-            {/* Bottom Navigation */}
             <Menu />
         </div>
     );

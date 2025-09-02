@@ -17,7 +17,7 @@ export const QuestionnairePage = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [taskData, setTaskData] = useState<any>();
     const navigate = useNavigate();
-    const [selectedAnswer, setSelectedAnswer] = useState();
+    const [selectedAnswer, setSelectedAnswer] = useState<Option>();
 
     const [answers, setAnswers] = useState([]);
 
@@ -29,12 +29,9 @@ export const QuestionnairePage = () => {
                 return;
             }
 
-            const res: AxiosResponse<ApiResponse<any>> = await apiClient.post(
-                `/mcq/${taskData?.taskable.id}`,
-                {
-                    answer: selectedAnswer.value,
-                }
-            );
+            const res: AxiosResponse<ApiResponse<any>> = await apiClient.post(`/mcq/${taskData?.taskable.id}`, {
+                answer: selectedAnswer?.value,
+            });
 
             if (res.data.code === 'CORRECT') {
                 toast.success(`آفرین`);
@@ -63,9 +60,7 @@ export const QuestionnairePage = () => {
     }, []);
 
     return (
-        <div
-            className={`min-h-screen ${className} flex items-center justify-center font-sans text-white`}
-        >
+        <div className={`min-h-screen ${className} flex items-center justify-center font-sans text-white`}>
             <div className="w-full max-w-xl p-4 text-center">
                 <header className="mb-8 flex items-center justify-between">
                     <div
@@ -104,11 +99,7 @@ export const QuestionnairePage = () => {
 
                         <div className="flex flex-col gap-2">
                             {loading ? (
-                                <div
-                                    className={
-                                        'flex h-[100vh] w-[100vw] items-center justify-center gap-4'
-                                    }
-                                >
+                                <div className={'flex h-[100vh] w-[100vw] items-center justify-center gap-4'}>
                                     <p>در حال بارگذاری</p>
                                     <span
                                         role="status"
@@ -117,12 +108,12 @@ export const QuestionnairePage = () => {
                                     ></span>
                                 </div>
                             ) : (
-                                answers.map((i, index) => (
+                                answers.map((i: Option, index) => (
                                     <button
                                         key={index}
                                         type="button"
                                         onClick={() => setSelectedAnswer(i)}
-                                        className={`btn btn-block h-auto justify-start py-3 text-white ${i.label === selectedAnswer.label ? 'btn-primary' : 'border-white/20 bg-black/20'}`}
+                                        className={`btn btn-block h-auto justify-start py-3 text-white ${i.label === selectedAnswer?.label ? 'btn-primary' : 'border-white/20 bg-black/20'}`}
                                     >
                                         {i.label}
                                     </button>
