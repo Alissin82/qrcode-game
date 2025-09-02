@@ -160,8 +160,6 @@ const DashboardPage = () => {
                 </section> */}
                 <Upgrade />
             </div>
-
-            {/* Bottom Navigation */}
             <Menu />
         </div>
     );
