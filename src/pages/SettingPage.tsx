@@ -156,7 +156,11 @@ const SettingsPage = () => {
                     <div className="pt-4">
                         <button
                             type="submit"
-                            className={`btn btn-lg w-full rounded-xl border-none text-xl font-bold text-white ${className}`}
+                            className={`flex flex-1 items-center justify-center gap-2 rounded-xl px-4 py-3 font-bold shadow-lg transition-transform hover:scale-105 w-full ${
+                                team?.gender
+                                    ? 'bg-gradient-to-r from-blue-400 to-indigo-600 text-white'
+                                    : 'bg-gradient-to-r from-pink-400 to-rose-500 text-white'
+                            }`}
                         >
                             ذخیره اطلاعات
                         </button>
