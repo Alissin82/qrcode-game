@@ -27,17 +27,15 @@ const MissionDetailPage = () => {
             const response: AxiosResponse<ApiResponse<ActionDetail>> = await apiClient(`/actions/${missionId}`);
             setAction(response.data.data);
             let src: string;
-            if (response.data.data.icon.disk == 's3') {
-                src = response.data.data.icon.download_url;
-            } else {
-                const imgResponse = await fetch(response.data.data.icon.download_url, {
-                    headers: {
+            const imgResponse = await fetch(response.data.data.icon.download_url, {
+                headers: {
+                    ...(response.data.data.icon.disk != 's3' && {
                         Authorization: `Bearer ${localStorage.getItem('token')}`,
-                    },
-                });
-                const blob = await imgResponse.blob();
-                src = window.URL.createObjectURL(blob);
-            }
+                    }),
+                },
+            });
+            const blob = await imgResponse.blob();
+            src = window.URL.createObjectURL(blob);
 
             iconRef?.current?.setAttribute('src', src);
         }
@@ -70,11 +68,13 @@ const MissionDetailPage = () => {
     //     }
     // };
 
-    async function downloadFile(url: string, filename: string) {
+    async function downloadFile(url: string, filename: string, disk: string) {
         try {
             const response = await fetch(url, {
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    ...(disk != 's3' && {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    }),
                 },
             });
 
@@ -102,6 +102,7 @@ const MissionDetailPage = () => {
                 console.error('No action data available');
                 return;
             }
+            const disk = teamData?.gender ? action.attachment_boy?.disk : action.attachment_girl?.disk;
 
             const downloadUrl = teamData?.gender
                 ? action.attachment_boy?.download_url
@@ -116,7 +117,7 @@ const MissionDetailPage = () => {
             const urlParts = downloadUrl.split('/');
             const originalFilename = urlParts[urlParts.length - 1] || 'download';
 
-            await downloadFile(downloadUrl, originalFilename);
+            await downloadFile(downloadUrl, originalFilename, disk);
         } catch (error) {
             console.error('Download failed:', error);
             // You might want to show a user-friendly error message here

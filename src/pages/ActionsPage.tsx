@@ -39,14 +39,16 @@ const ActionsPage = () => {
             fetchedActions.forEach(async (action: Action, index: number) => {
                 try {
                     let src: string;
-                    if (action.icon.disk == 's3') {
-                        src = action.icon.download_url;
-                    } else {
-                        const imgResponse = await apiClient.get(action.icon.download_url, {
-                            responseType: 'blob',
-                        });
-                        src = URL.createObjectURL(imgResponse.data);
-                    }
+
+                    const imgResponse = await fetch(action.icon.download_url, {
+                        headers: {
+                            ...(action.icon.disk != 's3' && {
+                                Authorization: `Bearer ${localStorage.getItem('token')}`,
+                            }),
+                        },
+                    });
+                    const blob = await imgResponse.blob();
+                    src = window.URL.createObjectURL(blob);
 
                     if (iconRefs.current[index]) {
                         iconRefs.current[index].setAttribute('src', src);
@@ -61,8 +63,7 @@ const ActionsPage = () => {
     }, []);
 
     async function handleScan(data: any) {
-        if (data.type != 'action_start')
-            return toast.error('لطفا qr code همین عملیات را اسکن کنید.');
+        if (data.type != 'action_start') return toast.error('لطفا qr code همین عملیات را اسکن کنید.');
         if (data.id != cardId) return toast.error('لطفا qr code همین عملیات را اسکن کنید.');
         try {
             const response = await apiClient.post(`/actions/${data.id}/start`);
@@ -76,12 +77,7 @@ const ActionsPage = () => {
     return (
         <div className={`min-h-screen ${className} font-sans text-white`} dir="rtl">
             {scanning && (
-                <QrCodeScanner
-                    onScan={handleScan}
-                    onError={() => {}}
-                    isOpen={scanning}
-                    onClose={() => setScanning(false)}
-                />
+                <QrCodeScanner onScan={handleScan} onError={() => {}} isOpen={scanning} onClose={() => setScanning(false)} />
             )}
             <div className="relative mx-auto w-full max-w-xl p-4 pb-24">
                 <div className="mb-6">
@@ -112,9 +108,7 @@ const ActionsPage = () => {
                 {/* Page Title */}
                 <div className="mb-6 text-center">
                     <h1 className="text-3xl font-bold">لیست عملیات</h1>
-                    <p className="mt-2 text-sm opacity-80">
-                        ماموریت‌های خود را انتخاب کنید و جایزه بگیرید
-                    </p>
+                    <p className="mt-2 text-sm opacity-80">ماموریت‌های خود را انتخاب کنید و جایزه بگیرید</p>
                 </div>
 
                 {/* Missions Grid - Matching the image design */}
@@ -146,14 +140,10 @@ const ActionsPage = () => {
                                             className="h-[32px] w-[32px]"
                                         />
                                     </div>
-                                    <h3 className="mx-4 flex-1 text-right text-lg">
-                                        {action.name}
-                                    </h3>
+                                    <h3 className="mx-4 flex-1 text-right text-lg">{action.name}</h3>
                                     {action.action_team_for ? (
                                         <div className="flex items-center gap-2">
-                                            <span className="text-sm">
-                                                {action.action_team_for?.status_label}
-                                            </span>
+                                            <span className="text-sm">{action.action_team_for?.status_label}</span>
                                             {action.action_team_for?.status == 'Pending' ? (
                                                 <FaClock size={16} className={'text-yellow-500'} />
                                             ) : action.action_team_for?.status == 'Completed' ? (
@@ -179,8 +169,7 @@ const ActionsPage = () => {
                                                     className="progress progress-primary flex-1"
                                                     value={
                                                         action.action_team_for
-                                                            ? (action.action_team_for
-                                                                  .completed_task_count /
+                                                            ? (action.action_team_for.completed_task_count /
                                                                   action.tasks_count) *
                                                               100
                                                             : 0
@@ -189,8 +178,7 @@ const ActionsPage = () => {
                                                 ></progress>
                                                 <span className="text-sm">
                                                     {action.action_team_for
-                                                        ? (action.action_team_for
-                                                              .completed_task_count /
+                                                        ? (action.action_team_for.completed_task_count /
                                                               action.tasks_count) *
                                                           100
                                                         : 0}
@@ -211,9 +199,7 @@ const ActionsPage = () => {
                                     {action.action_team_for ? (
                                         <div className="rounded-lg bg-blue-800/50 p-3">
                                             <div className="mb-1 text-sm">وظایف انجام شده</div>
-                                            <span className="text-sm">
-                                                {action.action_team_for?.completed_task_count}
-                                            </span>
+                                            <span className="text-sm">{action.action_team_for?.completed_task_count}</span>
                                         </div>
                                     ) : (
                                         <div className="rounded-lg bg-blue-800/50 p-3">
