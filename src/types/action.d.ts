@@ -6,9 +6,10 @@ interface Action {
     region_id: string;
     tasks: Task[];
     action_team_for: {
-        status: 'Pending' | 'Timeout', 'Completed',
-        status_label: string,
-        completed_task_count: number
+        status: 'Pending' | 'Timeout';
+        Completed;
+        status_label: string;
+        completed_task_count: number;
     };
     tasks_count: number;
     region: Region;
@@ -29,11 +30,11 @@ interface Meta {
     regions: {
         total: number;
         completed: number;
-    },
+    };
     actions: {
         total: number;
         completed: number;
-    }
+    };
 }
 
 interface Media {
@@ -42,4 +43,5 @@ interface Media {
     file_name: string;
     mime_type: string;
     download_url: string;
+    disk: string;
 }

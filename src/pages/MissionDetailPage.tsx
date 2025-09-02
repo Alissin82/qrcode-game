@@ -1,15 +1,6 @@
 import { type AxiosResponse } from 'axios';
 import { useContext, useEffect, useMemo, useRef, useState } from 'react';
-import {
-    FaArrowRight,
-    FaBook,
-    FaClock,
-    FaDownload,
-    FaLock,
-    FaMapMarkerAlt,
-    FaPlay,
-    FaPuzzlePiece,
-} from 'react-icons/fa';
+import { FaArrowRight, FaBook, FaClock, FaDownload, FaLock, FaMapMarkerAlt, FaPlay, FaPuzzlePiece } from 'react-icons/fa';
 import { useNavigate, useParams } from 'react-router-dom';
 import Menu from '../components/ui/Menu';
 import { TeamDataContext } from '../contexts/TeamDataContext.ts';
@@ -33,17 +24,22 @@ const MissionDetailPage = () => {
 
     useEffect(() => {
         async function fetchAction() {
-            const response: AxiosResponse<ApiResponse<ActionDetail>> = await apiClient(
-                `/actions/${missionId}`
-            );
+            const response: AxiosResponse<ApiResponse<ActionDetail>> = await apiClient(`/actions/${missionId}`);
             setAction(response.data.data);
-            const imgResponse = await fetch(response.data.data.icon.download_url, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`,
-                },
-            });
-            const blob = await imgResponse.blob();
-            iconRef?.current?.setAttribute('src', window.URL.createObjectURL(blob));
+            let src: string;
+            if (response.data.data.icon.disk == 's3') {
+                src = response.data.data.icon.download_url;
+            } else {
+                const imgResponse = await fetch(response.data.data.icon.download_url, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    },
+                });
+                const blob = await imgResponse.blob();
+                src = window.URL.createObjectURL(blob);
+            }
+
+            iconRef?.current?.setAttribute('src', src);
         }
 
         fetchAction();
@@ -165,9 +161,7 @@ const MissionDetailPage = () => {
         }
 
         try {
-            const response: AxiosResponse<ApiResponse<Action>> = await apiClient.post(
-                `actions/${data.id}/end`
-            );
+            const response: AxiosResponse<ApiResponse<Action>> = await apiClient.post(`actions/${data.id}/end`);
             if (response.status == 200) {
                 toast.success('عملیات با موفقیت تکمیل شد');
                 navigate('/missions');
@@ -180,12 +174,7 @@ const MissionDetailPage = () => {
     return (
         <div className={`min-h-screen ${className} font-sans text-white`} dir="rtl">
             {scanning && (
-                <QrCodeScanner
-                    onScan={handleEnd}
-                    onError={() => {}}
-                    isOpen={scanning}
-                    onClose={() => setScanning(false)}
-                />
+                <QrCodeScanner onScan={handleEnd} onError={() => {}} isOpen={scanning} onClose={() => setScanning(false)} />
             )}
             <div className="relative mx-auto w-full max-w-xl p-4 pb-24" dir="rtl">
                 {/* Header Section */}
@@ -211,11 +200,7 @@ const MissionDetailPage = () => {
                     >
                         <div className="mb-3 flex flex-row items-center gap-2" dir="rtl">
                             <div className="btn rounded-lg bg-purple-500 p-2">
-                                <img
-                                    ref={iconRef}
-                                    alt={'action icon'}
-                                    className={'h-[32px] w-[32px]'}
-                                />
+                                <img ref={iconRef} alt={'action icon'} className={'h-[32px] w-[32px]'} />
                             </div>
                             <h1 className="text-xl font-bold">{action?.name}</h1>
                         </div>
@@ -247,8 +232,7 @@ const MissionDetailPage = () => {
                                 className="progress progress-warning flex-1"
                                 value={
                                     action.team_completed_task_count
-                                        ? (action.team_completed_task_count / action.tasks_count) *
-                                          100
+                                        ? (action.team_completed_task_count / action.tasks_count) * 100
                                         : 0
                                 }
                                 max={100}
@@ -274,9 +258,7 @@ const MissionDetailPage = () => {
                                 }}
                             >
                                 <div className="mb-2 text-sm">وظایف انجام شده</div>
-                                <div className="text-lg font-bold">
-                                    {action?.team_completed_task_count ?? 0}
-                                </div>
+                                <div className="text-lg font-bold">{action?.team_completed_task_count ?? 0}</div>
                             </div>
                         </div>
                     </div>
@@ -294,8 +276,8 @@ const MissionDetailPage = () => {
                             <FaBook size={20} />
                         </div>
                         <p className="mb-4 text-right text-sm leading-relaxed">
-                            برای تکمیل ماموریت، تمام مراحل باید به ترتیب انجام شوند. پس از انجام
-                            تمام وظایف، میتوانید کارت پایان را اسکن کنید.
+                            برای تکمیل ماموریت، تمام مراحل باید به ترتیب انجام شوند. پس از انجام تمام وظایف، میتوانید کارت
+                            پایان را اسکن کنید.
                         </p>
                         <button
                             className="btn rounded-[16px] border-none bg-white px-[24px] text-black"
@@ -331,7 +313,6 @@ const MissionDetailPage = () => {
                                         {task.locked_for_team ? (
                                             <button
                                                 className={`flex cursor-pointer items-center gap-2 rounded-3xl bg-[#0000003D] px-4 py-2 font-medium text-white`}
-                                                onClick={() => hanleStart(task)}
                                             >
                                                 <FaLock size={14} />
                                                 {'در صف ...'}
@@ -354,8 +335,7 @@ const MissionDetailPage = () => {
                                     </div>
                                 </div>
                             ))}
-                        {action.tasks.filter((task: Task<MCQ | FileUpload>) => !task.done_by_team)
-                            .length == 0 ? (
+                        {action.tasks.filter((task: Task<MCQ | FileUpload>) => !task.done_by_team).length == 0 ? (
                             <div
                                 className="mb-3 rounded-xl p-4"
                                 style={{
