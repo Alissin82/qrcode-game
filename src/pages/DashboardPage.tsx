@@ -1,16 +1,16 @@
 import type { AxiosResponse } from 'axios';
 import { useContext, useEffect, useMemo } from 'react';
-import { FaMedal, FaTrophy } from 'react-icons/fa6';
-import { LuAlarmClock, LuLogOut } from 'react-icons/lu';
+import { FaTrophy } from 'react-icons/fa6';
+import { LuLogOut } from 'react-icons/lu';
 import { TbCoinFilled } from 'react-icons/tb';
+import { useNavigate } from 'react-router-dom';
+import BellIcon from '../components/ui/icons/BellIcon.tsx';
 import SettingsIcon from '../components/ui/icons/SettingIcon';
 import Menu from '../components/ui/Menu';
 import Upgrade from '../components/ui/Upgrade';
 import { TeamDataContext } from '../contexts/TeamDataContext.ts';
 import type { ApiResponse } from '../types/apiResponse';
 import { apiClient } from '../utils';
-import { useNavigate } from 'react-router-dom';
-import BellIcon from '../components/ui/icons/BellIcon.tsx';
 
 const DashboardPage = () => {
     const navigate = useNavigate();

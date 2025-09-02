@@ -68,28 +68,33 @@ const MissionDetailPage = () => {
     //     }
     // };
 
-    async function downloadFile(url: string, filename: string, disk: string) {
+    async function downloadFile(url: string, filename: string, disk = 'local') {
         try {
             const response = await fetch(url, {
                 headers: {
-                    ...(disk != 's3' && {
+                    ...(disk !== 's3' && {
                         Authorization: `Bearer ${localStorage.getItem('token')}`,
                     }),
                 },
             });
 
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
             const blob = await response.blob();
             const link = document.createElement('a');
-            link.href = window.URL.createObjectURL(blob);
-            link.download = filename;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            window.URL.revokeObjectURL(link.href);
+            const objectUrl = window.URL.createObjectURL(blob);
+
+            if ('download' in link) {
+                // Most modern browsers
+                link.href = objectUrl;
+                link.download = filename;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } else {
+                // Safari / older browsers fallback
+                window.open(objectUrl, '_blank');
+            }
+
+            window.URL.revokeObjectURL(objectUrl);
         } catch (error) {
             console.error('Download failed:', error);
             throw error;
