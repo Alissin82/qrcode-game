@@ -27,11 +27,13 @@ const DashboardPage = () => {
     const { data: team, setData: setTeam } =
         useContext(TeamDataContext);
 
-    const className = useMemo(() => {
-        return team?.gender
-            ? 'bg-accent'
-            : 'bg-secondary';
-    }, [team]);
+const className = useMemo(() => {
+    if (team?.gender === true) {
+        return 'bg-accent'; // پسر
+    } else {
+        return 'bg-pink-500'; // دختر
+    }
+}, [team]);
 
     useEffect(() => {
         async function fetchTeam() {

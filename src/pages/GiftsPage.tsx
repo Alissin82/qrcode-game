@@ -33,7 +33,9 @@ export const GiftsPage = () => {
                         <p className="text-3xl font-extrabold">{team?.coin}</p>
                         <p className="mt-1 flex items-center justify-center gap-2 text-sm opacity-80">
                             سکه
-                            <FaMedal size={22} />
+                            <img src="/images/coin_1fa99.png" alt="nist" width={24} height={24} />
+
+                            
                         </p>
                     </div>
                     <div className="h-16 w-px bg-white/20"></div>{' '}
@@ -41,7 +43,7 @@ export const GiftsPage = () => {
                         <p className="text-3xl font-extrabold">{team?.score}</p>
                         <p className="mt-1 flex items-center justify-center gap-2 text-sm opacity-80">
                             امتیاز
-                            <TbCoinFilled size={22} />
+                            <FaMedal size={22} />
                         </p>
                     </div>
                 </section>
