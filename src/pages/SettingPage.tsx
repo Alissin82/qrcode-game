@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 
 // --- Icon Components ---
 // NOTE: The following icons are from the 'react-icons' library.
@@ -17,18 +17,16 @@ import type { ApiResponse } from '../types/apiResponse';
 
 const SettingsPage = () => {
     const navigate = useNavigate();
-    const { data: team, setData: setTeam } =
-        useContext(TeamDataContext);
+    const { data: team, setData: setTeam } = useContext(TeamDataContext);
 
-    // State to toggle between boy (blue) and girl (pink) themes
-    const [isBoy, setIsBoy] = useState(true);
+    const className = useMemo(() => {
+        return team?.gender ? 'bg-accent' : 'bg-secondary';
+    }, [team]);
+
     // State to manage the team color from the color picker
-    const [teamColor, setTeamColor] =
-        useState('#1f4567');
+    const [teamColor, setTeamColor] = useState('#1f4567');
     // State for team name input
-    const [teamName, setTeamName] = useState(
-        team?.name || '',
-    );
+    const [teamName, setTeamName] = useState(team?.name || '');
     // State for gender selection
     const [gender, setGender] = useState('');
 
@@ -38,34 +36,22 @@ const SettingsPage = () => {
     };
 
     async function fetchTeam() {
-        const response: AxiosResponse<
-            ApiResponse<Team>
-        > = await apiClient.get(`/teams/me`);
+        const response: AxiosResponse<ApiResponse<Team>> = await apiClient.get(`/teams/me`);
         setTeam(response.data.data);
     }
 
     // Handler function to handle form submission
-    const handleSubmit = async (
-        e: React.FormEvent,
-    ) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const res = await apiClient.put(
-                `/teams`,
-                {
-                    gender:
-                        gender === 'true'
-                            ? true
-                            : false,
-                    color: teamColor,
-                    name: teamName,
-                },
-            );
+            const res = await apiClient.put(`/teams`, {
+                gender: gender === 'true' ? true : false,
+                color: teamColor,
+                name: teamName,
+            });
 
-            toast.success(
-                'اطلاعات با موفقیت ویرایش شد.',
-            );
-            fetchTeam()
+            toast.success('اطلاعات با موفقیت ویرایش شد.');
+            fetchTeam();
             navigate('/dashboard');
         } catch (error) {
             toast.error(`دوباره امتحان کنید.`);
@@ -73,26 +59,19 @@ const SettingsPage = () => {
         }
     };
 
-    // Dynamically set the background color based on the isBoy state
-    // These classes ('bg-secondary', 'bg-accent') should be defined in your DaisyUI theme config
-    const bgColor = isBoy
-        ? 'bg-accent'
-        : 'bg-secondary';
-
     return (
-        <div
-            className={`min-h-screen ${bgColor} font-sans text-white`}
-        >
+        <div className={`min-h-screen ${className} font-sans text-white`}>
             {/* Main container with responsive max-width */}
-            <div className='mx-auto w-full max-w-xl p-4 pb-32'>
+            <div className="mx-auto w-full max-w-xl p-4 pb-32">
                 {/* Header */}
-                <header className='mb-10 flex items-center justify-start'>
-                    <button className='btn btn-square btn-ghost rounded-full bg-white/20'>
+                <header className="mb-10 flex items-center justify-start">
+                    <button
+                        className="btn btn-square btn-ghost rounded-full bg-white/20"
+                        onClick={() => navigate('/dashboard')}
+                    >
                         <FaArrowRight />
                     </button>
-                    <h1 className='px-2 text-xl font-bold'>
-                        تنظیمات
-                    </h1>
+                    <h1 className="px-2 text-xl font-bold">تنظیمات</h1>
                 </header>
 
                 {/* Profile Picture Section */}
@@ -113,103 +92,71 @@ const SettingsPage = () => {
                 </section> */}
 
                 {/* Form Section */}
-                <form
-                    onSubmit={handleSubmit}
-                    className='space-y-6 text-right'
-                >
+                <form onSubmit={handleSubmit} className="space-y-6 text-right">
                     {/* Team Name Input */}
-                    <div className='py-4'>
-                        <label
-                            htmlFor='teamName'
-                            className='mb-2 block font-semibold'
-                        >
+                    <div className="py-4">
+                        <label htmlFor="teamName" className="mb-2 block font-semibold">
                             نام گروه
                         </label>
                         <input
-                            type='text'
-                            id='teamName'
+                            type="text"
+                            id="teamName"
                             value={teamName}
-                            onChange={(e) =>
-                                setTeamName(
-                                    e.target
-                                        .value,
-                                )
-                            }
-                            placeholder={
-                                team?.name
-                            }
-                            className='input input-bordered input-lg w-full bg-black/20 text-right placeholder:text-xs placeholder:text-gray-300'
+                            onChange={(e) => setTeamName(e.target.value)}
+                            placeholder={team?.name}
+                            className="input input-bordered input-lg w-full bg-black/20 text-right placeholder:text-xs placeholder:text-gray-300"
                         />
                     </div>
 
                     {/* Team Color Input */}
                     <div>
-                        <label
-                            htmlFor='teamColor'
-                            className='mb-2 block font-semibold'
-                        >
+                        <label htmlFor="teamColor" className="mb-2 block font-semibold">
                             رنگ تیم
                         </label>
-                        <div className='relative'>
+                        <div className="relative">
                             {/* This input displays the hex code and is read-only */}
                             <input
-                                type='text'
+                                type="text"
                                 value={teamColor}
                                 readOnly
-                                className='input input-bordered input-lg w-full bg-black/20 pr-12 text-right'
+                                className="input input-bordered input-lg w-full bg-black/20 pr-12 text-right"
                             />
                             {/* This is the clickable swatch that opens the color picker */}
                             <label
-                                htmlFor='teamColorPicker'
-                                className='absolute top-1/2 left-2 h-8 w-8 -translate-y-1/2 cursor-pointer rounded-lg border-2 border-white'
+                                htmlFor="teamColorPicker"
+                                className="absolute top-1/2 left-2 h-8 w-8 -translate-y-1/2 cursor-pointer rounded-lg border-2 border-white"
                                 style={{
-                                    backgroundColor:
-                                        teamColor,
+                                    backgroundColor: teamColor,
                                 }}
                             ></label>
                             {/* The actual color input is visually hidden but functional */}
                             <input
-                                type='color'
-                                id='teamColorPicker'
+                                type="color"
+                                id="teamColorPicker"
                                 value={teamColor}
-                                onChange={
-                                    handleColorChange
-                                }
-                                className='absolute h-0 w-0 opacity-0'
+                                onChange={handleColorChange}
+                                className="absolute h-0 w-0 opacity-0"
                             />
                         </div>
                     </div>
                     <select
-                        id='gender'
-                        className='select select-bordered input input-bordered mt-8 h-12 w-full rounded-lg bg-black/20 text-right'
+                        id="gender"
+                        className="select select-bordered input input-bordered mt-8 h-12 w-full rounded-lg bg-black/20 text-right"
                         value={gender}
-                        onChange={(e) =>
-                            setGender(
-                                e.target.value,
-                            )
-                        }
+                        onChange={(e) => setGender(e.target.value)}
                         required
                     >
-                        <option disabled value=''>
+                        <option disabled value="">
                             جنسیت را انتخاب کنید .
                         </option>
-                        <option value='true'>
-                            پسر
-                        </option>
-                        <option value='false'>
-                            دختر
-                        </option>
+                        <option value="true">پسر</option>
+                        <option value="false">دختر</option>
                     </select>
                     {/* Save Button */}
-                    <div className='pt-4'>
+                    <div className="pt-4">
                         <button
-                            type='submit'
-                            className='btn btn-lg w-full rounded-xl border-none text-xl font-bold text-white'
-                            style={{
-                                background: isBoy
-                                    ? 'linear-gradient(to left, #10B981, #34D399)' // سبز وقتی true
-                                    : 'linear-gradient(to left, #F97316, #FB923C)', // نارنجی وقتی false
-                            }}
+                            type="submit"
+                            className={`btn btn-lg w-full rounded-xl border-none text-xl font-bold text-white ${className}`}
                         >
                             ذخیره اطلاعات
                         </button>

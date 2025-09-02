@@ -1,31 +1,22 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useMemo } from 'react';
 import { FaMedal } from 'react-icons/fa6';
 import { TbCoinFilled } from 'react-icons/tb';
 import GetScors from '../components/ui/GetScors';
 import Menu from '../components/ui/Menu';
 // import { MY_TEAM_DATA } from '../utils/constants';
-import { apiClient } from '../utils';
 import { TeamDataContext } from '../contexts/TeamDataContext';
 
 export const GiftsPage = () => {
-    const { data: team } = useContext(TeamDataContext);
+    const { data: team, setData: setTeam } = useContext(TeamDataContext);
 
-    const [isBoy, setIsBoy] = useState(true);
-    // const [activeTab, setActiveTab] =
-    //     useState('all');
+    const className = useMemo(() => {
+        return team?.gender ? 'bg-accent' : 'bg-secondary';
+    }, [team]);
 
-    const bgColor = isBoy ? 'bg-blue-900' : 'bg-pink-600';
-
-    const activeBtnColor = isBoy
-        ? 'bg-gradient-to-r from-blue-400 to-indigo-600 text-white'
-        : 'bg-gradient-to-r from-yellow-300 to-orange-500 text-black';
-
-    const claimBtnColor = isBoy
-        ? 'bg-gradient-to-r from-green-400 to-emerald-600 text-white'
-        : 'bg-gradient-to-r from-yellow-300 to-orange-500 text-black';
+  
 
     return (
-        <div className={`min-h-screen ${bgColor} font-sans text-white`}>
+        <div className={`min-h-screen ${className} font-sans text-white`}>
             <div className="mx-auto w-full max-w-xl p-4 pb-32">
                 {/* Top Stats Section */}
                 <section className="mb-6 flex items-center justify-around rounded-2xl bg-black/20 p-6 text-center shadow-md">
