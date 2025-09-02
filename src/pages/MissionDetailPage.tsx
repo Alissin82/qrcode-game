@@ -70,6 +70,12 @@ const MissionDetailPage = () => {
 
     async function downloadFile(url: string, filename: string, disk = 'local') {
         try {
+            if (disk === 's3') {
+                // Open presigned S3 URL directly (most reliable cross-origin behavior)
+                window.open(url, '_blank');
+                return;
+            }
+
             const response = await fetch(url, {
                 headers: {
                     ...(disk !== 's3' && {
@@ -77,6 +83,10 @@ const MissionDetailPage = () => {
                     }),
                 },
             });
+
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
 
             const blob = await response.blob();
             const link = document.createElement('a');
@@ -118,14 +128,17 @@ const MissionDetailPage = () => {
                 return;
             }
 
-            // Extract filename from URL or use a default
-            const urlParts = downloadUrl.split('/');
-            const originalFilename = urlParts[urlParts.length - 1] || 'download';
+            // Extract filename from URL path, without query string
+            let originalFilename = 'download';
+            try {
+                const u = new URL(downloadUrl);
+                const last = u.pathname.split('/').pop();
+                if (last) originalFilename = last;
+            } catch {}
 
             await downloadFile(downloadUrl, originalFilename, disk);
         } catch (error) {
             console.error('Download failed:', error);
-            // You might want to show a user-friendly error message here
         }
     };
 

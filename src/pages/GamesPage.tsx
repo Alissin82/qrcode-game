@@ -52,7 +52,7 @@ export const GamesPage = () => {
             <div className="mx-auto w-full max-w-xl p-4 pb-32">
                 {/* Header */}
                 <header className="mb-6 flex items-center justify-start gap-4">
-                    <button className="btn btn-circle btn-ghost bg-white/20">
+                    <button className="btn btn-circle btn-ghost bg-white/20" onClick={() => navigate('/dashboard')}>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="24"
