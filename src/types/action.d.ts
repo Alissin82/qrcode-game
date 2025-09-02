@@ -6,7 +6,7 @@ interface Action {
     region_id: string;
     tasks: Task[];
     action_team_for: {
-        status: 'Pending' | 'Timeout';
+        status: 'Pending' | 'Timeout' | 'Completed';
         Completed;
         status_label: string;
         completed_task_count: number;

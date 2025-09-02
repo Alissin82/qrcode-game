@@ -35,10 +35,10 @@ export const UploadFileMission = () => {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     },
-                }
+                },
             );
-            console.log(res.data)
-            console.log(task)
+            console.log(res.data);
+            console.log(task);
             if (res.status == 200) {
                 toast.success(`با موفقیت انجام شد`);
             }
@@ -61,7 +61,7 @@ export const UploadFileMission = () => {
         const fetchData = async () => {
             try {
                 const res: AxiosResponse<ApiResponse<Task<FileUpload>>> = await apiClient.get(
-                    `/tasks/${taskId}`
+                    `/tasks/${taskId}`,
                 );
                 setTask(res.data.data);
                 setLoading(false);
@@ -107,7 +107,8 @@ export const UploadFileMission = () => {
                     <div className="mb-2 rounded-2xl bg-black/20 p-4">
                         <h2 className="text-2xl font-bold">آپلود فایل</h2>
                         <p className="mt-2 opacity-80">
-                            مرحله {task?.order + 1} از {task?.action_tasks_count}
+
+                            مرحله {task && task?.order + 1} از {task?.action_tasks_count}
                         </p>
                     </div>
 
