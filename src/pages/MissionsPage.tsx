@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom';
 
 import QrScanner from 'react-qr-scanner';
 import Menu from '../components/ui/Menu';
-import { TeamDataContext } from '../contexts/TeamDataContext.ts';
-import { apiClient } from '../utils';
 import Upgrade from '../components/ui/Upgrade.tsx';
-import type { Action, Meta } from '../types/action';
+import { TeamDataContext } from '../contexts/TeamDataContext.ts';
+import type { Meta } from '../types/action';
+import { apiClient } from '../utils';
 
 const MissionsPage = () => {
     const navigate = useNavigate();

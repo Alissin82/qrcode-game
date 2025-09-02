@@ -63,10 +63,11 @@ const ActionsPage = () => {
     }, []);
 
     async function handleScan(data: any) {
-        if (data.type != 'action_start') return toast.error('لطفا qr code همین عملیات را اسکن کنید.');
-        if (data.id != cardId) return toast.error('لطفا qr code همین عملیات را اسکن کنید.');
+        const qrCodeData = JSON.parse(data);
+        if (qrCodeData.type != 'action_start') return toast.error('لطفا qr code همین عملیات را اسکن کنید.');
+        if (qrCodeData.id != cardId) return toast.error('لطفا qr code همین عملیات را اسکن کنید.');
         try {
-            const response = await apiClient.post(`/actions/${data.id}/start`);
+            const response = await apiClient.post(`/actions/${qrCodeData.id}/start`);
             setScanning(false);
             if (response.status == 200) navigate(`/mission/${response.data.data.id}`);
         } catch (error) {

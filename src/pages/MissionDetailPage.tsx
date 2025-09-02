@@ -174,13 +174,14 @@ const MissionDetailPage = () => {
     }
 
     async function handleEnd(data: any) {
-        if (data.id != action?.id && data.type != 'action_end') {
+        const qrCodeData = JSON.parse(data);
+        if (qrCodeData.id != action?.id && qrCodeData.type != 'action_end') {
             toast.error('لطفا کارت همین عملیات را اسکن کنید.');
             return;
         }
 
         try {
-            const response: AxiosResponse<ApiResponse<Action>> = await apiClient.post(`actions/${data.id}/end`);
+            const response: AxiosResponse<ApiResponse<Action>> = await apiClient.post(`actions/${qrCodeData.id}/end`);
             if (response.status == 200) {
                 toast.success('عملیات با موفقیت تکمیل شد');
                 navigate('/missions');
