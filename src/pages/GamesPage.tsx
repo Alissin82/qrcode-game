@@ -4,6 +4,8 @@ import Menu from '../components/ui/Menu';
 import { apiClient } from '../utils';
 import { useNavigate } from 'react-router-dom';
 import { TeamDataContext } from '../contexts/TeamDataContext';
+import { FaGamepad, FaTrophy } from "react-icons/fa";
+
 
 export const GamesPage = () => {
     const { data: team, setData: setTeam } = useContext(TeamDataContext);
@@ -154,9 +156,15 @@ export const GamesPage = () => {
                         >
                             <div className="flex items-center gap-4">
                                 <div className="avatar placeholder">
-                                    <div className={`w-16 rounded-lg ${item.color}`}>
-                                        <span className="flex h-full w-full items-center justify-center text-3xl">💣</span>
-                                    </div>
+                               <div
+  className={`w-16 h-16 p-4 flex items-center justify-center rounded-2xl shadow-lg 
+  ${team?.gender
+    ? "bg-gradient-to-br from-indigo-700 via-purple-800 to-blue-700" // 🌌 پسرانه
+    : "bg-gradient-to-br from-pink-400 via-rose-500 to-fuchsia-600" // 🌸 دخترانه
+  }`}
+>
+  <FaGamepad className="text-3xl drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] text-white" />
+</div>
                                 </div>
 
                                 <div className="text-right">
@@ -175,6 +183,7 @@ export const GamesPage = () => {
                                     height="24"
                                     viewBox="0 0 24 24"
                                     fill="currentColor"
+                                    color='#ffffff'
                                 >
                                     <path d="M8 5v14l11-7z"></path>
                                 </svg>

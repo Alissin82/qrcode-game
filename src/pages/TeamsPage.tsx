@@ -97,8 +97,10 @@ export const TeamsLeaderboardPage = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <p className="mt-2 font-bold">{team.name}</p>
-                                <p className="text-sm font-semibold text-yellow-200">{team.score.toLocaleString('fa-IR')}</p>
+                                <p className="mt-2 font-bold py-1">{team.name}</p>
+                                <p className="text-sm font-semibold text-yellow-200 py-1">{team.score.toLocaleString('fa-IR')} <p className='px-1 inline-block text-[10px]'>امتیاز</p></p>
+                                <p className="text-sm font-semibold text-yellow-200">{team.coin.toLocaleString('fa-IR')} <p className='px-1 inline-block text-[10px]'>سکه</p></p>
+
                             </div>
                         ))}
                     </div>
@@ -119,8 +121,10 @@ export const TeamsLeaderboardPage = () => {
                                 </div>
                                 <span className="font-bold">{team.name}</span>
                             </div>
-                            <div className="text-lg font-extrabold text-yellow-300">
-                                {team.score.toLocaleString('fa-IR')}
+                            <div className="text-lg font-extrabold text-yellow-300 flex items-center">
+                                {team.score.toLocaleString('fa-IR')}<p className='px-1 inline-block text-[10px]'>امتیاز</p>
+                                <p className='inline-block mx-2'>{"-"}</p>
+                                {team.coin.toLocaleString('fa-IR')}<p className='px-1 inline-block text-[10px]'>سکه</p>
                             </div>
                         </div>
                     ))}

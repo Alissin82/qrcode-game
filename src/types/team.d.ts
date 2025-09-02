@@ -14,7 +14,9 @@ interface TeamLeadbord {
     id: number;
     name: string;
     score: number;
+    coin:number;
     score_teams_count: number;
+    gender:string;
 }
 
 interface Team {
