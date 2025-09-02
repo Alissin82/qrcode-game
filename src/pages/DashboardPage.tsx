@@ -35,7 +35,6 @@ const DashboardPage = () => {
     };
 
     return (
-<<<<<<< HEAD
         <div className={`min-h-screen ${className} font-sans text-white`}>
             <div className="relative mx-auto w-full max-w-xl p-4 pb-24">
                 <header className="mb-6 flex items-center justify-between rounded-2xl bg-white/20 p-4">
@@ -43,20 +42,6 @@ const DashboardPage = () => {
                         <div className="avatar">
                             <div className="ring-primary ring-offset-base-100 w-14 rounded-full ring ring-offset-2">
                                 <img src="/images/logo3.jpg" alt="User Avatar" />
-=======
-        <div
-            className={`min-h-screen ${className} font-sans text-white`}
-        >
-            <div className='relative mx-auto w-full max-w-xl p-4 pb-24'>
-                <header className='mb-6 flex items-center justify-between rounded-2xl bg-white/20 p-4'>
-                    <div className='flex items-center gap-3 text-right'>
-                        <div className='avatar'>
-                            <div className='ring-offset-base-100 w-14 rounded-full ring ring-amber-200 ring-offset-2'>
-                                <img
-                                    src='/images/logo3.jpg'
-                                    alt='User Avatar'
-                                />
->>>>>>> c31276f7a00be4e9b56d83ff54992a02296b9557
                             </div>
                         </div>
                         <div>
@@ -103,15 +88,9 @@ const DashboardPage = () => {
                     <section
                         className={`mb-8 flex w-1/2 items-center justify-between rounded-xl bg-black/10 p-4`}
                     >
-<<<<<<< HEAD
                         <div className="flex items-center gap-2">
                             <div className="rounded-full bg-yellow-400 p-1 text-black">
                                 <TbCoinFilled />
-=======
-                        <div className='flex items-center gap-2'>
-                            <div className='rounded-full bg-yellow-400 p-1 text-black'>
-                                <img src="/images/coin_1fa99.png" alt="nist" width={16} height={16} />
->>>>>>> c31276f7a00be4e9b56d83ff54992a02296b9557
                             </div>
                         </div>
                         <span className="text-2xl font-bold tracking-widest text-yellow-500">
@@ -181,8 +160,6 @@ const DashboardPage = () => {
                 </section> */}
                 <Upgrade />
             </div>
-
-            {/* Bottom Navigation */}
             <Menu />
         </div>
     );

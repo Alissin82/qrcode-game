@@ -11,7 +11,12 @@ export default defineConfig({
         },
     },
     server: {
-        allowedHosts: ['game.silitonix.ir', 'https://game.silitonix.ir'],
+        allowedHosts: [
+            'game.silitonix.ir',
+            'https://game.silitonix.ir',
+            'game_.silitonix.ir',
+            'https://game_.silitonix.ir',
+        ],
         host: true,
         port: 5173, // or any port you prefer
     },
