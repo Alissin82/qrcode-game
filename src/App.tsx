@@ -57,18 +57,9 @@ function App() {
                                 <Route path="games" element={<GamesPage />} />
                                 <Route path="games/:id" element={<GamePages />} />
                                 <Route path="video-mission/:id" element={<VideoMissionPage />} />
-                                <Route
-                                    path="upload-file-mission/:id"
-                                    element={<UploadFileMission />}
-                                />
-                                <Route
-                                    path="upload-video-mission/:id"
-                                    element={<VideoUploadPage />}
-                                />
-                                <Route
-                                    path="questionnaire-mission/:id"
-                                    element={<QuestionnairePage />}
-                                />
+                                <Route path="upload-file-mission/:id" element={<UploadFileMission />} />
+                                <Route path="upload-video-mission/:id" element={<VideoUploadPage />} />
+                                <Route path="questionnaire-mission/:id" element={<QuestionnairePage />} />
                                 <Route path="notifications" element={<AnnouncementsPage />} />
                             </Route>
                             <Route element={<GuestLayout />}>
