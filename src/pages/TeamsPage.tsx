@@ -3,6 +3,8 @@ import Menu from '../components/ui/Menu';
 import { apiClient } from '../utils';
 import { MY_TEAM_DATA } from '../utils/constants';
 import { TeamDataContext } from '../contexts/TeamDataContext';
+import { TbCoinFilled } from 'react-icons/tb';
+import { FaTrophy } from 'react-icons/fa6';
 
 export const TeamsLeaderboardPage = () => {
     const { data: team, setData: setTeam } = useContext(TeamDataContext);
@@ -98,9 +100,16 @@ export const TeamsLeaderboardPage = () => {
                                     </div>
                                 </div>
                                 <p className="mt-2 font-bold py-1">{team.name}</p>
-                                <p className="text-sm font-semibold text-yellow-200 py-1">{team.score.toLocaleString('fa-IR')} <p className='px-1 inline-block text-[10px]'>امتیاز</p></p>
-                                <p className="text-sm font-semibold text-yellow-200">{team.coin.toLocaleString('fa-IR')} <p className='px-1 inline-block text-[10px]'>سکه</p></p>
-
+                                <p className='flex gap-1 items-center text-sm font-semibold text-yellow-200'>
+                                    {team.score.toLocaleString(
+                                        'fa-IR',
+                                    )}
+                                    <FaTrophy />
+                                </p>
+                                <p className='flex gap-1 items-center text-sm font-semibold text-yellow-200/75'>
+                                    <span>{team.coin.toLocaleString('fa-IR',)}</span>
+                                    <TbCoinFilled />
+                                </p>
                             </div>
                         ))}
                     </div>
@@ -116,15 +125,24 @@ export const TeamsLeaderboardPage = () => {
                             <div className="flex items-center gap-3">
                                 <div className="avatar avatar-placeholder">
                                     <div className="text-neutral-content w-12 rounded-full bg-gray-900 p-2">
-                                        <span>{index + 1}</span>
+                                        <span>{index + 4}</span>
                                     </div>
                                 </div>
                                 <span className="font-bold">{team.name}</span>
                             </div>
-                            <div className="text-lg font-extrabold text-yellow-300 flex items-center">
-                                {team.score.toLocaleString('fa-IR')}<p className='px-1 inline-block text-[10px]'>امتیاز</p>
-                                <p className='inline-block mx-2'>{"-"}</p>
-                                {team.coin.toLocaleString('fa-IR')}<p className='px-1 inline-block text-[10px]'>سکه</p>
+                            <div className='flex gap-5 items-center'>
+                                <div className='flex gap-1 items-center text-lg font-extrabold text-yellow-300'>
+                                    {team.score.toLocaleString(
+                                        'fa-IR',
+                                    )}
+                                    <FaTrophy />
+                                </div>
+                                <div className='flex gap-1 items-center text-lg font-extrabold text-yellow-300/75'>
+                                    {team.coin.toLocaleString(
+                                        'fa-IR',
+                                    )}
+                                    <TbCoinFilled />
+                                </div>
                             </div>
                         </div>
                     ))}
