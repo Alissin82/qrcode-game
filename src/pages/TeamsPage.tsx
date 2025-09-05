@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import Menu from '../components/ui/Menu';
 import { apiClient } from '../utils';
 import { MY_TEAM_DATA } from '../utils/constants';
+import { TbCoinFilled } from 'react-icons/tb';
+import { FaTrophy } from 'react-icons/fa6';
 
 export const TeamsLeaderboardPage = () => {
     const [teams, setTeams] =
@@ -118,10 +120,15 @@ export const TeamsLeaderboardPage = () => {
                                                 team.name
                                             }
                                         </p>
-                                        <p className='text-sm font-semibold text-yellow-200'>
+                                        <p className='flex gap-1 items-center text-sm font-semibold text-yellow-200'>
                                             {team.score.toLocaleString(
                                                 'fa-IR',
                                             )}
+                                            <FaTrophy />
+                                        </p>
+                                        <p className='flex gap-1 items-center text-sm font-semibold text-yellow-200/75'>
+                                            <span>{team.coin.toLocaleString('fa-IR',)}</span>
+                                            <TbCoinFilled />
                                         </p>
                                     </div>
                                 ),
@@ -143,7 +150,7 @@ export const TeamsLeaderboardPage = () => {
                                         <div className='text-neutral-content w-12 rounded-full bg-gray-900 p-2'>
                                             <span>
                                                 {index +
-                                                    1}
+                                                    4}
                                             </span>
                                         </div>
                                     </div>
@@ -153,10 +160,19 @@ export const TeamsLeaderboardPage = () => {
                                         }
                                     </span>
                                 </div>
-                                <div className='text-lg font-extrabold text-yellow-300'>
-                                    {team.score.toLocaleString(
-                                        'fa-IR',
-                                    )}
+                                <div className='flex gap-5 items-center'>
+                                    <div className='flex gap-1 items-center text-lg font-extrabold text-yellow-300'>
+                                        {team.score.toLocaleString(
+                                            'fa-IR',
+                                        )}
+                                        <FaTrophy />
+                                    </div>
+                                    <div className='flex gap-1 items-center text-lg font-extrabold text-yellow-300/75'>
+                                        {team.coin.toLocaleString(
+                                            'fa-IR',
+                                        )}
+                                        <TbCoinFilled />
+                                    </div>
                                 </div>
                             </div>
                         ))}
