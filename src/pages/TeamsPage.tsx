@@ -53,11 +53,11 @@ export const TeamsLeaderboardPage = () => {
                                     <div className={`avatar indicator ${index === 0 ? 'mb-2' : ''}`}>
                                         <div className="avatar avatar-placeholder">
                                             <div className="text-neutral-content w-12 rounded-full bg-gray-900 p-2">
-                                                <span>{index + 1}</span>
+                                                <span className={'pt-1'}>{index + 1}</span>
                                             </div>
                                         </div>
                                     </div>
-                                    <p className="mt-2 py-1 font-bold">{team.name}</p>
+                                    <p className="mt-2 py-1 text-center font-bold">{team.name}</p>
                                     <p className="flex items-center gap-1 text-sm font-semibold text-yellow-200">
                                         {team.score.toLocaleString('fa-IR')}
                                         <FaTrophy />
@@ -83,7 +83,7 @@ export const TeamsLeaderboardPage = () => {
                                   <div className="flex items-center gap-3">
                                       <div className="avatar avatar-placeholder">
                                           <div className="text-neutral-content w-12 rounded-full bg-gray-900 p-2">
-                                              <span>{index + 4}</span>
+                                              <span className={'pt-1'}>{index + 4}</span>
                                           </div>
                                       </div>
                                       <span className="font-bold">{team.name}</span>
